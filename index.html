@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sofia & Marco — Mariage Méditerranéen</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">S & M</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#histoire">Notre Histoire</a></li>
+        <li><a href="#details">La Cérémonie</a></li>
+        <li><a href="#cortege">Le Cortège</a></li>
+        <li><a href="gallery.html">Galerie</a></li>
+        <li><a href="#voyage">Voyage</a></li>
+        <li><a href="#rsvp" class="nav-btn">RSVP</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Nous vous invitons à célébrer</p>
+      <h1 class="hero-names">Sofia <span class="ampersand">&</span> Marco</h1>
+      <div class="hero-divider">
+        <span class="divider-line"></span>
+        <i class="fa-solid fa-leaf divider-icon"></i>
+        <span class="divider-line"></span>
+      </div>
+      <p class="hero-date">Le 14 Septembre 2026</p>
+      <p class="hero-location"><i class="fa-solid fa-location-dot"></i> Santorin, Grèce</p>
+      <a href="#rsvp" class="btn btn-hero">Confirmer ma présence</a>
+    </div>
+    <a href="#compte-a-rebours" class="hero-scroll">
+      <span>Défiler</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <section id="compte-a-rebours" class="countdown-section">
+    <div class="container">
+      <p class="section-eyebrow">Le grand jour approche</p>
+      <div class="countdown-grid" id="countdown">
+        <div class="countdown-item">
+          <span class="countdown-number" id="days">00</span>
+          <span class="countdown-label">Jours</span>
+        </div>
+        <div class="countdown-dot">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="hours">00</span>
+          <span class="countdown-label">Heures</span>
+        </div>
+        <div class="countdown-dot">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="minutes">00</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-dot">:</div>
+        <div class="countdown-item">
+          <span class="countdown-number" id="seconds">00</span>
+          <span class="countdown-label">Secondes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOTRE HISTOIRE ===== -->
+  <section id="histoire" class="histoire-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Un amour méditerranéen</p>
+        <h2 class="section-title">Notre Histoire</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item" data-aos>
+          <div class="timeline-image">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80" alt="Notre rencontre" />
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2019</span>
+            <h3>La Première Rencontre</h3>
+            <p>C'était un soir de juillet sur la terrasse d'un café de la Côte d'Azur. Nos regards se sont croisés au-dessus des vagues et du soleil couchant. Marco s'est approché avec un sourire timide et une citation de Neruda. Le reste appartient à l'histoire.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item reverse" data-aos>
+          <div class="timeline-image">
+            <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=600&q=80" alt="Premier voyage" />
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2021</span>
+            <h3>Notre Premier Voyage</h3>
+            <p>Nous avons parcouru les îles grecques pendant trois semaines. Entre les villages blancs de Cyclades, les tavernes au bord de l'eau et les couchers de soleil magiques, notre amour a pris racine dans la terre méditerranéenne.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos>
+          <div class="timeline-image">
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&q=80" alt="Fiançailles" />
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2024</span>
+            <h3>La Demande en Mariage</h3>
+            <p>Au coucher du soleil à Oia, sur la caldeira de Santorin, Marco s'est agenouillé devant les eaux bleues de la mer Égée. Sofia a dit oui avant même qu'il n'ait fini sa phrase, les larmes aux yeux et le cœur débordant de bonheur.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item reverse" data-aos>
+          <div class="timeline-image">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="Mariage" />
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2026</span>
+            <h3>Le Grand Jour</h3>
+            <p>Nous nous marions là où nos cœurs ont trouvé leur maison — Santorin. Nous voulons partager ce moment inoubliable avec toutes les personnes qui nous sont chères, dans un cadre digne d'un rêve méditerranéen.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DETAILS CÉRÉMONIE ===== -->
+  <section id="details" class="details-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Rejoignez-nous</p>
+        <h2 class="section-title">Les Détails</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-olive"></i><span></span></div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-card" data-aos>
+          <div class="detail-icon">
+            <i class="fa-solid fa-church"></i>
+          </div>
+          <h3>La Cérémonie</h3>
+          <div class="detail-info">
+            <p class="detail-time"><i class="fa-regular fa-clock"></i> 16h00</p>
+            <p class="detail-address">
+              <i class="fa-solid fa-location-dot"></i>
+              Domaine Caldera Vista<br/>
+              Oia, Santorin 84702<br/>
+              Grèce
+            </p>
+          </div>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-outline">Voir sur la carte</a>
+        </div>
+
+        <div class="detail-card featured" data-aos>
+          <div class="detail-icon">
+            <i class="fa-solid fa-champagne-glasses"></i>
+          </div>
+          <h3>Le Cocktail</h3>
+          <div class="detail-info">
+            <p class="detail-time"><i class="fa-regular fa-clock"></i> 18h30</p>
+            <p class="detail-address">
+              <i class="fa-solid fa-location-dot"></i>
+              Terrasse Alizée<br/>
+              Domaine Caldera Vista<br/>
+              Santorin, Grèce
+            </p>
+          </div>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-outline">Voir sur la carte</a>
+        </div>
+
+        <div class="detail-card" data-aos>
+          <div class="detail-icon">
+            <i class="fa-solid fa-music"></i>
+          </div>
+          <h3>La Réception</h3>
+          <div class="detail-info">
+            <p class="detail-time"><i class="fa-regular fa-clock"></i> 20h00 — Minuit</p>
+            <p class="detail-address">
+              <i class="fa-solid fa-location-dot"></i>
+              Grande Salle Étoilée<br/>
+              Domaine Caldera Vista<br/>
+              Santorin, Grèce
+            </p>
+          </div>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-outline">Voir sur la carte</a>
+        </div>
+      </div>
+
+      <div class="dress-code" data-aos>
+        <h3><i class="fa-solid fa-shirt"></i> Code Vestimentaire</h3>
+        <p>Tenue de soirée élégante. Nous vous encourageons à porter des teintes claires, douces et méditerranéennes — blanc cassé, sable, bleu ciel, lin naturel. Évitez le blanc pur pour honorer la mariée.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PARALLAX QUOTE ===== -->
+  <section class="parallax-quote">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <i class="fa-solid fa-quote-left quote-icon"></i>
+      <blockquote>
+        "Aimer, ce n'est pas se regarder l'un l'autre,<br/>
+        c'est regarder ensemble dans la même direction."
+      </blockquote>
+      <cite>— Antoine de Saint-Exupéry</cite>
+    </div>
+  </section>
+
+  <!-- ===== LE CORTÈGE ===== -->
+  <section id="cortege" class="cortege-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Ceux qui nous entourent</p>
+        <h2 class="section-title">Le Cortège</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+      </div>
+
+      <div class="cortege-group">
+        <h3 class="cortege-group-title">La Mariée et ses Témoins</h3>
+        <div class="cortege-grid">
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1494790108755-2616b60a7c9a?w=400&q=80" alt="Sofia" />
+            </div>
+            <h4>Sofia Beaumont</h4>
+            <p class="cortege-role">La Mariée</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&q=80" alt="Camille" />
+            </div>
+            <h4>Camille Moreau</h4>
+            <p class="cortege-role">Témoin de la Mariée</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Léa" />
+            </div>
+            <h4>Léa Fontaine</h4>
+            <p class="cortege-role">Demoiselle d'honneur</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80" alt="Julie" />
+            </div>
+            <h4>Julie Petit</h4>
+            <p class="cortege-role">Demoiselle d'honneur</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cortege-group">
+        <h3 class="cortege-group-title">Le Marié et ses Témoins</h3>
+        <div class="cortege-grid">
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Marco" />
+            </div>
+            <h4>Marco Rossi</h4>
+            <p class="cortege-role">Le Marié</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Lucas" />
+            </div>
+            <h4>Lucas Dupont</h4>
+            <p class="cortege-role">Témoin du Marié</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Antoine" />
+            </div>
+            <h4>Antoine Bernard</h4>
+            <p class="cortege-role">Garçon d'honneur</p>
+          </div>
+          <div class="cortege-card" data-aos>
+            <div class="cortege-photo">
+              <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&q=80" alt="Raphaël" />
+            </div>
+            <h4>Raphaël Martin</h4>
+            <p class="cortege-role">Garçon d'honneur</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== GALERIE PREVIEW ===== -->
+  <section id="galerie" class="galerie-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Nos souvenirs</p>
+        <h2 class="section-title">Galerie Photo</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-camera"></i><span></span></div>
+      </div>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item tall" data-aos>
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="Couple" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+      <div class="gallery-item" data-aos>
+        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?w=600&q=80" alt="Mariage" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+      <div class="gallery-item" data-aos>
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Fleurs" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+      <div class="gallery-item tall" data-aos>
+        <img src="https://images.unsplash.com/photo-1522842054534-6e7c1d7a0e71?w=600&q=80" alt="Santorin" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+      <div class="gallery-item" data-aos>
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80" alt="Décoration" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+      <div class="gallery-item" data-aos>
+        <img src="https://images.unsplash.com/photo-1567271258649-b1d82ee0d346?w=600&q=80" alt="Mer Égée" />
+        <div class="gallery-overlay"><i class="fa-solid fa-expand"></i></div>
+      </div>
+    </div>
+    <div class="gallery-cta">
+      <a href="gallery.html" class="btn btn-primary">Voir toute la galerie</a>
+    </div>
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+      <button class="lightbox-prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
+      <img src="" alt="" id="lightboxImg" />
+    </div>
+  </section>
+
+  <!-- ===== VOYAGE & HÉBERGEMENT ===== -->
+  <section id="voyage" class="voyage-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Informations pratiques</p>
+        <h2 class="section-title">Voyage & Hébergement</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-plane"></i><span></span></div>
+      </div>
+
+      <div class="voyage-grid">
+        <div class="voyage-card" data-aos>
+          <div class="voyage-icon"><i class="fa-solid fa-plane-departure"></i></div>
+          <h3>Comment Venir</h3>
+          <p>L'aéroport de Santorin (JTR) est desservi depuis Paris, Lyon et Marseille. Des vols directs sont disponibles de juin à octobre. Prévoir l'arrivée le 13 septembre pour être reposés le jour J.</p>
+          <ul class="voyage-list">
+            <li><i class="fa-solid fa-check"></i> Vol Paris CDG → Santorin (3h30)</li>
+            <li><i class="fa-solid fa-check"></i> Navette aéroport incluse pour les invités</li>
+            <li><i class="fa-solid fa-check"></i> Transfert depuis Athènes possible (ferry 8h ou avion 45min)</li>
+          </ul>
+        </div>
+
+        <div class="voyage-card featured" data-aos>
+          <div class="voyage-icon"><i class="fa-solid fa-hotel"></i></div>
+          <h3>Hébergements Conseillés</h3>
+          <p>Nous avons négocié des tarifs préférentiels dans des hôtels proches du lieu de réception. Mentionnez "Mariage Rossi-Beaumont" lors de votre réservation.</p>
+          <ul class="voyage-list">
+            <li><i class="fa-solid fa-star"></i> <strong>Caldera Suite Hotel</strong> — 5★ (à 200m du lieu)</li>
+            <li><i class="fa-solid fa-star"></i> <strong>Aegean View Suites</strong> — 4★ (navette incluse)</li>
+            <li><i class="fa-solid fa-star"></i> <strong>Oia Castle Hotel</strong> — Boutique (vue caldeira)</li>
+          </ul>
+        </div>
+
+        <div class="voyage-card" data-aos>
+          <div class="voyage-icon"><i class="fa-solid fa-circle-info"></i></div>
+          <h3>Conseils Utiles</h3>
+          <p>Santorin en septembre — le mois parfait ! Temps doux (26°C), foules réduites, couchers de soleil spectaculaires.</p>
+          <ul class="voyage-list">
+            <li><i class="fa-solid fa-check"></i> Réservez votre hébergement avant le 30 juin</li>
+            <li><i class="fa-solid fa-check"></i> Prévoyez des chaussures confortables (rues pavées)</li>
+            <li><i class="fa-solid fa-check"></i> La monnaie locale est l'euro</li>
+            <li><i class="fa-solid fa-check"></i> Adaptateur prise non nécessaire (type F)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LISTE DE MARIAGE ===== -->
+  <section id="liste" class="liste-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Votre générosité</p>
+        <h2 class="section-title">Liste de Mariage</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-gift"></i><span></span></div>
+      </div>
+      <div class="liste-content" data-aos>
+        <p>Votre présence à nos côtés est le plus beau des cadeaux. Si toutefois vous souhaitez nous gâter, nous avons constitué une liste de voyage pour notre lune de miel en Grèce et en Italie, ainsi qu'une cagnotte participative pour l'aménagement de notre nouveau nid.</p>
+        <div class="liste-buttons">
+          <a href="#" class="btn btn-primary"><i class="fa-solid fa-plane"></i> Lune de Miel</a>
+          <a href="#" class="btn btn-outline"><i class="fa-solid fa-house"></i> Cagnotte Maison</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Vos questions</p>
+        <h2 class="section-title">Questions Fréquentes</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-question"></i><span></span></div>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" data-aos>
+          <button class="faq-question">
+            <span>Y a-t-il un parking sur place ?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Oui, un parking gratuit est disponible au Domaine Caldera Vista pour tous les invités. Un service de navette sera également assuré depuis les hôtels partenaires.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos>
+          <button class="faq-question">
+            <span>Les enfants sont-ils les bienvenus ?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Nous adorons les enfants ! Ceux de moins de 12 ans sont les bienvenus. Une animation spéciale et un menu enfant seront prévus pour les petits convives.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos>
+          <button class="faq-question">
+            <span>Puis-je prendre des photos pendant la cérémonie ?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Nous avons engagé un photographe et une vidéaste professionnels. Nous vous demandons de ne pas prendre de photos pendant la cérémonie afin d'être pleinement présents. Vos smartphones sont bienvenus pendant le cocktail et la réception !</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos>
+          <button class="faq-question">
+            <span>Y aura-t-il des options végétariennes / véganes ?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Absolument. Notre chef cuisinier proposera un menu méditerranéen généreux avec des options végétariennes, véganes et sans gluten. Précisez vos besoins alimentaires dans le formulaire RSVP.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos>
+          <button class="faq-question">
+            <span>Quelle est la date limite pour confirmer ma présence ?</span>
+            <i class="fa-solid fa-plus faq-icon"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Merci de confirmer votre présence avant le <strong>30 juin 2026</strong>. Passé ce délai, nous ne pourrons malheureusement pas garantir votre place.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RSVP ===== -->
+  <section id="rsvp" class="rsvp-section">
+    <div class="rsvp-overlay"></div>
+    <div class="container">
+      <div class="section-header light">
+        <p class="section-eyebrow">Confirmez votre présence</p>
+        <h2 class="section-title">RSVP</h2>
+        <div class="section-ornament light"><span></span><i class="fa-solid fa-envelope-open-text"></i><span></span></div>
+        <p class="rsvp-deadline">Répondre avant le 30 juin 2026</p>
+      </div>
+
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom" />
+          </div>
+          <div class="form-group">
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" required placeholder="Votre nom" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Adresse e-mail *</label>
+          <input type="email" id="email" name="email" required placeholder="votre@email.com" />
+        </div>
+
+        <div class="form-group">
+          <label>Votre réponse *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="presence" value="oui" required />
+              <span class="radio-custom"></span>
+              <i class="fa-solid fa-circle-check"></i> Avec grand plaisir !
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="presence" value="non" />
+              <span class="radio-custom"></span>
+              <i class="fa-solid fa-circle-xmark"></i> Je ne pourrai pas venir
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="guestCountGroup">
+          <label for="nb_personnes">Nombre de personnes (incluant vous)</label>
+          <select id="nb_personnes" name="nb_personnes">
+            <option value="1">1 personne</option>
+            <option value="2">2 personnes</option>
+            <option value="3">3 personnes</option>
+            <option value="4">4 personnes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="regime">Régime alimentaire</label>
+          <select id="regime" name="regime">
+            <option value="standard">Standard</option>
+            <option value="vegetarien">Végétarien</option>
+            <option value="vegan">Végan</option>
+            <option value="sans-gluten">Sans gluten</option>
+            <option value="autre">Autre (préciser dans les notes)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message pour les mariés</label>
+          <textarea id="message" name="message" rows="4" placeholder="Un mot doux, une chanson à demander, des besoins spéciaux..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-rsvp">
+          <i class="fa-solid fa-paper-plane"></i> Envoyer ma réponse
+        </button>
+
+        <div class="form-success" id="formSuccess">
+          <i class="fa-solid fa-circle-check"></i>
+          <p>Merci ! Votre réponse a bien été enregistrée. Nous avons hâte de vous voir !</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-logo">S & M</div>
+        <p class="footer-tagline">Sofia & Marco — 14 Septembre 2026 — Santorin, Grèce</p>
+        <div class="footer-divider">
+          <span></span><i class="fa-solid fa-heart"></i><span></span>
+        </div>
+        <div class="footer-links">
+          <a href="#histoire">Notre Histoire</a>
+          <a href="#details">La Cérémonie</a>
+          <a href="#cortege">Le Cortège</a>
+          <a href="gallery.html">Galerie</a>
+          <a href="#voyage">Voyage</a>
+          <a href="#rsvp">RSVP</a>
+        </div>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+        <p class="footer-contact">Questions ? <a href="mailto:sofia.marco.mariage@gmail.com">sofia.marco.mariage@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Sofia & Marco — Fait avec <i class="fa-solid fa-heart"></i> pour notre grand jour</p>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
