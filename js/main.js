@@ -2,6 +2,217 @@
    MEDITERRANEAN WEDDING — MAIN JS
    ============================================= */
 
+/* =============================================
+   ENVELOPE INTRO + WEDDING MUSIC
+   ============================================= */
+
+(function EnvelopeIntro() {
+
+  /* ---- Web Audio Piano Synth ---- */
+  let audioCtx = null;
+  let musicTimer = null;
+  let musicPlaying = false;
+
+  /* Canon in D — D major chord tones used for bass + melody */
+  const NOTE = {
+    D3:146.83, A3:220.00, B3:246.94, Fs3:185.00, G3:196.00,
+    D4:293.66, E4:329.63, Fs4:369.99, G4:392.00, A4:440.00,
+    B4:493.88, Cs5:554.37, D5:587.33, E5:659.25, Fs5:739.99
+  };
+
+  /* Piano-like oscillator tone */
+  function pianoNote(ctx, masterGain, freq, startT, dur, vel = 0.45) {
+    if (!freq) return;
+    const osc1  = ctx.createOscillator();
+    const osc2  = ctx.createOscillator();
+    const osc3  = ctx.createOscillator();
+    const gNode = ctx.createGain();
+
+    osc1.type = 'triangle'; osc1.frequency.value = freq;
+    osc2.type = 'sine';     osc2.frequency.value = freq * 2.005;
+    osc3.type = 'sine';     osc3.frequency.value = freq * 3.01;
+
+    const g2 = ctx.createGain(); g2.gain.value = 0.25;
+    const g3 = ctx.createGain(); g3.gain.value = 0.07;
+
+    osc1.connect(gNode);
+    osc2.connect(g2); g2.connect(gNode);
+    osc3.connect(g3); g3.connect(gNode);
+    gNode.connect(masterGain);
+
+    gNode.gain.setValueAtTime(0, startT);
+    gNode.gain.linearRampToValueAtTime(vel, startT + 0.015);
+    gNode.gain.setValueAtTime(vel * 0.65, startT + 0.08);
+    gNode.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
+
+    [osc1, osc2, osc3].forEach(o => { o.start(startT); o.stop(startT + dur + 0.05); });
+  }
+
+  /* Chord = play multiple notes together */
+  function chord(ctx, mg, notes, t, dur, vel) {
+    notes.forEach(f => pianoNote(ctx, mg, f, t, dur, vel));
+  }
+
+  /* Schedule the Canon in D loop */
+  function scheduleMusic(ctx, masterGain) {
+    const bpm  = 58;          /* slow, romantic tempo */
+    const beat = 60 / bpm;   /* seconds per beat */
+    const bar  = beat * 4;
+
+    /* Chord progression: D  A  Bm  F#m  G  D  G  A */
+    const chords = [
+      [NOTE.D3, NOTE.Fs4, NOTE.A4],    /* D  */
+      [NOTE.A3, NOTE.E4,  NOTE.A4],    /* A  */
+      [NOTE.B3, NOTE.D4,  NOTE.Fs4],   /* Bm */
+      [NOTE.Fs3,NOTE.Cs5, NOTE.Fs4],   /* F#m */
+      [NOTE.G3, NOTE.D4,  NOTE.G4],    /* G  */
+      [NOTE.D3, NOTE.Fs4, NOTE.A4],    /* D  */
+      [NOTE.G3, NOTE.D4,  NOTE.B4],    /* G  */
+      [NOTE.A3, NOTE.E4,  NOTE.A4],    /* A  */
+    ];
+
+    /* Simple melody (half-bar notes over each chord) */
+    const melody = [
+      [NOTE.Fs5, NOTE.E5],
+      [NOTE.D5,  NOTE.Cs5],
+      [NOTE.B4,  NOTE.A4],
+      [NOTE.Fs4, NOTE.Fs4],
+      [NOTE.G4,  NOTE.A4],
+      [NOTE.B4,  NOTE.A4],
+      [NOTE.G4,  NOTE.Fs4],
+      [NOTE.E4,  NOTE.D4],
+    ];
+
+    let t = ctx.currentTime + 0.1;
+
+    function scheduleBar(barIndex) {
+      if (!musicPlaying) return;
+      const ci = barIndex % chords.length;
+      const t0 = t + barIndex * bar;
+
+      /* Bass chord on beat 1 */
+      chord(ctx, masterGain, chords[ci], t0, bar * 0.9, 0.28);
+
+      /* Melody: two notes per bar (half-beat each) */
+      melody[ci].forEach((mf, mi) => {
+        pianoNote(ctx, masterGain, mf, t0 + mi * beat * 2, beat * 1.8, 0.22);
+      });
+
+      /* Schedule next bar 1 bar ahead */
+      const delay = (t0 + bar - ctx.currentTime - 0.2) * 1000;
+      musicTimer = setTimeout(() => scheduleBar(barIndex + 1), Math.max(0, delay));
+    }
+
+    scheduleBar(0);
+  }
+
+  function startMusic() {
+    if (musicPlaying) return;
+    musicPlaying = true;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const masterGain = audioCtx.createGain();
+    const compressor = audioCtx.createDynamicsCompressor();
+
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.55, audioCtx.currentTime + 2.5);
+
+    masterGain.connect(compressor);
+    compressor.connect(audioCtx.destination);
+
+    scheduleMusic(audioCtx, masterGain);
+  }
+
+  function stopMusic() {
+    musicPlaying = false;
+    clearTimeout(musicTimer);
+    if (audioCtx) { audioCtx.close(); audioCtx = null; }
+  }
+
+  /* ---- Envelope DOM ---- */
+  function init() {
+    const intro       = document.getElementById('envelopeIntro');
+    if (!intro) return;
+
+    const seal        = document.getElementById('envSeal');
+    const flap        = document.getElementById('envFlap');
+    const letterCard  = document.getElementById('envLetterCard');
+    const enterBtn    = document.getElementById('envEnterBtn');
+    const skipBtn     = document.getElementById('envSkip');
+    const musicBadge  = document.getElementById('envMusicBadge');
+    const hint        = document.getElementById('envHint');
+
+    let opened = false;
+
+    function openEnvelope() {
+      if (opened) return;
+      opened = true;
+
+      /* 1. Start music */
+      startMusic();
+
+      /* 2. CSS opening phase */
+      intro.classList.add('opening');
+      if (hint) hint.style.opacity = '0';
+
+      /* 3. Show music badge */
+      setTimeout(() => musicBadge?.classList.add('show'), 800);
+
+      /* 4. Slide letter card up */
+      setTimeout(() => intro.classList.add('letter-up'), 900);
+    }
+
+    function dismissEnvelope() {
+      intro.classList.add('closing');
+      intro.addEventListener('animationend', () => {
+        intro.remove();
+        document.body.style.overflow = '';
+      }, { once: true });
+    }
+
+    /* Click on seal or anywhere on intro to open */
+    seal?.addEventListener('click', e => { e.stopPropagation(); openEnvelope(); });
+    intro.addEventListener('click', () => { if (!opened) openEnvelope(); });
+
+    /* "Discover" button on letter card */
+    enterBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      dismissEnvelope();
+    });
+
+    /* Skip button */
+    skipBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      stopMusic();
+      intro.remove();
+      document.body.style.overflow = '';
+    });
+
+    /* Keyboard support */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
+        if (!document.getElementById('envelopeIntro')) return;
+        if (!opened) openEnvelope();
+        else if (e.key === 'Escape') { stopMusic(); intro.remove(); document.body.style.overflow = ''; }
+      }
+    });
+
+    /* Prevent body scroll while intro is visible */
+    document.body.style.overflow = 'hidden';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+}());
+
+/* =============================================
+   MAIN SITE
+   ============================================= */
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- NAVBAR ---------- */

@@ -12,6 +12,80 @@
 </head>
 <body>
 
+  <!-- ===== ENVELOPE INTRO ===== -->
+  <div id="envelopeIntro" class="env-intro">
+
+    <!-- Skip button -->
+    <button id="envSkip" class="env-skip-btn">PASSER <i class="fa-solid fa-forward-step"></i></button>
+
+    <!-- Fold lines drawn as SVG (from 4 corners to center) -->
+    <svg class="env-fold-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="0"   y1="0"   x2="50" y2="50" stroke="rgba(160,135,100,0.35)" stroke-width="0.18"/>
+      <line x1="100" y1="0"   x2="50" y2="50" stroke="rgba(160,135,100,0.35)" stroke-width="0.18"/>
+      <line x1="0"   y1="100" x2="50" y2="50" stroke="rgba(160,135,100,0.35)" stroke-width="0.18"/>
+      <line x1="100" y1="100" x2="50" y2="50" stroke="rgba(160,135,100,0.35)" stroke-width="0.18"/>
+    </svg>
+
+    <!-- Shaded triangular flaps (decorative) -->
+    <div class="env-tri env-tri-top"></div>
+    <div class="env-tri env-tri-left"></div>
+    <div class="env-tri env-tri-right"></div>
+    <div class="env-tri env-tri-bottom"></div>
+
+    <!-- The animated top flap (top half of screen that flips open) -->
+    <div class="env-flap-anim" id="envFlap">
+      <div class="env-flap-surface">
+        <!-- Top fold-line visual on the flap -->
+        <svg class="env-flap-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0"   y1="0" x2="50" y2="100" stroke="rgba(160,135,100,0.3)" stroke-width="0.22"/>
+          <line x1="100" y1="0" x2="50" y2="100" stroke="rgba(160,135,100,0.3)" stroke-width="0.22"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Inside of envelope (revealed after flap opens) -->
+    <div class="env-inside" id="envInside"></div>
+
+    <!-- Letter card that rises from envelope -->
+    <div class="env-letter-card" id="envLetterCard">
+      <p class="letter-eyebrow">Vous êtes cordialement invités au mariage de</p>
+      <h2 class="letter-names">Sofia <span>&</span> Marco</h2>
+      <div class="letter-rule"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+      <p class="letter-date">14 Septembre 2026</p>
+      <p class="letter-place"><i class="fa-solid fa-location-dot"></i> Santorin, Grèce</p>
+      <button class="letter-enter-btn" id="envEnterBtn">
+        Découvrir notre histoire <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- Wax seal (centered, overlapping flap fold line) -->
+    <div class="env-seal" id="envSeal">
+      <div class="seal-shine"></div>
+      <span class="seal-text">S&M</span>
+    </div>
+
+    <!-- Cherub decoration -->
+    <div class="env-cherub" aria-hidden="true">🕊️</div>
+
+    <!-- Music indicator (appears after opening) -->
+    <div class="env-music-badge" id="envMusicBadge">
+      <div class="music-wave">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      Musique en cours
+    </div>
+
+    <!-- Bottom text -->
+    <div class="env-bottom-text">
+      <p class="env-tagline">Cette invitation est exclusivement pour vous</p>
+      <p class="env-hint" id="envHint">
+        <i class="fa-regular fa-hand-pointer"></i>&nbsp; Cliquez sur le sceau pour ouvrir
+      </p>
+    </div>
+
+  </div>
+  <!-- END ENVELOPE INTRO -->
+
   <!-- ===== NAVIGATION ===== -->
   <nav id="navbar">
     <div class="nav-container">
