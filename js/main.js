@@ -131,36 +131,14 @@
 
   /* ---- Envelope DOM ---- */
   function init() {
-    const intro       = document.getElementById('envelopeIntro');
+    const intro   = document.getElementById('envelopeIntro');
     if (!intro) return;
 
-    const seal        = document.getElementById('envSeal');
-    const flap        = document.getElementById('envFlap');
-    const letterCard  = document.getElementById('envLetterCard');
-    const enterBtn    = document.getElementById('envEnterBtn');
-    const skipBtn     = document.getElementById('envSkip');
-    const musicBadge  = document.getElementById('envMusicBadge');
-    const hint        = document.getElementById('envHint');
+    const seal    = document.getElementById('envSeal');
+    const skipBtn = document.getElementById('envSkip');
+    const hint    = document.getElementById('envHint');
 
     let opened = false;
-
-    function openEnvelope() {
-      if (opened) return;
-      opened = true;
-
-      /* 1. Start music */
-      startMusic();
-
-      /* 2. CSS opening phase */
-      intro.classList.add('opening');
-      if (hint) hint.style.opacity = '0';
-
-      /* 3. Show music badge */
-      setTimeout(() => musicBadge?.classList.add('show'), 800);
-
-      /* 4. Slide letter card up */
-      setTimeout(() => intro.classList.add('letter-up'), 900);
-    }
 
     function dismissEnvelope() {
       intro.classList.add('closing');
@@ -170,15 +148,23 @@
       }, { once: true });
     }
 
-    /* Click on seal or anywhere on intro to open */
-    seal?.addEventListener('click', e => { e.stopPropagation(); openEnvelope(); });
-    intro.addEventListener('click', () => { if (!opened) openEnvelope(); });
+    function openEnvelope() {
+      if (opened) return;
+      opened = true;
 
-    /* "Discover" button on letter card */
-    enterBtn?.addEventListener('click', e => {
-      e.stopPropagation();
-      dismissEnvelope();
-    });
+      /* Start music */
+      startMusic();
+
+      /* Trigger CSS opening animations */
+      intro.classList.add('opening');
+      if (hint) hint.style.opacity = '0';
+
+      /* After flap fully opens (1.4s) → auto-dismiss, site appears */
+      setTimeout(() => dismissEnvelope(), 1900);
+    }
+
+    /* Click anywhere on intro to open */
+    intro.addEventListener('click', () => { if (!opened) openEnvelope(); });
 
     /* Skip button */
     skipBtn?.addEventListener('click', e => {
@@ -188,16 +174,14 @@
       document.body.style.overflow = '';
     });
 
-    /* Keyboard support */
+    /* Keyboard: Space / Enter opens, Escape skips */
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
-        if (!document.getElementById('envelopeIntro')) return;
-        if (!opened) openEnvelope();
-        else if (e.key === 'Escape') { stopMusic(); intro.remove(); document.body.style.overflow = ''; }
-      }
+      if (!document.getElementById('envelopeIntro')) return;
+      if ((e.key === ' ' || e.key === 'Enter') && !opened) openEnvelope();
+      if (e.key === 'Escape') { stopMusic(); intro.remove(); document.body.style.overflow = ''; }
     });
 
-    /* Prevent body scroll while intro is visible */
+    /* Prevent body scroll while intro visible */
     document.body.style.overflow = 'hidden';
   }
 
