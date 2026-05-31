@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------- COUNTDOWN ---------- */
-  const weddingDate = new Date('2026-09-14T16:00:00');
+  const weddingDate = new Date('2026-06-22T16:00:00');
 
   function updateCountdown() {
     const now  = new Date();
