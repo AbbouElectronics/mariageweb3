@@ -141,11 +141,12 @@
     let opened = false;
 
     function dismissEnvelope() {
+      intro.classList.remove('opening');
       intro.classList.add('closing');
-      intro.addEventListener('animationend', () => {
+      setTimeout(() => {
         intro.remove();
         document.body.style.overflow = '';
-      }, { once: true });
+      }, 900);
     }
 
     function openEnvelope() {
