@@ -141,12 +141,15 @@
     let opened = false;
 
     function dismissEnvelope() {
-      intro.classList.remove('opening');
-      intro.classList.add('closing');
+      /* Force fade out via inline styles — bypasse tout conflit CSS */
+      intro.style.transition = 'opacity 0.75s ease';
+      intro.style.opacity    = '0';
+      intro.style.pointerEvents = 'none';
+
       setTimeout(() => {
-        intro.remove();
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
         document.body.style.overflow = '';
-      }, 900);
+      }, 800);
     }
 
     function openEnvelope() {
