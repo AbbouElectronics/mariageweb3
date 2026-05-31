@@ -159,8 +159,9 @@
       intro.classList.add('opening');
       if (hint) hint.style.opacity = '0';
 
-      /* After flap fully opens (1.4s) → auto-dismiss, site appears */
-      setTimeout(() => dismissEnvelope(), 1900);
+      /* Flap animation: 0.15s delay + 1.4s duration = ends at 1.55s
+         Wait a beat after full open → then dismiss to site */
+      setTimeout(() => dismissEnvelope(), 2100);
     }
 
     /* Click anywhere on intro to open */
