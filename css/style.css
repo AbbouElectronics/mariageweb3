@@ -308,7 +308,7 @@ ul { list-style: none; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85') center/cover no-repeat;
+  background: url('../images/ora-hero.webp') center/cover no-repeat;
 }
 
 .hero-overlay {
