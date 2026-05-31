@@ -709,7 +709,7 @@ ul { list-style: none; }
   position: relative;
   padding: 7rem 2rem;
   text-align: center;
-  background: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1600&q=80') center/cover fixed;
+  background: url('../images/ora-hero.webp') center/cover fixed;
 }
 
 .parallax-overlay {
@@ -1153,7 +1153,7 @@ ul { list-style: none; }
 .rsvp-section {
   position: relative;
   padding: 7rem 0;
-  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover fixed;
+  background: url('../images/ora-hero.webp') center/cover fixed;
 }
 
 .rsvp-overlay {
@@ -1429,7 +1429,7 @@ ul { list-style: none; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80') center/cover;
+  background: url('../images/ora-hero.webp') center/cover;
   position: relative;
 }
 
