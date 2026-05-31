@@ -85,14 +85,16 @@
 
     <!-- Fold crease lines (double trait = clair + sombre = profondeur du pli) -->
     <svg class="env-fold-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      <line x1="0"    y1="0"   x2="50" y2="50" stroke="rgba(255,252,245,0.75)" stroke-width="0.32"/>
-      <line x1="100"  y1="0"   x2="50" y2="50" stroke="rgba(255,252,245,0.75)" stroke-width="0.32"/>
-      <line x1="0"    y1="100" x2="50" y2="50" stroke="rgba(255,252,245,0.55)" stroke-width="0.32"/>
-      <line x1="100"  y1="100" x2="50" y2="50" stroke="rgba(255,252,245,0.55)" stroke-width="0.32"/>
-      <line x1="0.55" y1="0"   x2="50.28" y2="50"  stroke="rgba(110,85,55,0.52)" stroke-width="0.22"/>
-      <line x1="99.45" y1="0"  x2="49.72" y2="50"  stroke="rgba(110,85,55,0.52)" stroke-width="0.22"/>
-      <line x1="0.55" y1="100" x2="50.28" y2="50"  stroke="rgba(110,85,55,0.35)" stroke-width="0.22"/>
-      <line x1="99.45" y1="100" x2="49.72" y2="50" stroke="rgba(110,85,55,0.35)" stroke-width="0.22"/>
+      <!-- Ombres des plis (côté sombre) -->
+      <line x1="0"    y1="0"   x2="50" y2="50" stroke="rgba(160,130,90,0.55)" stroke-width="0.35"/>
+      <line x1="100"  y1="0"   x2="50" y2="50" stroke="rgba(160,130,90,0.55)" stroke-width="0.35"/>
+      <line x1="0"    y1="100" x2="50" y2="50" stroke="rgba(160,130,90,0.40)" stroke-width="0.35"/>
+      <line x1="100"  y1="100" x2="50" y2="50" stroke="rgba(160,130,90,0.40)" stroke-width="0.35"/>
+      <!-- Reflets des plis (côté clair) -->
+      <line x1="0.5"  y1="0"   x2="50.25" y2="50"  stroke="rgba(255,252,245,0.9)" stroke-width="0.28"/>
+      <line x1="99.5" y1="0"   x2="49.75" y2="50"  stroke="rgba(255,252,245,0.9)" stroke-width="0.28"/>
+      <line x1="0.5"  y1="100" x2="50.25" y2="50"  stroke="rgba(255,252,245,0.7)" stroke-width="0.28"/>
+      <line x1="99.5" y1="100" x2="49.75" y2="50"  stroke="rgba(255,252,245,0.7)" stroke-width="0.28"/>
     </svg>
 
     <!-- Zones triangulaires ombrées (aspect enveloppe) -->
@@ -217,7 +219,6 @@
 
     <!-- Texte bas -->
     <div class="env-bottom-text">
-      <p class="env-tagline">Esta invitación es exclusiva para ti</p>
       <p class="env-hint" id="envHint">Cliquez pour ouvrir</p>
     </div>
 
