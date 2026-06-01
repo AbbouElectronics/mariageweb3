@@ -227,6 +227,9 @@
 
       /* 7 — Bouton "Découvrir le site" + CTA actif */
       tl.add(() => {
+        /* Enable pointer events on the card so buttons are clickable */
+        card.style.pointerEvents = 'auto';
+
         const cta = document.getElementById('envCardCta');
         if (cta) cta.classList.add('active');
 
@@ -237,12 +240,21 @@
 
         gsap.fromTo(discBtn, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, delay: 0.1 });
 
-        discBtn.addEventListener('click', () => {
+        function dismissAll() {
           gsap.to(intro, {
             opacity: 0, duration: 0.55, ease: 'power2.in',
             onComplete: () => { intro.remove(); document.body.style.overflow = ''; }
           });
-        });
+        }
+
+        discBtn.addEventListener('click', dismissAll);
+
+        /* Also dismiss when clicking CTA (it navigates and dismisses overlay) */
+        if (cta) {
+          cta.addEventListener('click', () => {
+            setTimeout(() => { if (intro.parentNode) intro.remove(); document.body.style.overflow = ''; }, 400);
+          });
+        }
       });
     }
 
