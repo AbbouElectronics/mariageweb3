@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=8" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -31,50 +31,154 @@
       <div class="env-body">
         <svg class="env-panels" viewBox="0 0 700 400" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <!-- Ombre panneau gauche (bord gauche plus sombre) -->
+            <!-- Emboss filter: shadow below + highlight above paths = raised paper relief -->
+            <filter id="fEmbB" x="-32%" y="-32%" width="164%" height="164%" color-interpolation-filters="sRGB">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="b"/>
+              <feOffset dx="1.6" dy="2.4" in="b" result="so"/>
+              <feFlood flood-color="rgba(55,38,8,0.32)" result="sc"/>
+              <feComposite in="sc" in2="so" operator="in" result="sh"/>
+              <feOffset dx="-1.0" dy="-1.6" in="b" result="ho"/>
+              <feFlood flood-color="rgba(255,248,218,0.64)" result="hc"/>
+              <feComposite in="hc" in2="ho" operator="in" result="hl"/>
+              <feMerge><feMergeNode in="sh"/><feMergeNode in="hl"/></feMerge>
+            </filter>
             <linearGradient id="gpL" x1="0%" y1="50%" x2="58%" y2="50%">
               <stop offset="0%"   stop-color="rgba(140,115,72,0.24)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
             </linearGradient>
-            <!-- Ombre panneau droit -->
             <linearGradient id="gpR" x1="100%" y1="50%" x2="42%" y2="50%">
               <stop offset="0%"   stop-color="rgba(125,102,62,0.22)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
             </linearGradient>
-            <!-- Ombre panneau bas -->
             <linearGradient id="gpB" x1="50%" y1="100%" x2="50%" y2="58%">
               <stop offset="0%"   stop-color="rgba(115,92,55,0.20)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
             </linearGradient>
-            <!-- Intérieur : papier légèrement plus clair au centre -->
             <radialGradient id="gpInner" cx="50%" cy="48%" r="42%">
               <stop offset="0%"   stop-color="rgba(255,252,242,0.30)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
             </radialGradient>
           </defs>
 
-          <!-- Lumière intérieure au centre (papier blanc-ivoire inside) -->
-          <rect x="0" y="0" width="700" height="400" fill="url(#gpInner)"/>
+          <!-- ═══ Motifs floraux embossés ═══ -->
+          <!-- Panneau gauche -->
+          <!-- Rose haut-gauche -->
+          <g transform="translate(62,72)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(72)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(144)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(216)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(288)"/>
+            <circle r="4.5"/>
+          </g>
+          <!-- Rameau de feuilles milieu-gauche -->
+          <g transform="translate(44,195)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-26" width="2.8" height="50" rx="1.4"/>
+            <path d="M0,-10 Q-14,-10 -12,-20 Q-5,-13 0,-10 Z"/>
+            <path d="M0,-10 Q14,-10 12,-20 Q5,-13 0,-10 Z"/>
+            <path d="M0,4 Q-12,4 -10,-6 Q-3,-2 0,4 Z"/>
+            <path d="M0,4 Q12,4 10,-6 Q3,-2 0,4 Z"/>
+            <ellipse cx="0" cy="-28" rx="3.8" ry="6"/>
+          </g>
+          <!-- Fleur simple bas-gauche -->
+          <g transform="translate(118,325)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(288)"/>
+            <circle r="4"/>
+          </g>
+          <!-- Bouton sur tige coin bas-gauche -->
+          <g transform="translate(54,362)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.3" y="-18" width="2.6" height="34" rx="1.3"/>
+            <path d="M0,-34 C-9,-28 -9,-16 0,-14 C9,-16 9,-28 0,-34 Z"/>
+            <path d="M0,-16 Q-9,-14 -8,-7 Q-2,-11 0,-16 Z"/>
+            <path d="M0,-16 Q9,-14 8,-7 Q2,-11 0,-16 Z"/>
+            <path d="M0,6 Q-10,8 -9,15 Q-2,11 0,6 Z"/>
+            <path d="M0,6 Q10,8 9,15 Q2,11 0,6 Z"/>
+          </g>
 
-          <!-- Panneaux latéraux et bas avec teintes de profondeur -->
+          <!-- Panneau droit -->
+          <!-- Fleur simple haut-droit -->
+          <g transform="translate(630,65)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(288)"/>
+            <circle r="4"/>
+          </g>
+          <!-- Bouton milieu-droit -->
+          <g transform="translate(654,192)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.3" y="-18" width="2.6" height="34" rx="1.3"/>
+            <path d="M0,-34 C-9,-28 -9,-16 0,-14 C9,-16 9,-28 0,-34 Z"/>
+            <path d="M0,-16 Q-9,-14 -8,-7 Q-2,-11 0,-16 Z"/>
+            <path d="M0,-16 Q9,-14 8,-7 Q2,-11 0,-16 Z"/>
+            <path d="M0,6 Q-10,8 -9,15 Q-2,11 0,6 Z"/>
+            <path d="M0,6 Q10,8 9,15 Q2,11 0,6 Z"/>
+          </g>
+          <!-- Rose bas-droit -->
+          <g transform="translate(560,322)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(72)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(144)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(216)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(288)"/>
+            <circle r="4.5"/>
+          </g>
+          <!-- Rameau coin bas-droit -->
+          <g transform="translate(648,355)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-26" width="2.8" height="50" rx="1.4"/>
+            <path d="M0,-10 Q-14,-10 -12,-20 Q-5,-13 0,-10 Z"/>
+            <path d="M0,-10 Q14,-10 12,-20 Q5,-13 0,-10 Z"/>
+            <path d="M0,4 Q-12,4 -10,-6 Q-3,-2 0,4 Z"/>
+            <path d="M0,4 Q12,4 10,-6 Q3,-2 0,4 Z"/>
+            <ellipse cx="0" cy="-28" rx="3.8" ry="6"/>
+          </g>
+
+          <!-- Panneau bas centre -->
+          <!-- Rameau bas-centre gauche -->
+          <g transform="translate(232,376)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-22" width="2.8" height="42" rx="1.4"/>
+            <path d="M0,-8 Q-13,-8 -11,-17 Q-4,-11 0,-8 Z"/>
+            <path d="M0,-8 Q13,-8 11,-17 Q4,-11 0,-8 Z"/>
+            <path d="M0,4 Q-11,5 -9,-3 Q-3,0 0,4 Z"/>
+            <path d="M0,4 Q11,5 9,-3 Q3,0 0,4 Z"/>
+            <ellipse cx="0" cy="-24" rx="3.5" ry="5.5"/>
+          </g>
+          <!-- Petite fleur centre-bas -->
+          <g transform="translate(350,352)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)" opacity="0.85">
+            <ellipse cx="0" cy="-8" rx="4" ry="6.5" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-8" rx="4" ry="6.5" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-8" rx="4" ry="6.5" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-8" rx="4" ry="6.5" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-8" rx="4" ry="6.5" transform="rotate(288)"/>
+            <circle r="3"/>
+          </g>
+          <!-- Rameau bas-centre droit -->
+          <g transform="translate(468,376)" filter="url(#fEmbB)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-22" width="2.8" height="42" rx="1.4"/>
+            <path d="M0,-8 Q-13,-8 -11,-17 Q-4,-11 0,-8 Z"/>
+            <path d="M0,-8 Q13,-8 11,-17 Q4,-11 0,-8 Z"/>
+            <path d="M0,4 Q-11,5 -9,-3 Q-3,0 0,4 Z"/>
+            <path d="M0,4 Q11,5 9,-3 Q3,0 0,4 Z"/>
+            <ellipse cx="0" cy="-24" rx="3.5" ry="5.5"/>
+          </g>
+          <!-- ═══ Fin motifs floraux ═══ -->
+
+          <rect x="0" y="0" width="700" height="400" fill="url(#gpInner)"/>
           <polygon points="0,0 0,400 350,200"   fill="url(#gpL)"/>
           <polygon points="700,0 700,400 350,200" fill="url(#gpR)"/>
           <polygon points="0,400 700,400 350,200" fill="url(#gpB)"/>
-
-          <!-- Pliures gauche : ombre + reflet lumière -->
           <line x1="0" y1="0" x2="350" y2="200" stroke="rgba(108,86,48,0.42)" stroke-width="2.0"/>
           <line x1="1.6" y1="0" x2="351.6" y2="200" stroke="rgba(255,246,220,0.55)" stroke-width="0.8"/>
-          <!-- Pliures droit -->
           <line x1="700" y1="0" x2="350" y2="200" stroke="rgba(108,86,48,0.40)" stroke-width="2.0"/>
           <line x1="698.4" y1="0" x2="348.4" y2="200" stroke="rgba(255,246,220,0.52)" stroke-width="0.8"/>
-          <!-- Pliures bas-gauche -->
           <line x1="0" y1="400" x2="350" y2="200" stroke="rgba(100,80,44,0.34)" stroke-width="1.8"/>
           <line x1="1.5" y1="398.5" x2="351.5" y2="198.5" stroke="rgba(255,246,220,0.42)" stroke-width="0.7"/>
-          <!-- Pliures bas-droit -->
           <line x1="700" y1="400" x2="350" y2="200" stroke="rgba(100,80,44,0.32)" stroke-width="1.8"/>
           <line x1="698.5" y1="398.5" x2="348.5" y2="198.5" stroke="rgba(255,246,220,0.40)" stroke-width="0.7"/>
-
-          <!-- Ombre d'épaisseur : bords extérieurs de l'enveloppe -->
           <line x1="2" y1="2" x2="2" y2="398" stroke="rgba(0,0,0,0.10)" stroke-width="5"/>
           <line x1="2" y1="397" x2="698" y2="397" stroke="rgba(0,0,0,0.14)" stroke-width="5"/>
           <line x1="698" y1="2" x2="698" y2="398" stroke="rgba(0,0,0,0.07)" stroke-width="4"/>
@@ -85,46 +189,128 @@
       <div class="env-flap" id="envFlap">
         <svg class="env-flap-shape" viewBox="0 0 700 420" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <!-- Ivoire légèrement différent du corps — papier verso -->
+            <!-- Emboss filter for flap florals (separate ID from body) -->
+            <filter id="fEmbF" x="-32%" y="-32%" width="164%" height="164%" color-interpolation-filters="sRGB">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="b"/>
+              <feOffset dx="1.6" dy="2.4" in="b" result="so"/>
+              <feFlood flood-color="rgba(55,38,8,0.32)" result="sc"/>
+              <feComposite in="sc" in2="so" operator="in" result="sh"/>
+              <feOffset dx="-1.0" dy="-1.6" in="b" result="ho"/>
+              <feFlood flood-color="rgba(255,248,218,0.64)" result="hc"/>
+              <feComposite in="hc" in2="ho" operator="in" result="hl"/>
+              <feMerge><feMergeNode in="sh"/><feMergeNode in="hl"/></feMerge>
+            </filter>
             <linearGradient id="gFlMain" x1="50%" y1="0%" x2="50%" y2="100%">
               <stop offset="0%"   stop-color="#EDE6CE"/>
               <stop offset="60%"  stop-color="#E5DCC2"/>
               <stop offset="100%" stop-color="#DAD0AE"/>
             </linearGradient>
-            <!-- Ombre vers le bas du rabat (profondeur au pli) -->
             <linearGradient id="gFlBot" x1="50%" y1="72%" x2="50%" y2="100%">
               <stop offset="0%"   stop-color="rgba(0,0,0,0)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0.18)"/>
             </linearGradient>
-            <!-- Lumière côté gauche du rabat -->
             <linearGradient id="gFlHL" x1="0%" y1="0%" x2="32%" y2="0%">
               <stop offset="0%"   stop-color="rgba(255,250,230,0.32)"/>
               <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
             </linearGradient>
-            <!-- Ombre sous le bord haut (épaisseur de l'enveloppe) -->
             <linearGradient id="gFlTop" x1="50%" y1="0%" x2="50%" y2="100%">
               <stop offset="0%"   stop-color="rgba(0,0,0,0.10)"/>
               <stop offset="8%"   stop-color="rgba(0,0,0,0)"/>
             </linearGradient>
           </defs>
 
-          <!-- Corps du rabat -->
+          <!-- Corps du rabat (fond ivoire) -->
           <polygon points="0,0 700,0 350,420" fill="url(#gFlMain)"/>
-          <!-- Ombre de pli en bas -->
-          <polygon points="0,0 700,0 350,420" fill="url(#gFlBot)"/>
-          <!-- Reflet côté gauche -->
-          <polygon points="0,0 700,0 350,420" fill="url(#gFlHL)"/>
-          <!-- Ombre en haut (épaisseur) -->
-          <polygon points="0,0 700,0 350,420" fill="url(#gFlTop)"/>
 
-          <!-- Pliure gauche : ombre + reflet -->
+          <!-- ═══ Motifs floraux embossés sur le rabat ═══ -->
+          <!-- Rose haut-gauche -->
+          <g transform="translate(80,62)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(72)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(144)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(216)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(288)"/>
+            <circle r="4.5"/>
+          </g>
+          <!-- Rameau gauche (dans triangle) -->
+          <g transform="translate(242,34)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-22" width="2.8" height="42" rx="1.4"/>
+            <path d="M0,-8 Q-13,-8 -11,-17 Q-4,-11 0,-8 Z"/>
+            <path d="M0,-8 Q13,-8 11,-17 Q4,-11 0,-8 Z"/>
+            <path d="M0,4 Q-11,5 -9,-3 Q-3,0 0,4 Z"/>
+            <path d="M0,4 Q11,5 9,-3 Q3,0 0,4 Z"/>
+            <ellipse cx="0" cy="-24" rx="3.5" ry="5.5"/>
+          </g>
+          <!-- Petit bouton centre-haut -->
+          <g transform="translate(350,68)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.2" y="-14" width="2.4" height="26" rx="1.2"/>
+            <path d="M0,-26 C-7,-21 -7,-12 0,-10 C7,-12 7,-21 0,-26 Z"/>
+            <path d="M0,-12 Q-7,-10 -6,-5 Q-2,-8 0,-12 Z"/>
+            <path d="M0,-12 Q7,-10 6,-5 Q2,-8 0,-12 Z"/>
+          </g>
+          <!-- Rameau droit -->
+          <g transform="translate(458,34)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-22" width="2.8" height="42" rx="1.4"/>
+            <path d="M0,-8 Q-13,-8 -11,-17 Q-4,-11 0,-8 Z"/>
+            <path d="M0,-8 Q13,-8 11,-17 Q4,-11 0,-8 Z"/>
+            <path d="M0,4 Q-11,5 -9,-3 Q-3,0 0,4 Z"/>
+            <path d="M0,4 Q11,5 9,-3 Q3,0 0,4 Z"/>
+            <ellipse cx="0" cy="-24" rx="3.5" ry="5.5"/>
+          </g>
+          <!-- Rose haut-droit -->
+          <g transform="translate(620,62)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(72)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(144)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(216)"/>
+            <path d="M0,-4 C5,-11 7,-20 0,-23 C-7,-20 -5,-11 0,-4 Z" transform="rotate(288)"/>
+            <circle r="4.5"/>
+          </g>
+          <!-- Bouton milieu-gauche -->
+          <g transform="translate(118,178)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.3" y="-18" width="2.6" height="34" rx="1.3"/>
+            <path d="M0,-34 C-9,-28 -9,-16 0,-14 C9,-16 9,-28 0,-34 Z"/>
+            <path d="M0,-16 Q-9,-14 -8,-7 Q-2,-11 0,-16 Z"/>
+            <path d="M0,-16 Q9,-14 8,-7 Q2,-11 0,-16 Z"/>
+            <path d="M0,6 Q-10,8 -9,15 Q-2,11 0,6 Z"/>
+            <path d="M0,6 Q10,8 9,15 Q2,11 0,6 Z"/>
+          </g>
+          <!-- Fleur milieu-droit -->
+          <g transform="translate(582,178)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(72)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(144)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(216)"/>
+            <ellipse cx="0" cy="-11" rx="5" ry="8" transform="rotate(288)"/>
+            <circle r="4"/>
+          </g>
+          <!-- Rameau bas-gauche (vers pointe) -->
+          <g transform="translate(188,278)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-20" width="2.8" height="38" rx="1.4"/>
+            <path d="M0,-7 Q-12,-7 -10,-15 Q-4,-10 0,-7 Z"/>
+            <path d="M0,-7 Q12,-7 10,-15 Q4,-10 0,-7 Z"/>
+            <path d="M0,5 Q-10,6 -8,-2 Q-3,1 0,5 Z"/>
+            <path d="M0,5 Q10,6 8,-2 Q3,1 0,5 Z"/>
+            <ellipse cx="0" cy="-22" rx="3.2" ry="5"/>
+          </g>
+          <!-- Rameau bas-droit (vers pointe) -->
+          <g transform="translate(512,278)" filter="url(#fEmbF)" fill="rgba(125,102,58,0.92)">
+            <rect x="-1.4" y="-20" width="2.8" height="38" rx="1.4"/>
+            <path d="M0,-7 Q-12,-7 -10,-15 Q-4,-10 0,-7 Z"/>
+            <path d="M0,-7 Q12,-7 10,-15 Q4,-10 0,-7 Z"/>
+            <path d="M0,5 Q-10,6 -8,-2 Q-3,1 0,5 Z"/>
+            <path d="M0,5 Q10,6 8,-2 Q3,1 0,5 Z"/>
+            <ellipse cx="0" cy="-22" rx="3.2" ry="5"/>
+          </g>
+          <!-- ═══ Fin motifs floraux ═══ -->
+
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlBot)"/>
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlHL)"/>
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlTop)"/>
           <line x1="0" y1="0" x2="350" y2="420" stroke="rgba(108,86,48,0.36)" stroke-width="1.5"/>
           <line x1="1.4" y1="0" x2="351.4" y2="420" stroke="rgba(255,246,220,0.48)" stroke-width="0.7"/>
-          <!-- Pliure droite -->
           <line x1="700" y1="0" x2="350" y2="420" stroke="rgba(108,86,48,0.36)" stroke-width="1.5"/>
           <line x1="698.6" y1="0" x2="348.6" y2="420" stroke="rgba(255,246,220,0.48)" stroke-width="0.7"/>
-
-          <!-- Bord haut de l'enveloppe (ombre épaisseur) -->
           <rect x="0" y="0" width="700" height="10" fill="rgba(0,0,0,0.08)"/>
         </svg>
 
@@ -878,6 +1064,6 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=7"></script>
+  <script src="js/main.js?v=8"></script>
 </body>
 </html>
