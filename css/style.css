@@ -1858,3 +1858,27 @@ ul { list-style: none; }
   .env-card { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
   .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
 }
+
+/* Portrait mobile — gros plan photographique sur l'enveloppe
+   SVG passe en xMidYMid slice via JS: sceau et pliures restent centrés,
+   effet photo proche du luxe (proportions jamais distordues)  */
+@media (orientation: portrait) and (max-width: 900px) {
+  /* Seal plus grand — élément central sur mobile */
+  .env-seal {
+    width:  clamp(100px, 30vw, 160px);
+    height: clamp(100px, 30vw, 160px);
+    bottom: -18%;
+  }
+  /* Hint légèrement plus haut pour rester visible */
+  .env-hint-text {
+    bottom: 4%;
+    font-size: clamp(0.54rem, 2.8vw, 0.68rem);
+  }
+  /* Card encore plus grande sur portrait */
+  .env-card {
+    width: 98vw;
+    max-width: 98vw;
+    min-height: 90vh;
+  }
+}
+}
