@@ -13,14 +13,12 @@
   let musicTimer = null;
   let musicPlaying = false;
 
-  /* Canon in D — D major chord tones used for bass + melody */
   const NOTE = {
     D3:146.83, A3:220.00, B3:246.94, Fs3:185.00, G3:196.00,
     D4:293.66, E4:329.63, Fs4:369.99, G4:392.00, A4:440.00,
     B4:493.88, Cs5:554.37, D5:587.33, E5:659.25, Fs5:739.99
   };
 
-  /* Piano-like oscillator tone */
   function pianoNote(ctx, masterGain, freq, startT, dur, vel = 0.45) {
     if (!freq) return;
     const osc1  = ctx.createOscillator();
@@ -48,30 +46,26 @@
     [osc1, osc2, osc3].forEach(o => { o.start(startT); o.stop(startT + dur + 0.05); });
   }
 
-  /* Chord = play multiple notes together */
   function chord(ctx, mg, notes, t, dur, vel) {
     notes.forEach(f => pianoNote(ctx, mg, f, t, dur, vel));
   }
 
-  /* Schedule the Canon in D loop */
   function scheduleMusic(ctx, masterGain) {
-    const bpm  = 58;          /* slow, romantic tempo */
-    const beat = 60 / bpm;   /* seconds per beat */
+    const bpm  = 58;
+    const beat = 60 / bpm;
     const bar  = beat * 4;
 
-    /* Chord progression: D  A  Bm  F#m  G  D  G  A */
     const chords = [
-      [NOTE.D3, NOTE.Fs4, NOTE.A4],    /* D  */
-      [NOTE.A3, NOTE.E4,  NOTE.A4],    /* A  */
-      [NOTE.B3, NOTE.D4,  NOTE.Fs4],   /* Bm */
-      [NOTE.Fs3,NOTE.Cs5, NOTE.Fs4],   /* F#m */
-      [NOTE.G3, NOTE.D4,  NOTE.G4],    /* G  */
-      [NOTE.D3, NOTE.Fs4, NOTE.A4],    /* D  */
-      [NOTE.G3, NOTE.D4,  NOTE.B4],    /* G  */
-      [NOTE.A3, NOTE.E4,  NOTE.A4],    /* A  */
+      [NOTE.D3, NOTE.Fs4, NOTE.A4],
+      [NOTE.A3, NOTE.E4,  NOTE.A4],
+      [NOTE.B3, NOTE.D4,  NOTE.Fs4],
+      [NOTE.Fs3,NOTE.Cs5, NOTE.Fs4],
+      [NOTE.G3, NOTE.D4,  NOTE.G4],
+      [NOTE.D3, NOTE.Fs4, NOTE.A4],
+      [NOTE.G3, NOTE.D4,  NOTE.B4],
+      [NOTE.A3, NOTE.E4,  NOTE.A4],
     ];
 
-    /* Simple melody (half-bar notes over each chord) */
     const melody = [
       [NOTE.Fs5, NOTE.E5],
       [NOTE.D5,  NOTE.Cs5],
@@ -90,15 +84,12 @@
       const ci = barIndex % chords.length;
       const t0 = t + barIndex * bar;
 
-      /* Bass chord on beat 1 */
       chord(ctx, masterGain, chords[ci], t0, bar * 0.9, 0.28);
 
-      /* Melody: two notes per bar (half-beat each) */
       melody[ci].forEach((mf, mi) => {
         pianoNote(ctx, masterGain, mf, t0 + mi * beat * 2, beat * 1.8, 0.22);
       });
 
-      /* Schedule next bar 1 bar ahead */
       const delay = (t0 + bar - ctx.currentTime - 0.2) * 1000;
       musicTimer = setTimeout(() => scheduleBar(barIndex + 1), Math.max(0, delay));
     }
@@ -134,59 +125,136 @@
     const intro   = document.getElementById('envelopeIntro');
     if (!intro) return;
 
-    const seal    = document.getElementById('envSeal');
     const skipBtn = document.getElementById('envSkip');
     const hint    = document.getElementById('envHint');
+    const seal    = document.getElementById('envSeal');
+    const flap    = document.getElementById('envFlap');
+    const wrapper = document.getElementById('envWrapper');
+    const card    = document.getElementById('envCard');
 
     let opened = false;
+    document.body.style.overflow = 'hidden';
 
-    function dismissEnvelope() {
-      /* L'enveloppe glisse vers le haut — comme on retire une lettre */
-      intro.style.transition = 'transform 1.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease 0.8s';
-      intro.style.transform  = 'translateY(-110%)';
-      intro.style.opacity    = '0';
-      intro.style.pointerEvents = 'none';
+    /* GSAP: set initial card position — inside the envelope, invisible */
+    if (typeof gsap !== 'undefined' && card) {
+      gsap.set(card, { xPercent: -50, yPercent: 30, opacity: 0 });
+    }
 
-      setTimeout(() => {
-        if (intro.parentNode) intro.parentNode.removeChild(intro);
+    function skip() {
+      stopMusic();
+      if (typeof gsap !== 'undefined') {
+        gsap.to(intro, {
+          opacity: 0, duration: 0.4,
+          onComplete: () => { intro.remove(); document.body.style.overflow = ''; }
+        });
+      } else {
+        intro.remove();
         document.body.style.overflow = '';
-      }, 1200);
+      }
     }
 
     function openEnvelope() {
       if (opened) return;
       opened = true;
-
       startMusic();
+      if (hint) gsap.to(hint, { opacity: 0, duration: 0.25 });
 
-      /* 1. Le cachet se brise (animation CSS .opening) */
-      intro.classList.add('opening');
-      if (hint) hint.style.opacity = '0';
+      if (typeof gsap === 'undefined') {
+        intro.style.transition = 'transform 1s ease-in, opacity 0.8s ease 0.3s';
+        intro.style.transform  = 'translateY(-110%)';
+        intro.style.opacity    = '0';
+        setTimeout(() => { intro.remove(); document.body.style.overflow = ''; }, 1100);
+        return;
+      }
 
-      /* 2. Après la fissure du cachet (0.5s), l'enveloppe monte */
-      setTimeout(() => dismissEnvelope(), 550);
+      const tl = gsap.timeline();
+
+      /* 1 — Sceau se fissure et disparaît */
+      tl.to(seal, {
+        scale: 1.14,
+        filter: 'brightness(1.9) saturate(1.4)',
+        duration: 0.18,
+        ease: 'power2.out'
+      })
+      .to(seal, {
+        scale: 0.1,
+        opacity: 0,
+        rotation: 30,
+        filter: 'brightness(4) saturate(0)',
+        duration: 0.28,
+        ease: 'back.in(2.5)'
+      });
+
+      /* 2 — Rabat s'ouvre vers l'arrière (3D) */
+      tl.set(flap, { transformPerspective: 1400 })
+        .to(flap, {
+          rotateX: 175,
+          duration: 1.2,
+          ease: 'power2.inOut',
+          transformOrigin: 'top center'
+        }, '-=0.05');
+
+      /* 3 — Carte sort de l'enveloppe */
+      tl.to(card, {
+        yPercent: -110,
+        opacity: 1,
+        duration: 1.0,
+        ease: 'power3.out'
+      }, '-=0.9');
+
+      /* 4 — Enveloppe disparaît */
+      tl.to(wrapper, {
+        opacity: 0,
+        y: 25,
+        duration: 0.5,
+        ease: 'power2.in'
+      }, '+=0.05');
+
+      /* 5 — Carte se centre à l'écran */
+      tl.to(card, {
+        yPercent: -50,
+        duration: 0.55,
+        ease: 'power2.out'
+      }, '-=0.25');
+
+      /* 6 — Texte de la carte apparaît en cascade */
+      tl.to('.env-card-eyebrow, .env-card-names, .env-card-rule, .env-card-date, .env-card-venue, .env-card-cta', {
+        opacity: 1,
+        stagger: 0.1,
+        duration: 0.38,
+        ease: 'power2.out'
+      }, '-=0.1');
+
+      /* 7 — Bouton "Découvrir le site" + CTA actif */
+      tl.add(() => {
+        const cta = document.getElementById('envCardCta');
+        if (cta) cta.classList.add('active');
+
+        const discBtn = document.createElement('button');
+        discBtn.textContent = 'Découvrir le site';
+        discBtn.className   = 'env-discover-btn';
+        card.querySelector('.env-card-content')?.appendChild(discBtn);
+
+        gsap.fromTo(discBtn, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, delay: 0.1 });
+
+        discBtn.addEventListener('click', () => {
+          gsap.to(intro, {
+            opacity: 0, duration: 0.55, ease: 'power2.in',
+            onComplete: () => { intro.remove(); document.body.style.overflow = ''; }
+          });
+        });
+      });
     }
 
-    /* Click anywhere on intro to open */
-    intro.addEventListener('click', () => { if (!opened) openEnvelope(); });
+    seal?.addEventListener('click',    e => { e.stopPropagation(); if (!opened) openEnvelope(); });
+    wrapper?.addEventListener('click', ()  => { if (!opened) openEnvelope(); });
+    skipBtn?.addEventListener('click', e  => { e.stopPropagation(); skip(); });
 
-    /* Skip button */
-    skipBtn?.addEventListener('click', e => {
-      e.stopPropagation();
-      stopMusic();
-      intro.remove();
-      document.body.style.overflow = '';
-    });
-
-    /* Keyboard: Space / Enter opens, Escape skips */
     document.addEventListener('keydown', e => {
       if (!document.getElementById('envelopeIntro')) return;
       if ((e.key === ' ' || e.key === 'Enter') && !opened) openEnvelope();
-      if (e.key === 'Escape') { stopMusic(); intro.remove(); document.body.style.overflow = ''; }
+      if (e.key === 'Escape') skip();
     });
-
-    /* Prevent body scroll while intro visible */
-    document.body.style.overflow = 'hidden';
   }
 
   if (document.readyState === 'loading') {

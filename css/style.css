@@ -1578,245 +1578,266 @@ ul { list-style: none; }
 
 
 /* =============================================
-   ENVELOPE INTRO — REALISTIC WAX SEAL
+   ENVELOPE INTRO — PREMIUM
    ============================================= */
 
-/* ── Paper background (enveloppe blanche texturée) ── */
 .env-intro {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: #F4F0E8;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65 0.55' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 80% 80% at center, rgba(255,255,255,0.35) 0%, rgba(200,185,155,0.18) 100%);
   overflow: hidden;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
   user-select: none;
-  box-shadow: inset 0 0 120px rgba(60,40,15,0.18);
 }
 
-/* Defs SVG cachées */
-.env-svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-
-/* ── Lignes de pli SVG ── */
-.env-fold-svg {
+/* Fond sombre élégant */
+.env-bg {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  background: radial-gradient(ellipse at 42% 45%, #1e1208 0%, #0d0705 45%, #060302 100%);
   pointer-events: none;
-  z-index: 3;
 }
 
-/* ── Zones triangulaires (teintes légèrement différentes = vrais plis d'enveloppe) ── */
-.env-tri { position: absolute; inset: 0; pointer-events: none; }
-.env-tri-top    { clip-path: polygon(0 0,100% 0,50% 50%);     background: rgba(248,244,236,0.55); z-index: 2; }
-.env-tri-left   { clip-path: polygon(0 0,0 100%,50% 50%);     background: rgba(232,226,215,0.48); z-index: 2; }
-.env-tri-right  { clip-path: polygon(100% 0,100% 100%,50% 50%); background: rgba(228,222,210,0.48); z-index: 2; }
-.env-tri-bottom { clip-path: polygon(0 100%,100% 100%,50% 50%); background: rgba(222,215,202,0.52); z-index: 2; }
-
-/* ── Rabat supérieur animé ── */
-.env-flap-anim {
+/* Bokeh */
+.env-bokeh {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 51%;           /* légèrement > 50% pour couvrir la ligne de pli */
-  z-index: 20;
-  /* La perspective doit être sur le parent, point de fuite au centre-bas */
-  perspective: 1100px;
-  perspective-origin: 50% 100%;
+  border-radius: 50%;
   pointer-events: none;
+  filter: blur(55px);
 }
-.env-flap-surface {
-  width: 100%;
-  height: 100%;
-  background: #EBEBDF;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8 0.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  /* CORRECTION PRINCIPALE : pivot au BAS du rabat = ligne de pli au centre de l'écran */
-  transform-origin: bottom center;
-  transform-style: preserve-3d;
-  backface-visibility: visible;  /* visible = on voit le dos du rabat pendant l'ouverture */
-  will-change: transform;
+.env-bokeh-1 { width: 320px; height: 320px; top: -8%;   left: -6%;  background: rgba(185,125,28,0.09); animation: bokehDrift 15s ease-in-out infinite; }
+.env-bokeh-2 { width: 240px; height: 240px; top: 15%;   right: 4%;  background: rgba(165,25,18,0.08);  animation: bokehDrift 19s ease-in-out infinite 3.5s; }
+.env-bokeh-3 { width: 280px; height: 280px; bottom: 8%; left: 12%;  background: rgba(195,155,55,0.07); animation: bokehDrift 23s ease-in-out infinite 7s; }
+.env-bokeh-4 { width: 200px; height: 200px; top: 8%;    left: 38%;  background: rgba(145,22,12,0.08);  animation: bokehDrift 17s ease-in-out infinite 2s; }
+.env-bokeh-5 { width: 260px; height: 260px; bottom: 4%; right: 8%;  background: rgba(185,140,38,0.07); animation: bokehDrift 21s ease-in-out infinite 10s; }
+@keyframes bokehDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(28px,-18px) scale(1.08); }
+  66%     { transform: translate(-18px,14px) scale(0.94); }
+}
+
+/* L'enveloppe */
+.env-wrapper {
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(60,40,10,0.14);
+  width: min(580px, 92vw);
+  aspect-ratio: 3 / 2;
+  cursor: pointer;
+  filter: drop-shadow(0 28px 55px rgba(0,0,0,0.65)) drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+  z-index: 5;
 }
-.env-flap-fold {
+
+/* Corps */
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: #F0EAD8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62 0.52' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.075'/%3E%3C/svg%3E");
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.env-folds {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 2;
 }
 
-/* ── Intérieur enveloppe ── */
-.env-inside {
+/* Rabat */
+.env-flap {
   position: absolute;
-  top: 0; left: 50%;
-  width: 58%;
-  height: 52%;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, #FDFAF4 0%, #F6F0E5 100%);
-  z-index: 4;
-  pointer-events: none;
-  opacity: 0;
-  box-shadow: inset 0 -3px 12px rgba(80,55,20,0.1);
-  transition: opacity 0.45s ease 0.65s;
-}
-.env-intro.opening .env-inside { opacity: 1; }
-
-/* ══════════════════════════════════════
-   CACHET DE CIRE SVG — RÉALISTE
-   ══════════════════════════════════════ */
-.env-seal-svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -52%);
-  width: clamp(300px, 65vh, 740px);
-  height: clamp(300px, 65vh, 740px);
-  z-index: 30;
+  top: 0; left: 0;
+  width: 100%;
+  height: 57%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  z-index: 10;
   cursor: pointer;
-  overflow: visible;
 }
 
-/* Anneau de pulsation animé */
+.env-flap-shape {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+/* Sceau */
+.env-seal {
+  position: absolute;
+  bottom: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(88px, 16vw, 150px);
+  height: clamp(88px, 16vw, 150px);
+  overflow: visible;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 14px rgba(80,0,0,0.48));
+  z-index: 20;
+}
+
 .env-seal-pulse {
   transform-origin: 200px 200px;
   animation: sealPulse 2.4s ease-in-out infinite;
 }
 @keyframes sealPulse {
-  0%, 100% { transform: scale(1);    opacity: 0.55; }
-  50%       { transform: scale(1.1); opacity: 0; }
+  0%,100% { transform: scale(1);    opacity: 0.48; }
+  50%     { transform: scale(1.09); opacity: 0; }
 }
 
-/* Hover: légère augmentation */
-.env-seal-svg:hover {
-  filter: brightness(1.06);
-}
-
-/* ── Chérubin vintage ── */
-.env-cherub-svg {
-  position: absolute;
-  top: calc(50% - clamp(180px, 28vh, 330px));
-  left: calc(50% + clamp(100px, 20vh, 260px));
-  width: clamp(100px, 14vw, 185px);
-  height: auto;
-  pointer-events: none;
-  z-index: 25;
-  animation: cherubFloat 4.5s ease-in-out infinite;
-  opacity: 0.9;
-}
-@keyframes cherubFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-9px) rotate(1.5deg); }
-}
-
-/* ── Texte bas ── */
-.env-bottom-text {
-  position: absolute;
-  bottom: clamp(2rem, 6.5vh, 5rem);
+/* Carte d'invitation */
+.env-card {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  z-index: 60;
+  width: min(480px, 90vw);
+  background: linear-gradient(155deg, #FFFDF9 0%, #FAF5EB 60%, #F5EDD8 100%);
+  border: 1px solid rgba(195,165,95,0.22);
+  border-radius: 3px;
+  padding: clamp(1.8rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
   text-align: center;
-  z-index: 25;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.12), inset 0 0 40px rgba(200,180,130,0.06);
   pointer-events: none;
-  width: 100%;
-  transition: opacity 0.4s ease;
+  opacity: 0;
 }
-.env-tagline {
-  font-family: var(--ff-script);
-  font-size: clamp(1.7rem, 4.5vw, 3.2rem);
-  color: #4A3318;
-  text-shadow: 0 1px 4px rgba(255,248,235,0.8), 0 2px 8px rgba(80,50,15,0.12);
-  line-height: 1.25;
+.env-card::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border: 1px solid rgba(185,152,80,0.12);
+  border-radius: 2px;
+  pointer-events: none;
 }
-.env-hint {
+.env-card-content { position: relative; z-index: 1; }
+
+.env-card-eyebrow {
   font-family: var(--ff-sans);
-  font-size: clamp(0.58rem, 1vw, 0.7rem);
-  letter-spacing: 0.24em;
+  font-size: clamp(0.52rem, 1.1vw, 0.62rem);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(70,48,20,0.52);
-  margin-top: 0.85rem;
-  animation: hintFade 2.8s ease-in-out infinite;
+  color: rgba(110,82,38,0.65);
+  margin-bottom: 1rem;
+  opacity: 0;
 }
-@keyframes hintFade {
-  0%, 100% { opacity: 0.42; }
-  50%       { opacity: 0.9; }
+.env-card-names {
+  font-family: var(--ff-script);
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  color: #2A1608;
+  margin: 0 0 0.6rem;
+  line-height: 1.15;
+  opacity: 0;
+}
+.env-amp { color: var(--gold-dark); }
+.env-card-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--gold-dark);
+  font-size: 0.6rem;
+  margin: 0.6rem 0 1rem;
+  opacity: 0;
+}
+.env-card-rule span {
+  flex: 1;
+  height: 1px;
+  max-width: 80px;
+  background: linear-gradient(to right, transparent, rgba(185,148,65,0.6), transparent);
+}
+.env-card-date {
+  font-family: var(--ff-serif);
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-style: italic;
+  color: #3E2410;
+  margin-bottom: 0.35rem;
+  opacity: 0;
+}
+.env-card-venue {
+  font-family: var(--ff-sans);
+  font-size: clamp(0.58rem, 1.2vw, 0.7rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(72,50,22,0.68);
+  margin-bottom: 1.6rem;
+  opacity: 0;
+}
+.env-card-cta {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  border: 1.5px solid var(--gold-dark);
+  color: var(--gold-dark);
+  font-family: var(--ff-sans);
+  font-size: clamp(0.58rem, 1.2vw, 0.68rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.env-card-cta:hover  { background: var(--gold-dark); color: #fff; }
+.env-card-cta.active { pointer-events: auto; }
+
+.env-discover-btn {
+  display: block;
+  margin: 1.1rem auto 0;
+  background: none;
+  border: none;
+  font-family: var(--ff-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(110,82,38,0.52);
+  cursor: pointer;
+  padding: 0.4rem;
+  transition: color 0.3s;
+}
+.env-discover-btn:hover { color: rgba(110,82,38,0.88); }
+
+/* Hint text */
+.env-hint-text {
+  font-family: var(--ff-sans);
+  font-size: clamp(0.58rem, 1.2vw, 0.7rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(215,195,155,0.5);
+  animation: hintPulse 2.5s ease-in-out infinite;
+  z-index: 5;
+  pointer-events: none;
+}
+@keyframes hintPulse {
+  0%,100% { opacity: 0.5; }
+  50%     { opacity: 0.88; }
 }
 
-/* ── Skip (SALTAR) ── */
+/* Skip */
 .env-skip-btn {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2rem;
+  position: fixed;
+  bottom: 1.4rem;
+  right: 1.8rem;
   font-family: var(--ff-sans);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(70,48,20,0.42);
+  color: rgba(215,195,155,0.32);
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 99;
+  z-index: 99999;
   padding: 0.5rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s;
 }
-.env-skip-btn:hover { color: rgba(70,48,20,0.85); }
+.env-skip-btn:hover { color: rgba(215,195,155,0.75); }
 
-/* ══════════════════════════════════════
-   ANIMATIONS D'OUVERTURE
-   ══════════════════════════════════════ */
-
-/* 1. Cachet se brise et disparaît */
-.env-intro.opening .env-seal-svg {
-  animation: sealCrack 0.48s ease forwards;
-  pointer-events: none;
-}
-@keyframes sealCrack {
-  0%   { transform: translate(-50%,-52%) scale(1);    opacity: 1; filter: brightness(1); }
-  25%  { transform: translate(-50%,-52%) scale(1.18); opacity: 1; filter: brightness(1.5) saturate(1.3); }
-  55%  { transform: translate(-50%,-52%) scale(0.92); opacity: 0.6; filter: brightness(0.8); }
-  100% { transform: translate(-50%,-52%) scale(0.3);  opacity: 0; filter: brightness(2.5) saturate(0); }
-}
-
-/* 2. Rabat s'ouvre en 3D — pivot au bas = fold line au centre de l'écran */
-.env-intro.opening .env-flap-surface {
-  animation: none; /* Le glissement vers le haut remplace l'animation du rabat */
-}
-@keyframes flapOpen {
-  0%   { transform: rotateX(0deg); }
-  8%   { transform: rotateX(5deg);   }   /* légère levée vers le spectateur */
-  50%  { transform: rotateX(-90deg); }   /* à 90° = profil = disparaît brièvement */
-  100% { transform: rotateX(-180deg); }  /* complètement ouvert = rabat à plat derrière */
-}
-
-/* 3. Texte bas et chérubin s'effacent */
-.env-intro.opening .env-bottom-text,
-.env-intro.opening .env-cherub-svg { opacity: 0; transition: opacity 0.4s ease; }
-
-/* 4. Enveloppe complète disparaît → site visible */
-.env-intro.closing {
-  animation: introDismiss 0.85s cubic-bezier(0.4,0,1,1) forwards;
-  pointer-events: none;
-}
-@keyframes introDismiss {
-  0%   { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.06); }
-}
-
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  .env-seal-svg { width: clamp(250px, 70vw, 420px); height: clamp(250px, 70vw, 420px); }
-  .env-cherub-svg { top: calc(50% - clamp(120px, 22vw, 200px)); left: calc(50% + clamp(70px, 18vw, 180px)); width: clamp(80px, 16vw, 140px); }
-  .env-tagline { font-size: clamp(1.4rem, 6.5vw, 2rem); }
-  .env-bottom-text { bottom: 3.5rem; }
-}
-@media (max-width: 480px) {
-  .env-seal-svg { width: 82vw; height: 82vw; }
-  .env-cherub-svg { display: none; }
-  .env-tagline { font-size: clamp(1.3rem, 8vw, 1.8rem); }
+@media (max-width: 600px) {
+  .env-wrapper { width: 95vw; }
+  .env-seal    { width: clamp(75px, 20vw, 110px); height: clamp(75px, 20vw, 110px); }
+  .env-hint-text { display: none; }
 }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -12,215 +12,138 @@
 </head>
 <body>
 
-  <!-- ===== ENVELOPE INTRO ===== -->
+  <!-- ===== ENVELOPE INTRO — PREMIUM ===== -->
   <div id="envelopeIntro" class="env-intro">
 
-    <!-- SVG Filter Definitions (hidden, used by seal) -->
-    <svg class="env-svg-defs" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
-      <defs>
-        <!-- ① Wax organic texture: turbulence + displacement → imperfections réalistes -->
-        <filter id="fWax" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.048 0.038" numOctaves="6" seed="9" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" result="warped"/>
-          <feGaussianBlur in="warped" stdDeviation="0.6" result="soft"/>
-          <feComposite in="soft" in2="SourceGraphic" operator="in"/>
-        </filter>
+    <!-- Fond élégant sombre -->
+    <div class="env-bg" aria-hidden="true">
+      <div class="env-bokeh env-bokeh-1"></div>
+      <div class="env-bokeh env-bokeh-2"></div>
+      <div class="env-bokeh env-bokeh-3"></div>
+      <div class="env-bokeh env-bokeh-4"></div>
+      <div class="env-bokeh env-bokeh-5"></div>
+    </div>
 
-        <!-- ② Éclairage spéculaire 3D → reflet de lumière sur la cire (comme une vraie bougie) -->
-        <filter id="fLight" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="blur"/>
-          <feSpecularLighting in="blur" surfaceScale="20" specularConstant="1.15" specularExponent="28" result="spec" lighting-color="#FFCC99">
-            <fePointLight x="145" y="105" z="260"/>
-          </feSpecularLighting>
-          <feComposite in="spec" in2="SourceAlpha" operator="in" result="specM"/>
-          <feBlend in="SourceGraphic" in2="specM" mode="screen" result="lit"/>
-          <feComposite in="lit" in2="SourceGraphic" operator="in"/>
-        </filter>
+    <!-- L'enveloppe physique (visible, centrée) -->
+    <div class="env-wrapper" id="envWrapper">
 
-        <!-- ③ Ombre portée réaliste sous le cachet -->
-        <filter id="fShadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="blur"/>
-          <feOffset dx="0" dy="12" result="offset"/>
-          <feFlood flood-color="rgba(35,0,0,0.62)" result="color"/>
-          <feComposite in="color" in2="offset" operator="in" result="shadow"/>
-          <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-
-        <!-- ④ Gravure du texte dans la cire (dépression + ombre interne) -->
-        <filter id="fEngraved" x="-5%" y="-5%" width="110%" height="110%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b"/>
-          <feOffset dx="1" dy="1.5" result="off"/>
-          <feFlood flood-color="rgba(20,0,0,0.7)" result="dark"/>
-          <feComposite in="dark" in2="off" operator="in" result="shadow"/>
-          <feOffset dx="-0.5" dy="-0.5" in="SourceAlpha" result="off2"/>
-          <feFlood flood-color="rgba(255,180,130,0.25)" result="light"/>
-          <feComposite in="light" in2="off2" operator="in" result="highlight"/>
-          <feMerge>
-            <feMergeNode in="shadow"/>
-            <feMergeNode in="SourceGraphic"/>
-            <feMergeNode in="highlight"/>
-          </feMerge>
-        </filter>
-
-        <!-- Gradient couleur cire rouge (du centre illuminé vers les bords sombres) -->
-        <radialGradient id="gWax" cx="37%" cy="28%" r="70%" fx="37%" fy="28%">
-          <stop offset="0%"   stop-color="#E06050"/>
-          <stop offset="14%"  stop-color="#C92515"/>
-          <stop offset="38%"  stop-color="#A00E06"/>
-          <stop offset="65%"  stop-color="#780808"/>
-          <stop offset="88%"  stop-color="#560505"/>
-          <stop offset="100%" stop-color="#3E0303"/>
-        </radialGradient>
-
-        <!-- Gradient secondaire pour les nuances de surface -->
-        <radialGradient id="gWax2" cx="60%" cy="65%" r="55%">
-          <stop offset="0%"   stop-color="rgba(180,0,0,0.3)"/>
-          <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-        </radialGradient>
-      </defs>
-    </svg>
-
-    <!-- Skip button -->
-    <button id="envSkip" class="env-skip-btn">SALTAR</button>
-
-    <!-- Fold crease lines (double trait = clair + sombre = profondeur du pli) -->
-    <svg class="env-fold-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      <!-- Ombres des plis (côté sombre) -->
-      <line x1="0"    y1="0"   x2="50" y2="50" stroke="rgba(160,130,90,0.55)" stroke-width="0.35"/>
-      <line x1="100"  y1="0"   x2="50" y2="50" stroke="rgba(160,130,90,0.55)" stroke-width="0.35"/>
-      <line x1="0"    y1="100" x2="50" y2="50" stroke="rgba(160,130,90,0.40)" stroke-width="0.35"/>
-      <line x1="100"  y1="100" x2="50" y2="50" stroke="rgba(160,130,90,0.40)" stroke-width="0.35"/>
-      <!-- Reflets des plis (côté clair) -->
-      <line x1="0.5"  y1="0"   x2="50.25" y2="50"  stroke="rgba(255,252,245,0.9)" stroke-width="0.28"/>
-      <line x1="99.5" y1="0"   x2="49.75" y2="50"  stroke="rgba(255,252,245,0.9)" stroke-width="0.28"/>
-      <line x1="0.5"  y1="100" x2="50.25" y2="50"  stroke="rgba(255,252,245,0.7)" stroke-width="0.28"/>
-      <line x1="99.5" y1="100" x2="49.75" y2="50"  stroke="rgba(255,252,245,0.7)" stroke-width="0.28"/>
-    </svg>
-
-    <!-- Zones triangulaires ombrées (aspect enveloppe) -->
-    <div class="env-tri env-tri-top"></div>
-    <div class="env-tri env-tri-left"></div>
-    <div class="env-tri env-tri-right"></div>
-    <div class="env-tri env-tri-bottom"></div>
-
-    <!-- Rabat supérieur animé -->
-    <div class="env-flap-anim" id="envFlap">
-      <div class="env-flap-surface">
-        <svg class="env-flap-fold" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="0"    y1="0" x2="50"    y2="100" stroke="rgba(255,252,245,0.65)" stroke-width="0.32"/>
-          <line x1="100"  y1="0" x2="50"    y2="100" stroke="rgba(255,252,245,0.65)" stroke-width="0.32"/>
-          <line x1="0.55" y1="0" x2="50.28" y2="100" stroke="rgba(110,85,55,0.42)"  stroke-width="0.22"/>
-          <line x1="99.45" y1="0" x2="49.72" y2="100" stroke="rgba(110,85,55,0.42)" stroke-width="0.22"/>
+      <!-- Corps de l'enveloppe -->
+      <div class="env-body">
+        <svg class="env-folds" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0"   y1="0"   x2="300" y2="200" stroke="rgba(175,150,108,0.42)" stroke-width="1.5"/>
+          <line x1="600" y1="0"   x2="300" y2="200" stroke="rgba(175,150,108,0.42)" stroke-width="1.5"/>
+          <line x1="0"   y1="400" x2="300" y2="200" stroke="rgba(160,138,98,0.32)"  stroke-width="1.5"/>
+          <line x1="600" y1="400" x2="300" y2="200" stroke="rgba(160,138,98,0.32)"  stroke-width="1.5"/>
+          <line x1="1"   y1="0"   x2="301" y2="200" stroke="rgba(255,248,232,0.55)" stroke-width="0.7"/>
+          <line x1="599" y1="0"   x2="299" y2="200" stroke="rgba(255,248,232,0.55)" stroke-width="0.7"/>
+          <line x1="1"   y1="400" x2="301" y2="200" stroke="rgba(255,248,232,0.42)" stroke-width="0.7"/>
+          <line x1="599" y1="400" x2="299" y2="200" stroke="rgba(255,248,232,0.42)" stroke-width="0.7"/>
         </svg>
+      </div>
+
+      <!-- Rabat supérieur (s'ouvre vers l'arrière en 3D) -->
+      <div class="env-flap" id="envFlap">
+        <svg class="env-flap-shape" viewBox="0 0 600 340" preserveAspectRatio="none" aria-hidden="true">
+          <polygon points="0,0 600,0 300,340" fill="#EEE8D5"/>
+          <line x1="0"   y1="0" x2="300" y2="340" stroke="rgba(175,150,108,0.36)" stroke-width="1.4"/>
+          <line x1="600" y1="0" x2="300" y2="340" stroke="rgba(175,150,108,0.36)" stroke-width="1.4"/>
+          <line x1="1"   y1="0" x2="301" y2="340" stroke="rgba(255,248,232,0.52)" stroke-width="0.7"/>
+          <line x1="599" y1="0" x2="299" y2="340" stroke="rgba(255,248,232,0.52)" stroke-width="0.7"/>
+        </svg>
+
+        <!-- Sceau de cire -->
+        <svg class="env-seal" id="envSeal"
+             viewBox="0 0 400 400"
+             xmlns="http://www.w3.org/2000/svg"
+             role="button" tabindex="0"
+             aria-label="Cliquez pour ouvrir l'invitation">
+          <defs>
+            <filter id="fW" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.042 0.034" numOctaves="7" seed="17" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="13" xChannelSelector="R" yChannelSelector="G" result="warped"/>
+              <feGaussianBlur in="warped" stdDeviation="0.5" result="soft"/>
+              <feComposite in="soft" in2="SourceGraphic" operator="in"/>
+            </filter>
+            <filter id="fL" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+              <feSpecularLighting in="blur" surfaceScale="24" specularConstant="1.25" specularExponent="34" result="spec" lighting-color="#FFCCA0">
+                <fePointLight x="125" y="90" z="290"/>
+              </feSpecularLighting>
+              <feComposite in="spec" in2="SourceAlpha" operator="in" result="specM"/>
+              <feBlend in="SourceGraphic" in2="specM" mode="screen" result="lit"/>
+              <feComposite in="lit" in2="SourceGraphic" operator="in"/>
+            </filter>
+            <filter id="fSh" x="-35%" y="-35%" width="170%" height="170%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="blur"/>
+              <feOffset dx="0" dy="16" result="offset"/>
+              <feFlood flood-color="rgba(25,0,0,0.72)" result="color"/>
+              <feComposite in="color" in2="offset" operator="in" result="shadow"/>
+              <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="fEn" x="-5%" y="-5%" width="110%" height="110%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="b"/>
+              <feOffset dx="1.2" dy="2" in="b" result="off"/>
+              <feFlood flood-color="rgba(12,0,0,0.78)" result="dark"/>
+              <feComposite in="dark" in2="off" operator="in" result="shadow"/>
+              <feOffset dx="-0.6" dy="-0.6" in="SourceAlpha" result="off2"/>
+              <feFlood flood-color="rgba(255,195,145,0.30)" result="light"/>
+              <feComposite in="light" in2="off2" operator="in" result="hl"/>
+              <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/><feMergeNode in="hl"/></feMerge>
+            </filter>
+            <radialGradient id="gW" cx="36%" cy="26%" r="72%" fx="36%" fy="26%">
+              <stop offset="0%"   stop-color="#EB5252"/>
+              <stop offset="12%"  stop-color="#CF1C0D"/>
+              <stop offset="36%"  stop-color="#A20A03"/>
+              <stop offset="65%"  stop-color="#7A0505"/>
+              <stop offset="88%"  stop-color="#550404"/>
+              <stop offset="100%" stop-color="#3C0202"/>
+            </radialGradient>
+            <radialGradient id="gW2" cx="63%" cy="68%" r="50%">
+              <stop offset="0%"   stop-color="rgba(155,0,0,0.30)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="204" cy="394" rx="170" ry="15" fill="rgba(20,0,0,0.42)" filter="url(#fSh)"/>
+          <circle cx="200" cy="200" r="180" fill="url(#gW)"  filter="url(#fW)"/>
+          <circle cx="200" cy="200" r="180" fill="url(#gW2)" filter="url(#fW)"/>
+          <circle cx="200" cy="200" r="180" fill="url(#gW)"  filter="url(#fL)"/>
+          <circle cx="200" cy="200" r="164" fill="none" stroke="rgba(255,195,145,0.22)" stroke-width="5.5"/>
+          <circle cx="200" cy="200" r="161" fill="none" stroke="rgba(0,0,0,0.20)"       stroke-width="3.5"/>
+          <circle cx="200" cy="200" r="141" fill="none" stroke="rgba(255,178,118,0.18)" stroke-width="4"/>
+          <circle cx="200" cy="200" r="138" fill="none" stroke="rgba(0,0,0,0.16)"       stroke-width="2.5"/>
+          <text x="200" y="232"
+                text-anchor="middle"
+                font-family="'Great Vibes', cursive"
+                font-size="112" font-weight="400"
+                fill="rgba(255,215,185,0.84)"
+                filter="url(#fEn)"
+                letter-spacing="2">A&amp;Z</text>
+          <ellipse cx="143" cy="133" rx="66" ry="41" fill="rgba(255,218,178,0.13)" transform="rotate(-40,143,133)"/>
+          <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(135,28,18,0.28)" stroke-width="2.5" class="env-seal-pulse"/>
+        </svg>
+      </div><!-- /env-flap -->
+
+    </div><!-- /env-wrapper -->
+
+    <!-- Carte d'invitation (sort de l'enveloppe) -->
+    <div class="env-card" id="envCard">
+      <div class="env-card-content">
+        <p class="env-card-eyebrow">Vous êtes cordialement invité·e à célébrer</p>
+        <h2 class="env-card-names">Abdelali <span class="env-amp">&amp;</span> Zahia</h2>
+        <div class="env-card-rule"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+        <p class="env-card-date">Le 22 Juin 2026</p>
+        <p class="env-card-venue"><i class="fa-solid fa-location-dot"></i>&nbsp;ŌRA Le Domaine du Moulin Brûlé</p>
+        <a href="#rsvp" class="env-card-cta" id="envCardCta">Confirmer ma présence</a>
       </div>
     </div>
 
-    <!-- Intérieur de l'enveloppe (visible après ouverture) -->
-    <div class="env-inside" id="envInside"></div>
+    <!-- Instruction -->
+    <p class="env-hint-text" id="envHint">
+      <i class="fa-solid fa-hand-pointer"></i>&ensp;Cliquez sur le sceau pour ouvrir
+    </p>
 
-    <!-- ══════════════════════════════════════════════
-         CACHET DE CIRE — SVG RÉALISTE
-         Utilise: feTurbulence + feDisplacementMap (texture cire)
-                  feSpecularLighting + fePointLight (reflet 3D)
-                  feDropShadow (ombre portée profonde)
-    ══════════════════════════════════════════════ -->
-    <svg id="envSeal" class="env-seal-svg"
-         viewBox="0 0 400 400"
-         xmlns="http://www.w3.org/2000/svg"
-         role="button" tabindex="0"
-         aria-label="Ouvrir l'invitation">
-
-      <!-- Ombre portée sous le cachet (couche séparée pour réalisme) -->
-      <ellipse cx="204" cy="388" rx="162" ry="18"
-               fill="rgba(30,0,0,0.48)"
-               filter="url(#fShadow)"/>
-
-      <!-- ─── Corps principal de la cire ─── -->
-      <!-- Couche 1 : forme + texture organique (turbulence) -->
-      <circle cx="200" cy="200" r="178"
-              fill="url(#gWax)"
-              filter="url(#fWax)"/>
-
-      <!-- Couche 2 : nuance secondaire (profondeur de la cire fondue) -->
-      <circle cx="200" cy="200" r="178"
-              fill="url(#gWax2)"
-              filter="url(#fWax)"/>
-
-      <!-- Couche 3 : éclairage spéculaire 3D (reflet de la source lumineuse) -->
-      <circle cx="200" cy="200" r="178"
-              fill="url(#gWax)"
-              filter="url(#fLight)"/>
-
-      <!-- ─── Anneaux gravés (embossé) ─── -->
-      <!-- Anneau extérieur -->
-      <circle cx="200" cy="200" r="163"
-              fill="none"
-              stroke="rgba(255,185,130,0.22)" stroke-width="5"/>
-      <circle cx="200" cy="200" r="160"
-              fill="none"
-              stroke="rgba(0,0,0,0.22)" stroke-width="3.5"/>
-
-      <!-- Anneau intérieur -->
-      <circle cx="200" cy="200" r="140"
-              fill="none"
-              stroke="rgba(255,170,110,0.18)" stroke-width="4"/>
-      <circle cx="200" cy="200" r="137"
-              fill="none"
-              stroke="rgba(0,0,0,0.18)" stroke-width="2.5"/>
-
-      <!-- ─── Initiales gravées dans la cire ─── -->
-      <text x="200" y="228"
-            text-anchor="middle"
-            font-family="'Great Vibes', cursive"
-            font-size="108"
-            font-weight="400"
-            fill="rgba(255,210,180,0.80)"
-            filter="url(#fEngraved)"
-            letter-spacing="3">A&amp;Z</text>
-
-      <!-- ─── Reflet lumineux haut-gauche (cire brillante) ─── -->
-      <ellipse cx="148" cy="138" rx="62" ry="38"
-               fill="rgba(255,210,170,0.14)"
-               transform="rotate(-42,148,138)"/>
-
-      <!-- ─── Anneau de pulsation (CSS animation) ─── -->
-      <circle cx="200" cy="200" r="186"
-              fill="none"
-              stroke="rgba(155,35,25,0.32)"
-              stroke-width="2.5"
-              class="env-seal-pulse"/>
-    </svg>
-
-    <!-- Chérubin vintage (illustration à droite du cachet) -->
-    <svg class="env-cherub-svg" viewBox="0 0 120 145" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M30,58 C8,46 2,26 20,20 C30,27 34,42 30,58Z" fill="rgba(140,30,30,0.12)" stroke="rgba(115,22,22,0.72)" stroke-width="1.3" stroke-linejoin="round"/>
-      <path d="M20,20 C26,35 28,48 30,58 C22,46 16,34 20,20Z" fill="rgba(140,30,30,0.08)" stroke="rgba(115,22,22,0.5)" stroke-width="0.9"/>
-      <path d="M90,58 C112,46 118,26 100,20 C90,27 86,42 90,58Z" fill="rgba(140,30,30,0.12)" stroke="rgba(115,22,22,0.72)" stroke-width="1.3" stroke-linejoin="round"/>
-      <path d="M100,20 C94,35 92,48 90,58 C98,46 104,34 100,20Z" fill="rgba(140,30,30,0.08)" stroke="rgba(115,22,22,0.5)" stroke-width="0.9"/>
-      <ellipse cx="60" cy="100" rx="25" ry="32" fill="rgba(255,235,215,0.55)" stroke="rgba(115,22,22,0.7)" stroke-width="1.5"/>
-      <circle cx="60" cy="55" r="22" fill="rgba(255,235,215,0.55)" stroke="rgba(115,22,22,0.7)" stroke-width="1.5"/>
-      <path d="M39,46 Q44,32 53,37" fill="none" stroke="rgba(115,22,22,0.65)" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M67,37 Q76,32 81,46" fill="none" stroke="rgba(115,22,22,0.65)" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M43,41 Q47,31 54,35" fill="none" stroke="rgba(115,22,22,0.5)" stroke-width="0.9" stroke-linecap="round"/>
-      <circle cx="52" cy="53" r="2.2" fill="rgba(90,12,12,0.8)"/>
-      <circle cx="68" cy="53" r="2.2" fill="rgba(90,12,12,0.8)"/>
-      <path d="M52,63 Q60,69 68,63" fill="none" stroke="rgba(115,22,22,0.65)" stroke-width="1.3" stroke-linecap="round"/>
-      <ellipse cx="47" cy="59" rx="5" ry="3.5" fill="rgba(210,80,80,0.18)"/>
-      <ellipse cx="73" cy="59" rx="5" ry="3.5" fill="rgba(210,80,80,0.18)"/>
-      <path d="M38,88 Q26,78 20,70" fill="none" stroke="rgba(115,22,22,0.7)" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M82,88 Q92,80 96,72" fill="none" stroke="rgba(115,22,22,0.7)" stroke-width="1.6" stroke-linecap="round"/>
-      <rect x="5" y="62" width="24" height="17" rx="1.5" fill="rgba(255,248,232,0.92)" stroke="rgba(115,22,22,0.7)" stroke-width="1.3"/>
-      <path d="M5,62 L17,71 L29,62" fill="none" stroke="rgba(115,22,22,0.6)" stroke-width="1.1"/>
-      <path d="M13,68 Q15,65 17,68 Q19,65 21,68 Q19,71.5 17,73.5 Q15,71.5 13,68Z" fill="rgba(185,15,15,0.85)"/>
-      <path d="M48,128 Q46,136 43,140" fill="none" stroke="rgba(115,22,22,0.65)" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M72,128 Q74,136 77,140" fill="none" stroke="rgba(115,22,22,0.65)" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="60" cy="106" r="1.2" fill="none" stroke="rgba(115,22,22,0.38)" stroke-width="0.8"/>
-    </svg>
-
-    <!-- Texte bas -->
-    <div class="env-bottom-text">
-      <p class="env-hint" id="envHint">Cliquez pour ouvrir</p>
-    </div>
+    <!-- Bouton passer -->
+    <button id="envSkip" class="env-skip-btn">PASSER</button>
 
   </div>
   <!-- END ENVELOPE INTRO -->
@@ -805,6 +728,7 @@
     <i class="fa-solid fa-chevron-up"></i>
   </button>
 
-  <script src="js/main.js?v=2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
