@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=16" />
+  <link rel="stylesheet" href="css/style.css?v=17" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -18,8 +18,99 @@
     <!-- Photo plein écran — fond photoréaliste de l'enveloppe -->
     <img class="env-photo" id="envPhoto" src="images/image_envloppe.png" alt="" aria-hidden="true" draggable="false">
 
-    <!-- Rabat animé — même texture que la photo, clip-path triangle, rotateX 3D -->
-    <div class="env-flap" id="envFlap" aria-hidden="true"></div>
+    <!-- Rabat animé — même texture photo + motifs floraux embossés, clip-path triangle -->
+    <div class="env-flap" id="envFlap" aria-hidden="true">
+      <!-- Motifs embossés sur le rabat (même filtre feSpecularLighting que le corps) -->
+      <svg class="env-flap-florals" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <filter id="fEmbFlap" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3.8" result="hm"/>
+            <feOffset dx="3.0" dy="4.5" in="hm" result="shO"/>
+            <feFlood flood-color="rgba(100,68,25,0.62)" result="shC"/>
+            <feComposite in="shC" in2="shO" operator="in" result="shadow"/>
+            <feSpecularLighting in="hm" surfaceScale="18" specularConstant="1.3" specularExponent="25"
+                lighting-color="rgba(255,252,236,1)" result="spec">
+              <feDistantLight azimuth="135" elevation="38"/>
+            </feSpecularLighting>
+            <feComposite in="spec" in2="SourceAlpha" operator="in" result="specM"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="specM"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Rose double-couronne haut-gauche -->
+        <g transform="translate(145,100) scale(1.8)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(72)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(144)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(216)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(288)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(36)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(108)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(180)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(252)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(324)"/>
+          <circle r="5.5"/>
+        </g>
+
+        <!-- Marguerite 8 pétales — centre haut -->
+        <g transform="translate(500,72) scale(1.6)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(45)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(90)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(135)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(225)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(270)"/>
+          <ellipse cx="0" cy="-13" rx="2.8" ry="8.5" transform="rotate(315)"/>
+          <circle r="4.8"/>
+        </g>
+
+        <!-- Rose double-couronne haut-droit -->
+        <g transform="translate(855,100) scale(1.8)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(72)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(144)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(216)"/>
+          <path d="M0,-6 C5,-14 7,-23 0,-27 C-7,-23 -5,-14 0,-6 Z" transform="rotate(288)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(36)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(108)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(180)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(252)"/>
+          <path d="M0,-5 C3,-10 4,-18 0,-21 C-4,-18 -3,-10 0,-5 Z" transform="rotate(324)"/>
+          <circle r="5.5"/>
+        </g>
+
+        <!-- Rameau feuilles pointues — milieu gauche -->
+        <g transform="translate(345,228) scale(1.5)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <rect x="-1.3" y="-28" width="2.6" height="54" rx="1.3"/>
+          <path d="M-1,-10 C-12,-8 -14,-19 -8,-26 C-3,-21 -1,-14 -1,-10 Z"/>
+          <path d="M1,-10 C12,-8 14,-19 8,-26 C3,-21 1,-14 1,-10 Z"/>
+          <path d="M-1,3 C-10,5 -12,-5 -7,-12 C-2,-8 -1,-1 -1,3 Z"/>
+          <path d="M1,3 C10,5 12,-5 7,-12 C2,-8 1,-1 1,3 Z"/>
+          <path d="M0,-38 C-5,-32 -5,-22 0,-20 C5,-22 5,-32 0,-38 Z"/>
+        </g>
+
+        <!-- Rameau feuilles pointues — milieu droit -->
+        <g transform="translate(655,228) scale(1.5)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <rect x="-1.3" y="-28" width="2.6" height="54" rx="1.3"/>
+          <path d="M-1,-10 C-12,-8 -14,-19 -8,-26 C-3,-21 -1,-14 -1,-10 Z"/>
+          <path d="M1,-10 C12,-8 14,-19 8,-26 C3,-21 1,-14 1,-10 Z"/>
+          <path d="M-1,3 C-10,5 -12,-5 -7,-12 C-2,-8 -1,-1 -1,3 Z"/>
+          <path d="M1,3 C10,5 12,-5 7,-12 C2,-8 1,-1 1,3 Z"/>
+          <path d="M0,-38 C-5,-32 -5,-22 0,-20 C5,-22 5,-32 0,-38 Z"/>
+        </g>
+
+        <!-- Bouton anatomique — centre bas (près de la jonction) -->
+        <g transform="translate(500,348) scale(1.3)" filter="url(#fEmbFlap)" fill="rgba(195,175,142,0.90)">
+          <rect x="-1.3" y="-14" width="2.6" height="28" rx="1.3"/>
+          <path d="M0,-40 C-7,-32 -7,-20 -4,-15 C-1,-12 1,-12 4,-15 C7,-20 7,-32 0,-40 Z"/>
+          <path d="M-4,-22 C-10,-18 -11,-10 -6,-8 C-3,-12 -4,-18 -4,-22 Z"/>
+          <path d="M4,-22 C10,-18 11,-10 6,-8 C3,-12 4,-18 4,-22 Z"/>
+          <path d="M0,-16 Q-8,-14 -7,-8 Q-2,-12 0,-16 Z"/>
+          <path d="M0,-16 Q8,-14 7,-8 Q2,-12 0,-16 Z"/>
+        </g>
+      </svg>
+    </div>
 
     <!-- Sceau de cire animé (positionné à la jonction des plis de la photo) -->
     <svg class="env-seal" id="envSeal"
@@ -763,6 +854,6 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=16"></script>
+  <script src="js/main.js?v=17"></script>
 </body>
 </html>
