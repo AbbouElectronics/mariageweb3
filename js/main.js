@@ -135,9 +135,15 @@
     let opened = false;
     document.body.style.overflow = 'hidden';
 
-    /* GSAP: set initial card position — inside the envelope, invisible */
+    /* GSAP: initial states */
     if (typeof gsap !== 'undefined' && card) {
       gsap.set(card, { xPercent: -50, yPercent: 22, opacity: 0 });
+      gsap.set('.env-card-eyebrow', { opacity: 0, y: 18 });
+      gsap.set('.env-card-names',   { opacity: 0, y: 22 });
+      gsap.set('.env-card-rule',    { opacity: 0, scaleX: 0 });
+      gsap.set('.env-card-date',    { opacity: 0, y: 16 });
+      gsap.set('.env-card-venue',   { opacity: 0, y: 14 });
+      gsap.set('.env-card-cta',     { opacity: 0, y: 12 });
     }
 
     function skip() {
@@ -167,72 +173,108 @@
       }
 
       const tl = gsap.timeline();
-
-      /* 1 — Le sceau se fissure : l'enveloppe tremble, l'anneau disparaît */
       const ring = document.getElementById('envSealRing');
+
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 1 — Réaction du sceau : zoom lent + vibration réaliste
+         Durée : ~1.2s
+      ══════════════════════════════════════════════════════════════ */
       tl
-        .to(photo, { scale: 0.982, duration: 0.08, ease: 'power2.in' })
-        .to(photo, { scale: 1.012, filter: 'brightness(1.22) contrast(1.05)', duration: 0.11, ease: 'power2.out' })
-        .to(photo, { x: -5, duration: 0.042, ease: 'none' })
-        .to(photo, { x:  6, duration: 0.042, ease: 'none' })
-        .to(photo, { x: -3, duration: 0.036, ease: 'none' })
-        .to(photo, { x:  3, duration: 0.036, ease: 'none' })
-        .to(photo, { x:  0, scale: 1, filter: 'brightness(1)', duration: 0.055, ease: 'none' });
-      if (ring) tl.to(ring, { scale: 1.6, opacity: 0, duration: 0.28, ease: 'power2.out' }, '-=0.28');
+        /* Zoom doux vers le sceau */
+        .to(photo, { scale: 1.055, duration: 0.85, ease: 'power2.out' })
+        /* Légère vibration réaliste — 6 micro-mouvements irréguliers */
+        .to(photo, { x: -7,  duration: 0.07,  ease: 'none' }, '-=0.38')
+        .to(photo, { x:  9,  duration: 0.08,  ease: 'none' })
+        .to(photo, { x: -5,  duration: 0.065, ease: 'none' })
+        .to(photo, { x:  6,  duration: 0.065, ease: 'none' })
+        .to(photo, { x: -3,  duration: 0.055, ease: 'none' })
+        .to(photo, { x:  3,  duration: 0.055, ease: 'none' })
+        .to(photo, { x:  0,  duration: 0.07,  ease: 'power1.out' })
+        /* Reflet lumineux : éclair bref sur la cire */
+        .to(photo, { filter: 'brightness(1.25) contrast(1.06)', duration: 0.16 }, '-=0.5')
+        .to(photo, { filter: 'brightness(1.0)',                 duration: 0.55, ease: 'power2.out' });
 
-      /* 2 — Rabat s'ouvre en 3D (backface-visibility:hidden le masque une fois retourné) */
-      tl.set(flap, { transformPerspective: 1400 })
-        .to(flap, {
-          rotateX: 175,
-          duration: 1.2,
-          ease: 'power2.inOut',
-          transformOrigin: 'top center'
-        }, '-=0.05');
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 2 — Détachement du sceau : anneau explose vers l'extérieur
+         Durée : ~1.0s, chevauche avec fin étape 1
+      ══════════════════════════════════════════════════════════════ */
+      if (ring) {
+        tl.to(ring, { scale: 2.4, opacity: 0, duration: 1.0, ease: 'power3.out' }, '-=0.75');
+      }
+      /* Retour au zoom initial — l'enveloppe "respire" */
+      tl.to(photo, { scale: 1.0, duration: 0.80, ease: 'power2.inOut' }, '-=0.50');
 
-      /* 3 — Carte sort lentement de l'enveloppe (monte depuis l'intérieur) */
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 3 — Ouverture du rabat en 3D très lente et fluide
+         Durée : 2.4s avec décélération naturelle expo.out
+      ══════════════════════════════════════════════════════════════ */
+      tl.set(flap, { transformPerspective: 1800 });
+      tl.to(flap, {
+        rotateX: 175,
+        duration: 2.4,
+        ease: 'expo.out',
+        transformOrigin: 'top center'
+      }, '+=0.15');
+
+      /* Ombre dynamique : la lumière change lentement quand le rabat pivote */
+      tl.to(photo, { filter: 'brightness(0.88)', duration: 1.1, ease: 'power1.inOut' }, '-=2.1');
+      tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.0, ease: 'power1.out'  }, '-=0.9');
+
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 4 — La carte glisse lentement hors de l'enveloppe
+         Durée : 2.2s — comme une vraie lettre extraite à la main
+      ══════════════════════════════════════════════════════════════ */
       tl.to(card, {
-        yPercent: -62,
+        yPercent: -58,
         opacity: 1,
-        duration: 1.3,
+        duration: 2.2,
         ease: 'power2.out'
-      }, '-=0.85');
+      }, '-=1.6');
 
-      /* 4 — Photo descend doucement (flap déjà invisible via backface-visibility) */
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 5 — Photo s'efface, carte monte et se centre
+         Durée : ~2.2s
+      ══════════════════════════════════════════════════════════════ */
       tl.to(photo, {
         opacity: 0,
-        y: 55,
-        duration: 0.65,
-        ease: 'power2.in'
-      }, '-=0.45');
+        y: 45,
+        duration: 1.4,
+        ease: 'power2.inOut'
+      }, '-=0.9');
 
-      /* 5 — Carte se centre parfaitement à l'écran */
       tl.to(card, {
         yPercent: -50,
-        duration: 0.70,
-        ease: 'power2.inOut'
-      }, '-=0.30');
+        duration: 1.3,
+        ease: 'power3.out'
+      }, '-=0.8');
 
-      /* 6 — Texte de la carte apparaît en cascade */
-      tl.to('.env-card-eyebrow, .env-card-names, .env-card-rule, .env-card-date, .env-card-venue, .env-card-cta', {
-        opacity: 1,
-        stagger: 0.1,
-        duration: 0.38,
-        ease: 'power2.out'
-      }, '-=0.1');
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 6 — Texte apparaît élément par élément, lentement
+         ~1s par élément avec glissement vertical
+      ══════════════════════════════════════════════════════════════ */
+      tl.to('.env-card-eyebrow', { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.1');
+      tl.to('.env-card-names',   { opacity: 1, y: 0, duration: 1.05, ease: 'power2.out' }, '-=0.45');
+      tl.to('.env-card-rule',    { opacity: 1, scaleX: 1, duration: 0.90, ease: 'power2.out', transformOrigin: 'center' }, '-=0.5');
+      tl.to('.env-card-date',    { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.5');
+      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.5');
+      tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.90, ease: 'power2.out' }, '-=0.45');
 
-      /* 7 — Carte s'agrandit jusqu'à ~90% de l'écran (devient la page principale) */
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 7 — Carte s'élargit majestueusement (~90% écran)
+      ══════════════════════════════════════════════════════════════ */
       tl.to(card, {
         width:  () => Math.round(window.innerWidth  * 0.90),
         height: () => Math.round(window.innerHeight * 0.90),
-        duration: 0.90,
+        duration: 1.2,
         ease: 'power2.inOut',
         onComplete: () => { card.style.overflowY = 'auto'; }
-      }, '+=0.30');
+      }, '+=0.55');
 
-      /* 7b — Photo s'efface légèrement pendant l'expansion de la carte */
-      tl.to(photo, { opacity: 0, duration: 0.90 }, '<');
+      tl.to(photo, { opacity: 0, duration: 1.0 }, '<');
 
-      /* 8 — Bouton "Découvrir le site" + CTA actif */
+      /* ══════════════════════════════════════════════════════════════
+         ÉTAPE 8 — Bouton "Découvrir le site" + CTA actif
+      ══════════════════════════════════════════════════════════════ */
       tl.add(() => {
         /* Enable pointer events on the card so buttons are clickable */
         card.style.pointerEvents = 'auto';
@@ -245,7 +287,7 @@
         discBtn.className   = 'env-discover-btn';
         card.querySelector('.env-card-content')?.appendChild(discBtn);
 
-        gsap.fromTo(discBtn, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, delay: 0.1 });
+        gsap.fromTo(discBtn, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.80, ease: 'power2.out', delay: 0.2 });
 
         function dismissAll() {
           gsap.to(intro, {
