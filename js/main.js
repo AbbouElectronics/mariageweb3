@@ -231,7 +231,19 @@
         ease: 'power2.out'
       }, '-=0.1');
 
-      /* 7 — Bouton "Découvrir le site" + CTA actif */
+      /* 7 — Carte s'agrandit jusqu'à ~90% de l'écran (devient la page principale) */
+      tl.to(card, {
+        width:  () => Math.round(window.innerWidth  * 0.90),
+        height: () => Math.round(window.innerHeight * 0.90),
+        duration: 0.90,
+        ease: 'power2.inOut',
+        onComplete: () => { card.style.overflowY = 'auto'; }
+      }, '+=0.30');
+
+      /* 7b — Fond s'efface légèrement pendant l'expansion */
+      tl.to('.env-bokeh', { opacity: 0.35, duration: 0.90 }, '<');
+
+      /* 8 — Bouton "Découvrir le site" + CTA actif */
       tl.add(() => {
         /* Enable pointer events on the card so buttons are clickable */
         card.style.pointerEvents = 'auto';
