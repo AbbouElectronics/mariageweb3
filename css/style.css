@@ -1859,22 +1859,58 @@ ul { list-style: none; }
   .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
 }
 
-/* Portrait mobile — gros plan photographique sur l'enveloppe
-   SVG passe en xMidYMid slice via JS: sceau et pliures restent centrés,
-   effet photo proche du luxe (proportions jamais distordues)  */
+/* ═══ Portrait mobile ═══
+   L'enveloppe devient un OBJET PHYSIQUE POSÉ DEVANT L'UTILISATEUR.
+   Proportions 7:4 respectées, ombre luxe, fond ivoire = table photographique.
+   Plus de triangles étirés — même ressenti que la référence premium.
+   ─────────────────────────────────────────────────────────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
-  /* Seal plus grand — élément central sur mobile */
+
+  /* Intro : flex centré — l'enveloppe flotte au centre */
+  .env-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+  }
+
+  /* L'enveloppe : carte physique, proportions 7:4 préservées */
+  .env-wrapper {
+    position: relative !important;
+    inset: auto !important;
+    /* Max = 96vw ou hauteur contrainte par 58vh × ratio */
+    width: min(96vw, calc(58vh * 7 / 4));
+    aspect-ratio: 7 / 4;
+    /* Ombre luxe — fait « flotter » l'invitation au-dessus de la surface */
+    box-shadow:
+      0 32px 88px rgba(105,68,22,0.46),
+      0 12px 32px rgba(105,68,22,0.28),
+      0 3px 10px rgba(105,68,22,0.16),
+      inset 0 0 0 1px rgba(195,168,118,0.14);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* Sceau proportionnel à la carte (pas trop grand, pas trop petit) */
   .env-seal {
-    width:  clamp(100px, 30vw, 160px);
-    height: clamp(100px, 30vw, 160px);
-    bottom: -18%;
+    width:  clamp(68px, 19vw, 92px) !important;
+    height: clamp(68px, 19vw, 92px) !important;
+    bottom: -16% !important;
   }
-  /* Hint légèrement plus haut pour rester visible */
+
+  /* Hint visible sous l'enveloppe, pas positionné absolument */
   .env-hint-text {
-    bottom: 4%;
-    font-size: clamp(0.54rem, 2.8vw, 0.68rem);
+    position: relative !important;
+    bottom: auto !important;
+    left:   auto !important;
+    transform: none !important;
+    white-space: nowrap;
+    color: rgba(138,98,48,0.68);
+    font-size: clamp(0.54rem, 2.6vw, 0.68rem);
   }
-  /* Card encore plus grande sur portrait */
+
+  /* Card grand format portrait */
   .env-card {
     width: 98vw;
     max-width: 98vw;

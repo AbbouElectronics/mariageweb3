@@ -132,21 +132,6 @@
     const wrapper = document.getElementById('envWrapper');
     const card    = document.getElementById('envCard');
 
-    /* ---- Portrait/landscape SVG mode ----
-       On portrait screens: xMidYMid slice = "close-up photo" effect (proportions preserved,
-       envelope fills screen like a real photo crop — no distorted triangles).
-       On landscape: none = fills the full screen as designed.
-    --------------------------------------------------------- */
-    function updateSvgAspect() {
-      const portrait = window.innerHeight > window.innerWidth * 1.05;
-      const mode = portrait ? 'xMidYMid slice' : 'none';
-      document.querySelectorAll('.env-panels, .env-flap-shape').forEach(s => {
-        s.setAttribute('preserveAspectRatio', mode);
-      });
-    }
-    updateSvgAspect();
-    window.addEventListener('resize', updateSvgAspect);
-
     let opened = false;
     document.body.style.overflow = 'hidden';
 
