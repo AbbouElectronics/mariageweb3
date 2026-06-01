@@ -213,9 +213,8 @@
          → backface-visibility fonctionne correctement sur Safari.
       ══════════════════════════════════════════════════════════════ */
       let flapHidden = false;
-      tl.set(flap, { transformPerspective: 1800 });
       tl.to(flap, {
-        rotateX: -175,
+        rotateX: -180,
         duration: 2.4,
         ease: 'expo.out',
         transformOrigin: 'top center',

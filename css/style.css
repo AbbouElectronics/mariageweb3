@@ -1608,29 +1608,37 @@ ul { list-style: none; }
 }
 
 /* Clip wrapper : non-rotatif, porte uniquement le clip-path triangle.
-   Séparé du rabat rotatif pour que backface-visibility fonctionne sur Safari —
-   clip-path + backface-visibility sur le MÊME élément est un bug Safari connu. */
+   perspective ici (sur le PARENT) = la seule façon correcte pour Safari.
+   JAMAIS overflow:hidden ici — Safari aplatit tout transform 3D si un ancêtre
+   a overflow:hidden ou overflow:clip. */
 .env-flap-clip {
   position: absolute;
   inset: 0;
   clip-path: polygon(0 0, 100% 0, 50% 52%);
+  perspective: 1800px;
+  -webkit-perspective: 1800px;
   z-index: 10;
   pointer-events: none;
 }
 
-/* Rabat rotatif : même photo que le body. Pas de clip-path ici.
-   Le clip-path du parent clippe visuellement ; backface-visibility fonctionne
-   correctement car l'élément n'a pas de clip-path propre. */
+/* Rabat rotatif : AUCUN clip-path, AUCUN overflow:hidden.
+   transform-style:preserve-3d requis pour le rendu 3D.
+   backface-visibility:hidden fonctionne car l'élément n'a pas de clip-path propre. */
 .env-flap {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   background-image: url('../images/image_envloppe.png');
   background-size: cover;
   background-position: center;
   transform-origin: top center;
   -webkit-transform-origin: top center;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* SVG floral overlay sur le rabat */
