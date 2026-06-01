@@ -137,7 +137,7 @@
 
     /* GSAP: set initial card position — inside the envelope, invisible */
     if (typeof gsap !== 'undefined' && card) {
-      gsap.set(card, { xPercent: -50, yPercent: 30, opacity: 0 });
+      gsap.set(card, { xPercent: -50, yPercent: 22, opacity: 0 });
     }
 
     function skip() {
@@ -200,28 +200,28 @@
           transformOrigin: 'top center'
         }, '-=0.05');
 
-      /* 3 — Carte sort de l'enveloppe */
+      /* 3 — Carte sort lentement de l'enveloppe (monte depuis l'intérieur) */
       tl.to(card, {
-        yPercent: -110,
+        yPercent: -62,
         opacity: 1,
-        duration: 1.0,
-        ease: 'power3.out'
-      }, '-=0.9');
+        duration: 1.3,
+        ease: 'power2.out'
+      }, '-=0.85');
 
-      /* 4 — Enveloppe disparaît */
+      /* 4 — Enveloppe descend doucement pendant que la carte monte */
       tl.to(wrapper, {
         opacity: 0,
-        y: 25,
-        duration: 0.5,
+        y: 55,
+        duration: 0.65,
         ease: 'power2.in'
-      }, '+=0.05');
+      }, '-=0.45');
 
-      /* 5 — Carte se centre à l'écran */
+      /* 5 — Carte se centre parfaitement à l'écran */
       tl.to(card, {
         yPercent: -50,
-        duration: 0.55,
-        ease: 'power2.out'
-      }, '-=0.25');
+        duration: 0.70,
+        ease: 'power2.inOut'
+      }, '-=0.30');
 
       /* 6 — Texte de la carte apparaît en cascade */
       tl.to('.env-card-eyebrow, .env-card-names, .env-card-rule, .env-card-date, .env-card-venue, .env-card-cta', {

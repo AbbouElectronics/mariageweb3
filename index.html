@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=5" />
+  <link rel="stylesheet" href="css/style.css?v=6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -27,28 +27,105 @@
     <!-- L'enveloppe physique (visible, centrée) -->
     <div class="env-wrapper" id="envWrapper">
 
-      <!-- Corps de l'enveloppe -->
+      <!-- Corps de l'enveloppe — 3 panneaux triangulaires avec ombres de pliure -->
       <div class="env-body">
-        <svg class="env-folds" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="0"   y1="0"   x2="300" y2="200" stroke="rgba(175,150,108,0.42)" stroke-width="1.5"/>
-          <line x1="600" y1="0"   x2="300" y2="200" stroke="rgba(175,150,108,0.42)" stroke-width="1.5"/>
-          <line x1="0"   y1="400" x2="300" y2="200" stroke="rgba(160,138,98,0.32)"  stroke-width="1.5"/>
-          <line x1="600" y1="400" x2="300" y2="200" stroke="rgba(160,138,98,0.32)"  stroke-width="1.5"/>
-          <line x1="1"   y1="0"   x2="301" y2="200" stroke="rgba(255,248,232,0.55)" stroke-width="0.7"/>
-          <line x1="599" y1="0"   x2="299" y2="200" stroke="rgba(255,248,232,0.55)" stroke-width="0.7"/>
-          <line x1="1"   y1="400" x2="301" y2="200" stroke="rgba(255,248,232,0.42)" stroke-width="0.7"/>
-          <line x1="599" y1="400" x2="299" y2="200" stroke="rgba(255,248,232,0.42)" stroke-width="0.7"/>
+        <svg class="env-panels" viewBox="0 0 700 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <!-- Ombre panneau gauche (bord gauche plus sombre) -->
+            <linearGradient id="gpL" x1="0%" y1="50%" x2="58%" y2="50%">
+              <stop offset="0%"   stop-color="rgba(140,115,72,0.24)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+            <!-- Ombre panneau droit -->
+            <linearGradient id="gpR" x1="100%" y1="50%" x2="42%" y2="50%">
+              <stop offset="0%"   stop-color="rgba(125,102,62,0.22)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+            <!-- Ombre panneau bas -->
+            <linearGradient id="gpB" x1="50%" y1="100%" x2="50%" y2="58%">
+              <stop offset="0%"   stop-color="rgba(115,92,55,0.20)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+            <!-- Intérieur : papier légèrement plus clair au centre -->
+            <radialGradient id="gpInner" cx="50%" cy="48%" r="42%">
+              <stop offset="0%"   stop-color="rgba(255,252,242,0.30)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Lumière intérieure au centre (papier blanc-ivoire inside) -->
+          <rect x="0" y="0" width="700" height="400" fill="url(#gpInner)"/>
+
+          <!-- Panneaux latéraux et bas avec teintes de profondeur -->
+          <polygon points="0,0 0,400 350,200"   fill="url(#gpL)"/>
+          <polygon points="700,0 700,400 350,200" fill="url(#gpR)"/>
+          <polygon points="0,400 700,400 350,200" fill="url(#gpB)"/>
+
+          <!-- Pliures gauche : ombre + reflet lumière -->
+          <line x1="0" y1="0" x2="350" y2="200" stroke="rgba(108,86,48,0.42)" stroke-width="2.0"/>
+          <line x1="1.6" y1="0" x2="351.6" y2="200" stroke="rgba(255,246,220,0.55)" stroke-width="0.8"/>
+          <!-- Pliures droit -->
+          <line x1="700" y1="0" x2="350" y2="200" stroke="rgba(108,86,48,0.40)" stroke-width="2.0"/>
+          <line x1="698.4" y1="0" x2="348.4" y2="200" stroke="rgba(255,246,220,0.52)" stroke-width="0.8"/>
+          <!-- Pliures bas-gauche -->
+          <line x1="0" y1="400" x2="350" y2="200" stroke="rgba(100,80,44,0.34)" stroke-width="1.8"/>
+          <line x1="1.5" y1="398.5" x2="351.5" y2="198.5" stroke="rgba(255,246,220,0.42)" stroke-width="0.7"/>
+          <!-- Pliures bas-droit -->
+          <line x1="700" y1="400" x2="350" y2="200" stroke="rgba(100,80,44,0.32)" stroke-width="1.8"/>
+          <line x1="698.5" y1="398.5" x2="348.5" y2="198.5" stroke="rgba(255,246,220,0.40)" stroke-width="0.7"/>
+
+          <!-- Ombre d'épaisseur : bords extérieurs de l'enveloppe -->
+          <line x1="2" y1="2" x2="2" y2="398" stroke="rgba(0,0,0,0.10)" stroke-width="5"/>
+          <line x1="2" y1="397" x2="698" y2="397" stroke="rgba(0,0,0,0.14)" stroke-width="5"/>
+          <line x1="698" y1="2" x2="698" y2="398" stroke="rgba(0,0,0,0.07)" stroke-width="4"/>
         </svg>
       </div>
 
-      <!-- Rabat supérieur (s'ouvre vers l'arrière en 3D) -->
+      <!-- Rabat supérieur — triangle avec dégradés de profondeur (s'ouvre en 3D) -->
       <div class="env-flap" id="envFlap">
-        <svg class="env-flap-shape" viewBox="0 0 600 340" preserveAspectRatio="none" aria-hidden="true">
-          <polygon points="0,0 600,0 300,340" fill="#EEE8D5"/>
-          <line x1="0"   y1="0" x2="300" y2="340" stroke="rgba(175,150,108,0.36)" stroke-width="1.4"/>
-          <line x1="600" y1="0" x2="300" y2="340" stroke="rgba(175,150,108,0.36)" stroke-width="1.4"/>
-          <line x1="1"   y1="0" x2="301" y2="340" stroke="rgba(255,248,232,0.52)" stroke-width="0.7"/>
-          <line x1="599" y1="0" x2="299" y2="340" stroke="rgba(255,248,232,0.52)" stroke-width="0.7"/>
+        <svg class="env-flap-shape" viewBox="0 0 700 420" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <!-- Ivoire légèrement différent du corps — papier verso -->
+            <linearGradient id="gFlMain" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%"   stop-color="#EDE6CE"/>
+              <stop offset="60%"  stop-color="#E5DCC2"/>
+              <stop offset="100%" stop-color="#DAD0AE"/>
+            </linearGradient>
+            <!-- Ombre vers le bas du rabat (profondeur au pli) -->
+            <linearGradient id="gFlBot" x1="50%" y1="72%" x2="50%" y2="100%">
+              <stop offset="0%"   stop-color="rgba(0,0,0,0)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0.18)"/>
+            </linearGradient>
+            <!-- Lumière côté gauche du rabat -->
+            <linearGradient id="gFlHL" x1="0%" y1="0%" x2="32%" y2="0%">
+              <stop offset="0%"   stop-color="rgba(255,250,230,0.32)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+            <!-- Ombre sous le bord haut (épaisseur de l'enveloppe) -->
+            <linearGradient id="gFlTop" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%"   stop-color="rgba(0,0,0,0.10)"/>
+              <stop offset="8%"   stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Corps du rabat -->
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlMain)"/>
+          <!-- Ombre de pli en bas -->
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlBot)"/>
+          <!-- Reflet côté gauche -->
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlHL)"/>
+          <!-- Ombre en haut (épaisseur) -->
+          <polygon points="0,0 700,0 350,420" fill="url(#gFlTop)"/>
+
+          <!-- Pliure gauche : ombre + reflet -->
+          <line x1="0" y1="0" x2="350" y2="420" stroke="rgba(108,86,48,0.36)" stroke-width="1.5"/>
+          <line x1="1.4" y1="0" x2="351.4" y2="420" stroke="rgba(255,246,220,0.48)" stroke-width="0.7"/>
+          <!-- Pliure droite -->
+          <line x1="700" y1="0" x2="350" y2="420" stroke="rgba(108,86,48,0.36)" stroke-width="1.5"/>
+          <line x1="698.6" y1="0" x2="348.6" y2="420" stroke="rgba(255,246,220,0.48)" stroke-width="0.7"/>
+
+          <!-- Bord haut de l'enveloppe (ombre épaisseur) -->
+          <rect x="0" y="0" width="700" height="10" fill="rgba(0,0,0,0.08)"/>
         </svg>
 
         <!-- Sceau de cire -->
@@ -801,6 +878,6 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=5"></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>

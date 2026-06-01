@@ -1623,8 +1623,9 @@ ul { list-style: none; }
 /* L'enveloppe */
 .env-wrapper {
   position: relative;
-  width: min(88vw, calc(88vh * 1.5));  /* grand sur tous les écrans, toujours dans le viewport */
-  aspect-ratio: 3 / 2;
+  /* 7:4 ratio — proche enveloppe luxe. Contrainte hauteur 70vh sur 16:9 ≈ 69vw */
+  width: min(95vw, calc(70vh * 1.75));
+  aspect-ratio: 7 / 4;
   cursor: pointer;
   /* No filter here — CSS filter flattens 3D child transforms (browser limitation) */
   z-index: 5;
@@ -1634,14 +1635,36 @@ ul { list-style: none; }
 .env-body {
   position: absolute;
   inset: 0;
-  background: #F0EAD8;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62 0.52' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.075'/%3E%3C/svg%3E");
-  border-radius: 2px;
+  background: #F2EBDA;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62 0.52' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.085'/%3E%3C/svg%3E");
+  border-radius: 3px;
   overflow: hidden;
-  box-shadow: 0 28px 55px rgba(0,0,0,0.65), 0 6px 18px rgba(0,0,0,0.45);
+  /* Large shadow pour effet de volume sous l'enveloppe */
+  box-shadow:
+    0 32px 64px rgba(0,0,0,0.55),
+    0 8px 22px rgba(0,0,0,0.38),
+    inset 0 0 0 1px rgba(195,175,130,0.18);
+}
+/* Illusion d'épaisseur — bord inférieur sombre */
+.env-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.18));
+  pointer-events: none;
+}
+/* Bord gauche légèrement sombre */
+.env-body::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 5px;
+  background: linear-gradient(to right, rgba(0,0,0,0.12), transparent);
+  pointer-events: none;
 }
 
-.env-folds {
+.env-panels {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1654,7 +1677,7 @@ ul { list-style: none; }
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 57%;
+  height: 60%;
   transform-origin: top center;
   transform-style: preserve-3d;
   z-index: 10;
@@ -1691,47 +1714,55 @@ ul { list-style: none; }
   50%     { transform: scale(1.09); opacity: 0; }
 }
 
-/* Carte d'invitation */
+/* Carte d'invitation — grande, centrale, premium */
 .env-card {
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 60;
-  width: min(480px, 90vw);
-  background: linear-gradient(155deg, #FFFDF9 0%, #FAF5EB 60%, #F5EDD8 100%);
+  width: min(70vw, 900px);
+  min-height: 70vh;
+  background: linear-gradient(155deg, #FFFDF9 0%, #FAF5EB 55%, #F5EDD8 100%);
   border: 1px solid rgba(195,165,95,0.22);
   border-radius: 3px;
-  padding: clamp(1.8rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(3rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.12), inset 0 0 40px rgba(200,180,130,0.06);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.07), 0 20px 50px rgba(0,0,0,0.16), inset 0 0 60px rgba(200,180,130,0.05);
   pointer-events: none;
   opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .env-card::before {
   content: '';
   position: absolute;
-  top: 10px; left: 10px; right: 10px; bottom: 10px;
-  border: 1px solid rgba(185,152,80,0.12);
+  top: 16px; left: 16px; right: 16px; bottom: 16px;
+  border: 1px solid rgba(185,152,80,0.14);
   border-radius: 2px;
   pointer-events: none;
 }
-.env-card-content { position: relative; z-index: 1; }
+.env-card-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
 
 .env-card-eyebrow {
   font-family: var(--ff-sans);
-  font-size: clamp(0.52rem, 1.1vw, 0.62rem);
-  letter-spacing: 0.22em;
+  font-size: clamp(0.60rem, 1.3vw, 0.78rem);
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: rgba(110,82,38,0.65);
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
   opacity: 0;
 }
 .env-card-names {
   font-family: var(--ff-script);
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(3rem, 6.5vw, 5.2rem);
   color: #2A1608;
-  margin: 0 0 0.6rem;
-  line-height: 1.15;
+  margin: 0 0 0.5rem;
+  line-height: 1.12;
   opacity: 0;
 }
 .env-amp { color: var(--gold-dark); }
@@ -1739,43 +1770,43 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 1rem;
   color: var(--gold-dark);
-  font-size: 0.6rem;
-  margin: 0.6rem 0 1rem;
+  font-size: 0.65rem;
+  margin: 0.8rem 0 1.4rem;
   opacity: 0;
 }
 .env-card-rule span {
   flex: 1;
   height: 1px;
-  max-width: 80px;
+  max-width: 140px;
   background: linear-gradient(to right, transparent, rgba(185,148,65,0.6), transparent);
 }
 .env-card-date {
   font-family: var(--ff-serif);
-  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
   font-style: italic;
   color: #3E2410;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
   opacity: 0;
 }
 .env-card-venue {
   font-family: var(--ff-sans);
-  font-size: clamp(0.58rem, 1.2vw, 0.7rem);
-  letter-spacing: 0.15em;
+  font-size: clamp(0.65rem, 1.3vw, 0.82rem);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(72,50,22,0.68);
-  margin-bottom: 1.6rem;
+  margin-bottom: 2.2rem;
   opacity: 0;
 }
 .env-card-cta {
   display: inline-block;
-  padding: 0.7rem 2rem;
+  padding: 0.85rem 2.5rem;
   border: 1.5px solid var(--gold-dark);
   color: var(--gold-dark);
   font-family: var(--ff-sans);
-  font-size: clamp(0.58rem, 1.2vw, 0.68rem);
-  letter-spacing: 0.2em;
+  font-size: clamp(0.60rem, 1.2vw, 0.72rem);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
   transition: background 0.3s ease, color 0.3s ease;
@@ -1839,7 +1870,9 @@ ul { list-style: none; }
 .env-skip-btn:hover { color: rgba(215,195,155,0.75); }
 
 @media (max-width: 600px) {
-  .env-wrapper { width: 95vw; }
+  .env-wrapper { width: 96vw; }
   .env-seal    { width: clamp(90px, 22vw, 140px); height: clamp(90px, 22vw, 140px); }
   .env-hint-text { display: none; }
+  .env-card { width: 92vw; min-height: auto; padding: 2.5rem 1.8rem; }
+  .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
 }
