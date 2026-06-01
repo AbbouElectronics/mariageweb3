@@ -157,7 +157,6 @@
       if (opened) return;
       opened = true;
       startMusic();
-      if (hint) gsap.to(hint, { opacity: 0, duration: 0.25 });
 
       if (typeof gsap === 'undefined') {
         intro.style.transition = 'transform 1s ease-in, opacity 0.8s ease 0.3s';
@@ -171,17 +170,13 @@
 
       /* 1 — Le sceau se fissure : micro-tremblement puis se détache */
       tl
-        /* Légère compression initiale (pression du doigt) */
         .to(seal, { scale: 0.94, duration: 0.08, ease: 'power2.in' })
-        /* Flash de chaleur — la cire réagit */
         .to(seal, { scale: 1.06, filter: 'brightness(1.45) contrast(1.1)', duration: 0.12, ease: 'power2.out' })
-        /* Micro-tremblement : la fissure se propage */
         .to(seal, { x: -4, duration: 0.045, ease: 'none' })
         .to(seal, { x:  5, duration: 0.045, ease: 'none' })
         .to(seal, { x: -3, duration: 0.040, ease: 'none' })
         .to(seal, { x:  3, duration: 0.040, ease: 'none' })
         .to(seal, { x:  0, duration: 0.035, ease: 'none' })
-        /* Le sceau se détache et disparaît */
         .to(seal, {
           scale: 0.08,
           opacity: 0,
@@ -191,8 +186,9 @@
           ease: 'back.in(2.2)'
         });
 
-      /* 2 — Rabat s'ouvre vers l'arrière (3D) */
-      tl.set(flap, { transformPerspective: 1400 })
+      /* 2 — Rabat se matérialise puis s'ouvre en 3D */
+      tl.to(flap, { opacity: 1, duration: 0.12 })
+        .set(flap, { transformPerspective: 1400 })
         .to(flap, {
           rotateX: 175,
           duration: 1.2,

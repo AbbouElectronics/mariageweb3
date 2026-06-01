@@ -1605,16 +1605,18 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Rabat animé — triangle couvrant la partie supérieure de l'enveloppe */
+/* Rabat animé — invisible par défaut (photo montre le rabat naturel),
+   se matérialise juste avant de s'ouvrir via GSAP */
 .env-flap {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 47%;
+  height: 50%;
   transform-origin: top center;
   transform-style: preserve-3d;
   z-index: 10;
-  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .env-flap-shape {
@@ -1624,14 +1626,14 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Sceau — positionné à la jonction des plis de l'image */
+/* Sceau — centré à la jonction des plis de la photo */
 .env-seal {
   position: absolute;
-  top: 47%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(120px, 14vw, 200px);
-  height: clamp(120px, 14vw, 200px);
+  width: clamp(150px, 16vw, 230px);
+  height: clamp(150px, 16vw, 230px);
   overflow: visible;
   cursor: pointer;
   z-index: 20;
