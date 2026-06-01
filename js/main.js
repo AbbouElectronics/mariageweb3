@@ -269,7 +269,6 @@
     photo?.addEventListener('click',   e => { e.stopPropagation(); if (!opened) openEnvelope(); });
     flap?.addEventListener('click',    e => { e.stopPropagation(); if (!opened) openEnvelope(); });
     /* Catch-all: clicking anywhere on the intro (except skip) opens the envelope */
-    const intro = document.getElementById('envelopeIntro');
     intro?.addEventListener('click',   ()  => { if (!opened) openEnvelope(); });
     skipBtn?.addEventListener('click', e  => { e.stopPropagation(); skip(); });
 
