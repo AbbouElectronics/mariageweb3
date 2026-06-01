@@ -1623,7 +1623,7 @@ ul { list-style: none; }
 /* L'enveloppe */
 .env-wrapper {
   position: relative;
-  width: min(580px, 92vw);
+  width: min(88vw, calc(88vh * 1.5));  /* grand sur tous les écrans, toujours dans le viewport */
   aspect-ratio: 3 / 2;
   cursor: pointer;
   /* No filter here — CSS filter flattens 3D child transforms (browser limitation) */
@@ -1674,11 +1674,11 @@ ul { list-style: none; }
   bottom: -15%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(88px, 16vw, 150px);
-  height: clamp(88px, 16vw, 150px);
+  width: clamp(120px, 16vw, 220px);
+  height: clamp(120px, 16vw, 220px);
   overflow: visible;
   cursor: pointer;
-  filter: drop-shadow(0 6px 14px rgba(80,0,0,0.48));
+  /* Shadow handled inside SVG for organic shape matching */
   z-index: 20;
 }
 
@@ -1840,6 +1840,6 @@ ul { list-style: none; }
 
 @media (max-width: 600px) {
   .env-wrapper { width: 95vw; }
-  .env-seal    { width: clamp(75px, 20vw, 110px); height: clamp(75px, 20vw, 110px); }
+  .env-seal    { width: clamp(90px, 22vw, 140px); height: clamp(90px, 22vw, 140px); }
   .env-hint-text { display: none; }
 }
