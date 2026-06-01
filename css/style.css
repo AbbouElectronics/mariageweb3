@@ -1586,27 +1586,22 @@ ul { list-style: none; }
   inset: 0;
   z-index: 99999;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.8rem;
   user-select: none;
 }
 
-/* Fond — ambiance mariage luxe ivoire/champagne/or */
+/* Fond — papier sage-olive (enveloppe plein écran) */
 .env-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 42%, #FBF6EE 0%, #F0E6CC 32%, #E3D5B0 62%, #CFC49A 100%);
+  background: linear-gradient(148deg, #626140 0%, #76754D 35%, #6E6D45 65%, #5D5C3B 100%);
   pointer-events: none;
 }
-/* Lumière douce au centre — effet photographique */
+/* Lumière centrale douce sur papier olive */
 .env-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, rgba(255,251,235,0.65) 0%, transparent 58%);
+  background: radial-gradient(ellipse at 50% 40%, rgba(200,196,136,0.18) 0%, transparent 52%);
   pointer-events: none;
 }
 
@@ -1617,59 +1612,32 @@ ul { list-style: none; }
   pointer-events: none;
   filter: blur(62px);
 }
-.env-bokeh-1 { width: 380px; height: 380px; top: -10%;  left: -8%;  background: rgba(210,172,82,0.15);  animation: bokehDrift 15s ease-in-out infinite; }
-.env-bokeh-2 { width: 280px; height: 280px; top: 10%;   right: 3%;  background: rgba(195,155,65,0.12);  animation: bokehDrift 19s ease-in-out infinite 3.5s; }
-.env-bokeh-3 { width: 320px; height: 320px; bottom: 6%; left: 10%;  background: rgba(220,185,95,0.10);  animation: bokehDrift 23s ease-in-out infinite 7s; }
-.env-bokeh-4 { width: 240px; height: 240px; top: 5%;    left: 36%;  background: rgba(200,160,72,0.13);  animation: bokehDrift 17s ease-in-out infinite 2s; }
-.env-bokeh-5 { width: 300px; height: 300px; bottom: 3%; right: 6%;  background: rgba(215,175,85,0.11);  animation: bokehDrift 21s ease-in-out infinite 10s; }
+.env-bokeh-1 { width: 420px; height: 420px; top: -12%;  left: -10%; background: rgba(175,168,84,0.14);  animation: bokehDrift 15s ease-in-out infinite; }
+.env-bokeh-2 { width: 310px; height: 310px; top: 8%;    right: 4%;  background: rgba(158,152,68,0.11);  animation: bokehDrift 19s ease-in-out infinite 3.5s; }
+.env-bokeh-3 { width: 350px; height: 350px; bottom: 5%; left: 8%;   background: rgba(182,175,90,0.10);  animation: bokehDrift 23s ease-in-out infinite 7s; }
+.env-bokeh-4 { width: 260px; height: 260px; top: 4%;    left: 34%;  background: rgba(165,160,76,0.13);  animation: bokehDrift 17s ease-in-out infinite 2s; }
+.env-bokeh-5 { width: 330px; height: 330px; bottom: 2%; right: 5%;  background: rgba(172,166,82,0.12);  animation: bokehDrift 21s ease-in-out infinite 10s; }
 @keyframes bokehDrift {
   0%,100% { transform: translate(0,0) scale(1); }
   33%     { transform: translate(28px,-18px) scale(1.08); }
   66%     { transform: translate(-18px,14px) scale(0.94); }
 }
 
-/* L'enveloppe */
+/* L'enveloppe — plein écran, elle EST le fond */
 .env-wrapper {
-  position: relative;
-  /* 7:4 ratio — proche enveloppe luxe. Contrainte hauteur 70vh sur 16:9 ≈ 69vw */
-  width: min(95vw, calc(70vh * 1.75));
-  aspect-ratio: 7 / 4;
+  position: absolute;
+  inset: 0;
   cursor: pointer;
-  /* No filter here — CSS filter flattens 3D child transforms (browser limitation) */
   z-index: 5;
 }
 
-/* Corps */
+/* Corps — papier coton olive sage */
 .env-body {
   position: absolute;
   inset: 0;
-  background: #F2EBDA;
+  background: #79784E;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62 0.52' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.085'/%3E%3C/svg%3E");
-  border-radius: 3px;
   overflow: hidden;
-  /* Large shadow pour effet de volume sous l'enveloppe */
-  box-shadow:
-    0 32px 64px rgba(0,0,0,0.55),
-    0 8px 22px rgba(0,0,0,0.38),
-    inset 0 0 0 1px rgba(195,175,130,0.18);
-}
-/* Illusion d'épaisseur — bord inférieur sombre */
-.env-body::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 6px;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.18));
-  pointer-events: none;
-}
-/* Bord gauche légèrement sombre */
-.env-body::before {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0; left: 0;
-  width: 5px;
-  background: linear-gradient(to right, rgba(0,0,0,0.12), transparent);
-  pointer-events: none;
 }
 
 .env-panels {
@@ -1728,8 +1696,8 @@ ul { list-style: none; }
   top: 50%;
   left: 50%;
   z-index: 60;
-  width: min(70vw, 900px);
-  min-height: 70vh;
+  width: min(90vw, 1200px);
+  min-height: 85vh;
   background: linear-gradient(155deg, #FFFDF9 0%, #FAF5EB 55%, #F5EDD8 100%);
   border: 1px solid rgba(195,165,95,0.22);
   border-radius: 3px;
@@ -1841,20 +1809,25 @@ ul { list-style: none; }
 }
 .env-discover-btn:hover { color: rgba(110,82,38,0.88); }
 
-/* Hint text — sombre sur fond ivoire clair */
+/* Hint text — clair sur fond olive, positionné en absolu */
 .env-hint-text {
+  position: absolute;
+  bottom: 5.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
   font-family: var(--ff-sans);
   font-size: clamp(0.58rem, 1.2vw, 0.7rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(90,68,32,0.52);
+  color: rgba(212,208,148,0.78);
   animation: hintPulse 2.5s ease-in-out infinite;
-  z-index: 5;
+  z-index: 50;
   pointer-events: none;
 }
 @keyframes hintPulse {
-  0%,100% { opacity: 0.52; }
-  50%     { opacity: 0.90; }
+  0%,100% { opacity: 0.78; }
+  50%     { opacity: 1.0; }
 }
 
 /* Skip */
@@ -1867,7 +1840,7 @@ ul { list-style: none; }
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(90,68,32,0.32);
+  color: rgba(210,205,148,0.42);
   background: none;
   border: none;
   cursor: pointer;
@@ -1875,12 +1848,11 @@ ul { list-style: none; }
   padding: 0.5rem;
   transition: color 0.3s;
 }
-.env-skip-btn:hover { color: rgba(90,68,32,0.72); }
+.env-skip-btn:hover { color: rgba(210,205,148,0.85); }
 
 @media (max-width: 600px) {
-  .env-wrapper { width: 96vw; }
   .env-seal    { width: clamp(90px, 22vw, 140px); height: clamp(90px, 22vw, 140px); }
   .env-hint-text { display: none; }
-  .env-card { width: 92vw; min-height: auto; padding: 2.5rem 1.8rem; }
+  .env-card { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
   .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
 }
