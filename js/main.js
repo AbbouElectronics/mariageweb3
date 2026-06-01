@@ -186,9 +186,8 @@
           ease: 'back.in(2.2)'
         });
 
-      /* 2 — Rabat se matérialise puis s'ouvre en 3D */
-      tl.to(flap, { opacity: 1, duration: 0.12 })
-        .set(flap, { transformPerspective: 1400 })
+      /* 2 — Rabat s'ouvre en 3D (backface-visibility:hidden le masque une fois retourné) */
+      tl.set(flap, { transformPerspective: 1400 })
         .to(flap, {
           rotateX: 175,
           duration: 1.2,
@@ -204,8 +203,8 @@
         ease: 'power2.out'
       }, '-=0.85');
 
-      /* 4 — Photo + rabat descendent doucement pendant que la carte monte */
-      tl.to([photo, flap], {
+      /* 4 — Photo descend doucement (flap déjà invisible via backface-visibility) */
+      tl.to(photo, {
         opacity: 0,
         y: 55,
         duration: 0.65,

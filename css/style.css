@@ -1605,25 +1605,21 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Rabat animé — invisible par défaut (photo montre le rabat naturel),
-   se matérialise juste avant de s'ouvrir via GSAP */
+/* Rabat — même photo que le body, découpé en triangle par clip-path.
+   Les deux couches étant identiques au repos, l'enveloppe semble d'un seul bloc.
+   Lors du clic, seul le rabat fait rotateX ; le body reste visible dessous. */
 .env-flap {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 50%;
+  inset: 0;
+  background-image: url('../images/image_envloppe.png');
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(0 0, 100% 0, 50% 47%);
   transform-origin: top center;
   transform-style: preserve-3d;
+  backface-visibility: hidden;
   z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.env-flap-shape {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 /* Sceau — centré à la jonction des plis de la photo */
@@ -1820,13 +1816,8 @@ ul { list-style: none; }
 
 /* ─── Portrait mobile ───────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
-  .env-flap  { height: 50%; }
-  .env-seal  { top: 50%; width: clamp(80px, 16vw, 115px) !important; height: clamp(80px, 16vw, 115px) !important; }
-  .env-hint-text {
-    position: fixed !important;
-    bottom: 5% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
+  /* Sur portrait le rabat de la photo converge plus bas (~52%) */
+  .env-flap  { clip-path: polygon(0 0, 100% 0, 50% 52%); }
+  .env-seal  { top: 52%; width: clamp(100px, 20vw, 140px) !important; height: clamp(100px, 20vw, 140px) !important; }
   .env-card  { width: 98vw; max-width: 98vw; min-height: 90vh; }
 }
