@@ -1642,6 +1642,27 @@ ul { list-style: none; }
   overflow: visible;
   cursor: pointer;
   z-index: 20;
+  opacity: 0;
+  pointer-events: all;
+}
+
+/* Pulsing ring visible over the photo's seal — sole visual hint */
+.env-seal-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(155px, 17vw, 240px);
+  height: clamp(155px, 17vw, 240px);
+  border-radius: 50%;
+  border: 2px solid rgba(180, 130, 80, 0.55);
+  pointer-events: none;
+  z-index: 19;
+  animation: sealRingPulse 2.4s ease-in-out infinite;
+}
+@keyframes sealRingPulse {
+  0%,100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.55; }
+  50%     { transform: translate(-50%, -50%) scale(1.10); opacity: 0; }
 }
 
 .env-seal-pulse {
@@ -1818,6 +1839,7 @@ ul { list-style: none; }
 /* ─── Mobile ≤600px ─────────────────── */
 @media (max-width: 600px) {
   .env-seal      { width: clamp(90px, 18vw, 130px); height: clamp(90px, 18vw, 130px); }
+  .env-seal-ring { width: clamp(95px, 19vw, 138px); height: clamp(95px, 19vw, 138px); }
   .env-hint-text { display: none; }
   .env-card      { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
   .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
@@ -1826,7 +1848,8 @@ ul { list-style: none; }
 /* ─── Portrait mobile ───────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
   /* Sur portrait le rabat de la photo converge plus bas (~52%) */
-  .env-flap  { clip-path: polygon(0 0, 100% 0, 50% 52%); }
-  .env-seal  { top: 52%; width: clamp(100px, 20vw, 140px) !important; height: clamp(100px, 20vw, 140px) !important; }
-  .env-card  { width: 98vw; max-width: 98vw; min-height: 90vh; }
+  .env-flap      { clip-path: polygon(0 0, 100% 0, 50% 52%); }
+  .env-seal      { top: 52%; width: clamp(100px, 20vw, 140px) !important; height: clamp(100px, 20vw, 140px) !important; }
+  .env-seal-ring { top: 52%; width: clamp(106px, 21vw, 148px) !important; height: clamp(106px, 21vw, 148px) !important; }
+  .env-card      { width: 98vw; max-width: 98vw; min-height: 90vh; }
 }

@@ -168,23 +168,17 @@
 
       const tl = gsap.timeline();
 
-      /* 1 — Le sceau se fissure : micro-tremblement puis se détache */
+      /* 1 — Le sceau se fissure : l'enveloppe tremble, l'anneau disparaît */
+      const ring = document.getElementById('envSealRing');
       tl
-        .to(seal, { scale: 0.94, duration: 0.08, ease: 'power2.in' })
-        .to(seal, { scale: 1.06, filter: 'brightness(1.45) contrast(1.1)', duration: 0.12, ease: 'power2.out' })
-        .to(seal, { x: -4, duration: 0.045, ease: 'none' })
-        .to(seal, { x:  5, duration: 0.045, ease: 'none' })
-        .to(seal, { x: -3, duration: 0.040, ease: 'none' })
-        .to(seal, { x:  3, duration: 0.040, ease: 'none' })
-        .to(seal, { x:  0, duration: 0.035, ease: 'none' })
-        .to(seal, {
-          scale: 0.08,
-          opacity: 0,
-          rotation: 28,
-          filter: 'brightness(3) saturate(0)',
-          duration: 0.32,
-          ease: 'back.in(2.2)'
-        });
+        .to(photo, { scale: 0.982, duration: 0.08, ease: 'power2.in' })
+        .to(photo, { scale: 1.012, filter: 'brightness(1.22) contrast(1.05)', duration: 0.11, ease: 'power2.out' })
+        .to(photo, { x: -5, duration: 0.042, ease: 'none' })
+        .to(photo, { x:  6, duration: 0.042, ease: 'none' })
+        .to(photo, { x: -3, duration: 0.036, ease: 'none' })
+        .to(photo, { x:  3, duration: 0.036, ease: 'none' })
+        .to(photo, { x:  0, scale: 1, filter: 'brightness(1)', duration: 0.055, ease: 'none' });
+      if (ring) tl.to(ring, { scale: 1.6, opacity: 0, duration: 0.28, ease: 'power2.out' }, '-=0.28');
 
       /* 2 — Rabat s'ouvre en 3D (backface-visibility:hidden le masque une fois retourné) */
       tl.set(flap, { transformPerspective: 1400 })
