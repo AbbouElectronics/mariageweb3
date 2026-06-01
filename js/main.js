@@ -125,12 +125,13 @@
     const intro   = document.getElementById('envelopeIntro');
     if (!intro) return;
 
-    const skipBtn = document.getElementById('envSkip');
-    const hint    = document.getElementById('envHint');
-    const seal    = document.getElementById('envSeal');
-    const flap    = document.getElementById('envFlap');
-    const photo   = document.getElementById('envPhoto');
-    const card    = document.getElementById('envCard');
+    const skipBtn  = document.getElementById('envSkip');
+    const hint     = document.getElementById('envHint');
+    const seal     = document.getElementById('envSeal');
+    const flapClip = document.getElementById('envFlapClip');
+    const flap     = document.getElementById('envFlap');
+    const photo    = document.getElementById('envPhoto');
+    const card     = document.getElementById('envCard');
 
     let opened = false;
     document.body.style.overflow = 'hidden';
@@ -206,14 +207,32 @@
 
       /* ══════════════════════════════════════════════════════════════
          ÉTAPE 3 — Ouverture du rabat en 3D très lente et fluide
-         Durée : 2.4s avec décélération naturelle expo.out
+         Durée : 2.4s avec décélération naturelle expo.out.
+         Architecture : flapClip porte le clip-path (non-rotatif) ;
+         flap (enfant) porte les transforms 3D (sans clip-path).
+         → backface-visibility fonctionne correctement sur Safari.
       ══════════════════════════════════════════════════════════════ */
+      let flapHidden = false;
       tl.set(flap, { transformPerspective: 1800 });
       tl.to(flap, {
-        rotateX: 175,
+        rotateX: -175,
         duration: 2.4,
         ease: 'expo.out',
-        transformOrigin: 'top center'
+        transformOrigin: 'top center',
+        onUpdate: function () {
+          /* Fallback Safari : dès que le rabat dépasse 90° on masque le clip wrapper.
+             backface-visibility devrait s'en charger, mais sur iOS ce n'est pas fiable. */
+          if (!flapHidden) {
+            const rx = Math.abs(gsap.getProperty(flap, 'rotateX'));
+            if (rx > 92) {
+              flapHidden = true;
+              flapClip.style.visibility = 'hidden';
+            }
+          }
+        },
+        onComplete: function () {
+          flapClip.style.display = 'none';
+        }
       }, '+=0.15');
 
       /* Ombre dynamique : la lumière change lentement quand le rabat pivote */

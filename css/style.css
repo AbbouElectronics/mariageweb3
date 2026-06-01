@@ -1607,22 +1607,30 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Rabat — même photo que le body, découpé en triangle par clip-path.
-   Les deux couches étant identiques au repos, l'enveloppe semble d'un seul bloc.
-   Lors du clic, seul le rabat fait rotateX ; le body reste visible dessous. */
+/* Clip wrapper : non-rotatif, porte uniquement le clip-path triangle.
+   Séparé du rabat rotatif pour que backface-visibility fonctionne sur Safari —
+   clip-path + backface-visibility sur le MÊME élément est un bug Safari connu. */
+.env-flap-clip {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 52%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Rabat rotatif : même photo que le body. Pas de clip-path ici.
+   Le clip-path du parent clippe visuellement ; backface-visibility fonctionne
+   correctement car l'élément n'a pas de clip-path propre. */
 .env-flap {
   position: absolute;
   inset: 0;
   background-image: url('../images/image_envloppe.png');
   background-size: cover;
   background-position: center;
-  clip-path: polygon(0 0, 100% 0, 50% 52%);
-  overflow: hidden;
   transform-origin: top center;
-  transform-style: preserve-3d;
+  -webkit-transform-origin: top center;
   backface-visibility: hidden;
-  z-index: 10;
-  cursor: pointer;
+  -webkit-backface-visibility: hidden;
 }
 
 /* SVG floral overlay sur le rabat */
@@ -1850,7 +1858,7 @@ ul { list-style: none; }
 /* ─── Portrait mobile ───────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
   /* Sur portrait le rabat de la photo converge plus bas (~52%) */
-  .env-flap      { clip-path: polygon(0 0, 100% 0, 50% 52%); }
+  .env-flap-clip { clip-path: polygon(0 0, 100% 0, 50% 52%); }
   .env-seal      { top: 52%; width: clamp(100px, 20vw, 140px) !important; height: clamp(100px, 20vw, 140px) !important; }
   .env-seal-ring { top: 52%; width: clamp(106px, 21vw, 148px) !important; height: clamp(106px, 21vw, 148px) !important; }
   .env-card      { width: 98vw; max-width: 98vw; min-height: 90vh; }

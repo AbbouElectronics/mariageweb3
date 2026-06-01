@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=19" />
+  <link rel="stylesheet" href="css/style.css?v=22" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -18,9 +18,11 @@
     <!-- Photo plein écran — fond photoréaliste de l'enveloppe -->
     <img class="env-photo" id="envPhoto" src="images/image_envloppe.png" alt="" aria-hidden="true" draggable="false">
 
-    <!-- Rabat animé — même texture photo + motifs floraux embossés, clip-path triangle -->
-    <div class="env-flap" id="envFlap" aria-hidden="true">
-      <!-- Motifs embossés sur le rabat (même filtre feSpecularLighting que le corps) -->
+    <!-- Clip wrapper : non-rotatif, porte le clip-path triangle -->
+    <div class="env-flap-clip" id="envFlapClip" aria-hidden="true">
+      <!-- Rabat animé : rotatif en 3D, sans clip-path (séparation pour Safari) -->
+      <div class="env-flap" id="envFlap" aria-hidden="true">
+        <!-- Motifs embossés sur le rabat (même filtre feSpecularLighting que le corps) -->
       <svg class="env-flap-florals" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
         <defs>
           <filter id="fEmbFlap" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
@@ -110,7 +112,8 @@
           <path d="M0,-16 Q8,-14 7,-8 Q2,-12 0,-16 Z"/>
         </g>
       </svg>
-    </div>
+      </div><!-- /.env-flap -->
+    </div><!-- /.env-flap-clip -->
 
     <!-- Anneau pulsant visible au-dessus du sceau photo -->
     <div class="env-seal-ring" id="envSealRing" aria-hidden="true"></div>
@@ -857,6 +860,6 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=21"></script>
+  <script src="js/main.js?v=22"></script>
 </body>
 </html>
