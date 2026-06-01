@@ -1591,6 +1591,8 @@ ul { list-style: none; }
   z-index: 99999;
   overflow: hidden;
   user-select: none;
+  cursor: pointer;
+  touch-action: manipulation;
 }
 
 /* Photo de fond plein écran */
