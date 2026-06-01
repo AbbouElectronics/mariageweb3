@@ -129,7 +129,7 @@
     const hint    = document.getElementById('envHint');
     const seal    = document.getElementById('envSeal');
     const flap    = document.getElementById('envFlap');
-    const wrapper = document.getElementById('envWrapper');
+    const photo   = document.getElementById('envPhoto');
     const card    = document.getElementById('envCard');
 
     let opened = false;
@@ -208,8 +208,8 @@
         ease: 'power2.out'
       }, '-=0.85');
 
-      /* 4 — Enveloppe descend doucement pendant que la carte monte */
-      tl.to(wrapper, {
+      /* 4 — Photo + rabat descendent doucement pendant que la carte monte */
+      tl.to([photo, flap], {
         opacity: 0,
         y: 55,
         duration: 0.65,
@@ -240,8 +240,8 @@
         onComplete: () => { card.style.overflowY = 'auto'; }
       }, '+=0.30');
 
-      /* 7b — Fond s'efface légèrement pendant l'expansion */
-      tl.to('.env-bokeh', { opacity: 0.35, duration: 0.90 }, '<');
+      /* 7b — Photo s'efface légèrement pendant l'expansion de la carte */
+      tl.to(photo, { opacity: 0, duration: 0.90 }, '<');
 
       /* 8 — Bouton "Découvrir le site" + CTA actif */
       tl.add(() => {
@@ -277,7 +277,7 @@
     }
 
     seal?.addEventListener('click',    e => { e.stopPropagation(); if (!opened) openEnvelope(); });
-    wrapper?.addEventListener('click', ()  => { if (!opened) openEnvelope(); });
+    photo?.addEventListener('click',   ()  => { if (!opened) openEnvelope(); });
     skipBtn?.addEventListener('click', e  => { e.stopPropagation(); skip(); });
 
     document.addEventListener('keydown', e => {
