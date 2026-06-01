@@ -141,31 +141,30 @@
     let opened = false;
 
     function dismissEnvelope() {
-      /* Force fade out via inline styles — bypasse tout conflit CSS */
-      intro.style.transition = 'opacity 0.75s ease';
+      /* L'enveloppe glisse vers le haut — comme on retire une lettre */
+      intro.style.transition = 'transform 1.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease 0.8s';
+      intro.style.transform  = 'translateY(-110%)';
       intro.style.opacity    = '0';
       intro.style.pointerEvents = 'none';
 
       setTimeout(() => {
         if (intro.parentNode) intro.parentNode.removeChild(intro);
         document.body.style.overflow = '';
-      }, 800);
+      }, 1200);
     }
 
     function openEnvelope() {
       if (opened) return;
       opened = true;
 
-      /* Start music */
       startMusic();
 
-      /* Trigger CSS opening animations */
+      /* 1. Le cachet se brise (animation CSS .opening) */
       intro.classList.add('opening');
       if (hint) hint.style.opacity = '0';
 
-      /* Flap animation: 0.15s delay + 1.4s duration = ends at 1.55s
-         Wait a beat after full open → then dismiss to site */
-      setTimeout(() => dismissEnvelope(), 2100);
+      /* 2. Après la fissure du cachet (0.5s), l'enveloppe monte */
+      setTimeout(() => dismissEnvelope(), 550);
     }
 
     /* Click anywhere on intro to open */

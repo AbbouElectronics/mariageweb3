@@ -1773,18 +1773,19 @@ ul { list-style: none; }
 
 /* 1. Cachet se brise et disparaît */
 .env-intro.opening .env-seal-svg {
-  animation: sealCrack 0.42s ease forwards;
+  animation: sealCrack 0.48s ease forwards;
   pointer-events: none;
 }
 @keyframes sealCrack {
-  0%   { transform: translate(-50%,-50%) scale(1);    opacity: 1; filter: brightness(1); }
-  30%  { transform: translate(-50%,-50%) scale(1.15); opacity: 0.85; filter: brightness(1.3); }
-  100% { transform: translate(-50%,-50%) scale(0.45); opacity: 0; filter: brightness(2); }
+  0%   { transform: translate(-50%,-52%) scale(1);    opacity: 1; filter: brightness(1); }
+  25%  { transform: translate(-50%,-52%) scale(1.18); opacity: 1; filter: brightness(1.5) saturate(1.3); }
+  55%  { transform: translate(-50%,-52%) scale(0.92); opacity: 0.6; filter: brightness(0.8); }
+  100% { transform: translate(-50%,-52%) scale(0.3);  opacity: 0; filter: brightness(2.5) saturate(0); }
 }
 
 /* 2. Rabat s'ouvre en 3D — pivot au bas = fold line au centre de l'écran */
 .env-intro.opening .env-flap-surface {
-  animation: flapOpen 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  animation: none; /* Le glissement vers le haut remplace l'animation du rabat */
 }
 @keyframes flapOpen {
   0%   { transform: rotateX(0deg); }
