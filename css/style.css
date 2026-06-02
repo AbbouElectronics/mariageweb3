@@ -1699,121 +1699,210 @@ ul { list-style: none; }
 }
 
 /* Carte d'invitation — grande, centrale, premium */
+/* =========================================
+   CARTE D'INVITATION PREMIUM v31
+   ========================================= */
 .env-card {
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 60;
-  width: min(90vw, 1200px);
-  min-height: 85vh;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E"),
-    linear-gradient(155deg, #FFFEF8 0%, #FAF5ED 40%, #F5EDDA 75%, #EFE4CC 100%);
-  border: 1px solid rgba(185,148,68,0.28);
-  border-radius: 3px;
-  padding: clamp(3rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
+  width: min(90vw, 960px);
+  min-height: 82vh;
+
+  /* Papier ivoire — grain + vignette chaude */
+  background-color: #FDFBF2;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='0.030'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 85% 70% at 50% 42%, #FFFEF6 0%, #FAF4E4 50%, #F0E5CE 84%, #E8D9B8 100%);
+
+  border: none;
+  border-radius: 2px;
+  padding: clamp(4rem, 7vw, 6rem) clamp(3rem, 5vw, 4.5rem);
   text-align: center;
-  box-shadow:
-    0 6px 14px rgba(0,0,0,0.07),
-    0 20px 50px rgba(0,0,0,0.16),
-    inset 0 0 80px rgba(185,148,68,0.06),
-    inset 0 0 25px rgba(255,252,240,0.40);
-  pointer-events: none;
-  opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  box-shadow:
+    0 2px 4px rgba(60,35,10,0.04),
+    0 8px 22px rgba(40,20,5,0.08),
+    0 28px 70px rgba(30,15,5,0.14),
+    0 60px 140px rgba(20,10,2,0.10),
+    inset 0 1px 0 rgba(255,255,248,0.80);
+
+  pointer-events: none;
+  opacity: 0;
   overflow: hidden;
 }
-.env-card::before {
+
+/* ── Bordure champagne dorée (élément animé par GSAP) ── */
+.card-border {
+  position: absolute;
+  inset: 13px;
+  border: 1.5px solid rgba(178,140,58,0.50);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 8;
+}
+/* Filet intérieur plus fin */
+.card-border::after {
   content: '';
   position: absolute;
-  top: 18px; left: 18px; right: 18px; bottom: 18px;
-  border: 1px solid rgba(185,148,68,0.20);
-  border-radius: 2px;
-  pointer-events: none;
-  z-index: 0;
-}
-/* SVG cadre botanique — superposé, pointer-events none */
-.env-card-florals {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
-}
-.env-card-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 0 clamp(3rem, 12vw, 14rem);
+  inset: 7px;
+  border: 0.6px solid rgba(178,140,58,0.20);
+  border-radius: 1px;
 }
 
+/* ── Coins floraux PNG ──────────────────────────────────
+   Si vous n'avez qu'une seule image (coin haut-gauche),
+   décommentez les transforms miroir ci-dessous.
+─────────────────────────────────────────────────────── */
+.floral-corner {
+  position: absolute;
+  pointer-events: none;
+  object-fit: contain;
+  display: block;
+  z-index: 5;
+}
+/* Grande composition — haut-gauche */
+.fc-tl {
+  top: 0; left: 0;
+  width: clamp(160px, 42%, 420px);
+  transform-origin: top left;
+  /* Si même image pour haut-droit : aucun transform ici */
+}
+/* Grande composition — haut-droit */
+.fc-tr {
+  top: 0; right: 0;
+  width: clamp(160px, 42%, 420px);
+  transform-origin: top right;
+  /* Décommentez si vous utilisez la même image que fc-tl :
+  transform: scaleX(-1); */
+}
+/* Rappel floral — bas-gauche */
+.fc-bl {
+  bottom: 0; left: 0;
+  width: clamp(100px, 25%, 250px);
+  transform-origin: bottom left;
+  /* Décommentez si vous utilisez la même image que fc-tl :
+  transform: scaleY(-1); */
+}
+/* Rappel floral — bas-droit */
+.fc-br {
+  bottom: 0; right: 0;
+  width: clamp(100px, 25%, 250px);
+  transform-origin: bottom right;
+  /* Décommentez si vous utilisez la même image que fc-tl :
+  transform: scale(-1,-1); */
+}
+
+/* ── Monogramme A&Z en filigrane ── */
+.card-monogram {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(220px, 55%, 490px);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Contenu centré — zone protégée ── */
+.env-card-content {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  padding: 0 clamp(4rem, 16vw, 18rem);
+}
+
+/* Mention introductive — italic serif */
 .env-card-eyebrow {
-  font-family: var(--ff-sans);
-  font-size: clamp(0.60rem, 1.3vw, 0.78rem);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(110,82,38,0.65);
-  margin-bottom: 1.4rem;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+  letter-spacing: 0.05em;
+  color: rgba(92,60,22,0.52);
+  margin-bottom: 1.6rem;
   opacity: 0;
 }
+
+/* Noms — grande signature bordeaux */
 .env-card-names {
   font-family: var(--ff-script);
-  font-size: clamp(3rem, 6.5vw, 5.2rem);
+  font-size: clamp(3.2rem, 7vw, 5.8rem);
   color: #5C1828;
-  margin: 0 0 0.5rem;
-  line-height: 1.12;
+  margin: 0 0 0.2rem;
+  line-height: 1.08;
   opacity: 0;
-  text-shadow: 0 1px 3px rgba(92,24,40,0.12);
+  text-shadow: 0 1px 4px rgba(92,24,40,0.10), 0 4px 14px rgba(92,24,40,0.05);
 }
-.env-amp { color: var(--gold-dark); }
+.env-amp {
+  color: #B89048;
+  font-size: 0.86em;
+}
+
+/* Séparateur ornemental losange */
 .env-card-rule {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  color: var(--gold-dark);
-  font-size: 0.65rem;
-  margin: 0.8rem 0 1.4rem;
+  gap: 0.9rem;
+  margin: 1.0rem 0 1.8rem;
   opacity: 0;
 }
 .env-card-rule span {
   flex: 1;
   height: 1px;
-  max-width: 140px;
-  background: linear-gradient(to right, transparent, rgba(185,148,65,0.6), transparent);
+  max-width: 110px;
+  background: linear-gradient(to right, transparent, rgba(178,140,58,0.52), transparent);
 }
+.rule-ornament { display: block; flex-shrink: 0; }
+
+/* Date — serif italique élégant */
 .env-card-date {
   font-family: var(--ff-serif);
-  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
   font-style: italic;
-  color: #3E2410;
-  margin-bottom: 0.4rem;
+  font-size: clamp(1.4rem, 3vw, 2.0rem);
+  color: #2E1A08;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.4rem;
   opacity: 0;
 }
-.env-card-venue {
+
+/* Micro-label lieu */
+.env-card-venue-label {
   font-family: var(--ff-sans);
-  font-size: clamp(0.65rem, 1.3vw, 0.82rem);
-  letter-spacing: 0.16em;
+  font-size: clamp(0.52rem, 1vw, 0.60rem);
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(72,50,22,0.68);
-  margin-bottom: 2.2rem;
+  color: rgba(178,140,58,0.65);
+  margin-bottom: 0.30rem;
   opacity: 0;
 }
+
+/* Nom du domaine */
+.env-card-venue {
+  font-family: var(--ff-serif);
+  font-size: clamp(0.82rem, 1.7vw, 1.06rem);
+  letter-spacing: 0.09em;
+  color: rgba(46,26,8,0.70);
+  margin-bottom: 2.4rem;
+  opacity: 0;
+}
+
+/* CTA — bordeaux raffiné */
 .env-card-cta {
   display: inline-block;
-  padding: 0.85rem 2.5rem;
+  padding: 0.88rem 2.6rem;
   border: 1.5px solid #5C1828;
   color: #5C1828;
   font-family: var(--ff-sans);
-  font-size: clamp(0.60rem, 1.2vw, 0.72rem);
-  letter-spacing: 0.22em;
+  font-size: clamp(0.58rem, 1.1vw, 0.70rem);
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.32s ease, color 0.32s ease;
   opacity: 0;
   pointer-events: none;
 }
@@ -1885,15 +1974,21 @@ ul { list-style: none; }
   .env-seal      { width: clamp(120px, 34vw, 175px); height: clamp(120px, 34vw, 175px); }
   .env-seal-ring { width: clamp(130px, 37vw, 190px); height: clamp(130px, 37vw, 190px); }
   .env-hint-text { display: none; }
-  .env-card      { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
-  .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
+  .env-card      { width: 95vw; min-height: auto; padding: 2.5rem 1.5rem; }
+  .env-card-names { font-size: clamp(2.6rem, 10vw, 3.2rem); }
+  .env-card-content { padding: 0 2.2rem; }
+  .fc-tl, .fc-tr { width: clamp(110px, 36%, 180px); }
+  .fc-bl, .fc-br { width: clamp(70px, 20%, 120px); }
+  .card-monogram { width: clamp(180px, 70%, 300px); }
 }
 
 /* ─── Portrait mobile ───────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
-  /* Sur portrait le rabat de la photo converge plus bas (~52%) */
   .env-flap-clip { clip-path: polygon(0 0, 100% 0, 50% 52%); }
   .env-seal      { top: 52%; width: clamp(120px, 26vw, 175px) !important; height: clamp(120px, 26vw, 175px) !important; }
   .env-seal-ring { top: 52%; width: clamp(130px, 28vw, 188px) !important; height: clamp(130px, 28vw, 188px) !important; }
   .env-card      { width: 98vw; max-width: 98vw; min-height: 90vh; }
+  .env-card-content { padding: 0 3rem; }
+  .fc-tl, .fc-tr { width: clamp(120px, 38%, 220px); }
+  .fc-bl, .fc-br { width: clamp(80px, 22%, 140px); }
 }

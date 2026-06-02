@@ -165,12 +165,18 @@
       if (seal) gsap.set(seal, { xPercent: -50, yPercent: -50 });
       if (card) {
         gsap.set(card, { xPercent: -50, yPercent: 22, opacity: 0 });
-        gsap.set('.env-card-eyebrow', { opacity: 0, y: 18 });
-        gsap.set('.env-card-names',   { opacity: 0, y: 22 });
-        gsap.set('.env-card-rule',    { opacity: 0, scaleX: 0 });
-        gsap.set('.env-card-date',    { opacity: 0, y: 16 });
-        gsap.set('.env-card-venue',   { opacity: 0, y: 14 });
-        gsap.set('.env-card-cta',     { opacity: 0, y: 12 });
+        /* Bordure et coins floraux — apparaissent après la carte */
+        gsap.set('.card-border',          { opacity: 0 });
+        gsap.set('.card-monogram',        { opacity: 0 });
+        gsap.set('.floral-corner',        { opacity: 0, scale: 0.95 });
+        /* Cascade textuelle */
+        gsap.set('.env-card-eyebrow',     { opacity: 0, y: 18 });
+        gsap.set('.env-card-names',       { opacity: 0, y: 22 });
+        gsap.set('.env-card-rule',        { opacity: 0, scaleX: 0 });
+        gsap.set('.env-card-date',        { opacity: 0, y: 16 });
+        gsap.set('.env-card-venue-label', { opacity: 0, y: 10 });
+        gsap.set('.env-card-venue',       { opacity: 0, y: 14 });
+        gsap.set('.env-card-cta',         { opacity: 0, y: 12 });
       }
     }
 
@@ -287,12 +293,25 @@
         ease:     'power2.inOut'
       }, 'cardExit+=0.20');
 
-      /* -- Texte : cascade sequentielle apres la carte */
+      /* Bordure champagne : trace sur 1.2s après la carte */
+      tl.to('.card-border', {
+        opacity: 1, duration: 1.2, ease: 'power2.out'
+      }, 'cardExit+=0.55');
+
+      /* Coins floraux : épanouissement en stagger */
+      tl.to('.floral-corner', {
+        opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', stagger: 0.10
+      }, 'cardExit+=0.85');
+
+      /* -- Texte : cascade séquentielle */
       tl.to('.env-card-eyebrow', { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });
       tl.to('.env-card-names',   { opacity: 1, y: 0, duration: 0.80, ease: 'power2.out' });
+      /* Monogramme s'estompe avec les noms */
+      tl.to('.card-monogram',    { opacity: 1, duration: 0.55, ease: 'power2.out' }, '<+=0.18');
       tl.to('.env-card-rule',    { opacity: 1, scaleX: 1, transformOrigin: 'center', duration: 0.60, ease: 'power2.out' });
       tl.to('.env-card-date',    { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });
-      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });
+      tl.to('.env-card-venue-label', { opacity: 1, y: 0, duration: 0.50, ease: 'power2.out' });
+      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.60, ease: 'power2.out' });
       tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.60, ease: 'power2.out' });
 
       /* -- ETAT 7 : AGRANDISSEMENT (1500ms) */
