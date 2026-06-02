@@ -176,40 +176,43 @@
       const tl = gsap.timeline();
       const ring = document.getElementById('envSealRing');
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 1 — Fissure du sceau (0.65s)
-         Le sceau visible est celui de la photo (baked-in).
-         On anime la photo + l'anneau pour simuler la rupture de la cire.
-         Aucun second sceau n'est jamais affiché.
-      ══════════════════════════════════════════════════════════════ */
-      /* Vibration réaliste de l'enveloppe entière */
-      tl
-        .to(photo, { scale: 1.04, duration: 0.18, ease: 'power2.out' })
-        .to(photo, { x: -7, duration: 0.055, ease: 'none' })
-        .to(photo, { x:  9, duration: 0.060, ease: 'none' })
-        .to(photo, { x: -5, duration: 0.050, ease: 'none' })
-        .to(photo, { x:  6, duration: 0.050, ease: 'none' })
-        .to(photo, { x: -3, duration: 0.040, ease: 'none' })
-        .to(photo, { x:  3, duration: 0.040, ease: 'none' })
-        .to(photo, { x:  0, duration: 0.06,  ease: 'power1.out' });
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 2 — RETRAIT DU SCEAU  (~1.2s)
+         Photo vibre + éclair lumineux = simulation de cire qui craque.
+         Anneau explose = signal visuel de rupture.
+         AUCUN chevauchement avec l'état suivant.
+      ════════════════════════════════════════════════════════════ */
+      tl.addLabel('sealCrack');
 
-      /* Éclair lumineux : reflet sur la cire au moment de la rupture */
-      tl.to(photo, { filter: 'brightness(1.5) contrast(1.08)', duration: 0.12 }, '-=0.42');
-      tl.to(photo, { filter: 'brightness(1.0)',                duration: 0.30, ease: 'power2.out' });
+      /* Vibration : photo entière (6 micro-secousses irrégulières) */
+      tl.to(photo, { scale: 1.03, duration: 0.14, ease: 'power2.out' }, 'sealCrack');
+      tl.to(photo, { filter: 'brightness(1.55) contrast(1.1)', duration: 0.09 }, 'sealCrack');
+      tl.to(photo, { x: -8, duration: 0.055 });
+      tl.to(photo, { x:  9, duration: 0.060 });
+      tl.to(photo, { x: -5, duration: 0.050 });
+      tl.to(photo, { x:  6, duration: 0.050 });
+      tl.to(photo, { x: -3, duration: 0.040 });
+      tl.to(photo, { x:  3, duration: 0.040 });
+      tl.to(photo, { x:  0, scale: 1, filter: 'brightness(1.0)', duration: 0.22, ease: 'power2.out' });
 
-      /* L'anneau explose vers l'extérieur — symbolise le sceau qui se brise */
+      /* Anneau explose APRÈS la vibration */
       if (ring) {
-        tl.to(ring, { scale: 3.2, opacity: 0, duration: 0.70, ease: 'power3.out' }, '-=0.38');
+        tl.to(ring, { scale: 3.5, opacity: 0, duration: 0.52, ease: 'power3.out' });
       }
 
-      /* Enveloppe reprend sa taille normale */
-      tl.to(photo, { scale: 1.0, duration: 0.35, ease: 'power2.inOut' }, '-=0.3');
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 3 — PAUSE  (300ms)
+      ════════════════════════════════════════════════════════════ */
+      tl.to({}, { duration: 0.30 });
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 2 — Ouverture du rabat (2.5s) — STRICTEMENT après rupture.
-         flapClip = clip-path fixe  /  flap = rotateX sans clip-path.
-         Fallback Safari : masquage manuel dès 90° (onUpdate).
-      ══════════════════════════════════════════════════════════════ */
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 4 — OUVERTURE DU RABAT  (2.5s)
+         Le rabat pivote COMPLÈTEMENT avant toute suite.
+         Effets internes à l'état (ombre dynamique) en parallèle —
+         ils font partie du même état, pas un état séparé.
+      ════════════════════════════════════════════════════════════ */
+      tl.addLabel('flapOpen');
+
       let flapHidden = false;
       tl.to(flap, {
         rotateX:         -180,
@@ -228,65 +231,65 @@
         onComplete: function () {
           flapClip.style.display = 'none';
         }
-      });
+      }, 'flapOpen');
 
-      /* Ombre dynamique pendant l'ouverture */
-      tl.to(photo, { filter: 'brightness(0.88)', duration: 1.0, ease: 'power1.inOut' }, '<');
-      tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.0, ease: 'power1.out'  }, '-=0.8');
+      /* Ombre interne à l'état 4 — parallèle avec la rotation */
+      tl.to(photo, { filter: 'brightness(0.84)', duration: 1.2, ease: 'power1.inOut' }, 'flapOpen');
+      tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.3, ease: 'power1.out'  }, 'flapOpen+=1.2');
+      /* Les deux effets photo se terminent exactement à 2.5s ✓ */
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 3 — La carte glisse hors de l'enveloppe
-      ══════════════════════════════════════════════════════════════ */
-      tl.to(card, {
-        yPercent: -58,
-        opacity:  1,
-        duration: 2.0,
-        ease:     'power2.out'
-      }, '-=0.7');
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 5 — PAUSE  (300ms)
+      ════════════════════════════════════════════════════════════ */
+      tl.to({}, { duration: 0.30 });
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 4 — Photo s'efface, carte monte et se centre
-      ══════════════════════════════════════════════════════════════ */
-      tl.to(photo, {
-        opacity:  0,
-        y:        40,
-        duration: 1.3,
-        ease:     'power2.inOut'
-      }, '-=0.9');
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 6 — SORTIE DE LA CARTE  (2.0s)
+         La carte glisse hors de l'enveloppe et se centre.
+         Photo s'efface en parallèle (interne à cet état).
+      ════════════════════════════════════════════════════════════ */
+      tl.addLabel('cardExit');
 
       tl.to(card, {
         yPercent: -50,
-        duration: 1.2,
-        ease:     'power3.out'
-      }, '-=0.8');
+        opacity:  1,
+        duration: 2.0,
+        ease:     'power2.out'
+      }, 'cardExit');
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 6 — Texte apparaît élément par élément, lentement
-         ~1s par élément avec glissement vertical
-      ══════════════════════════════════════════════════════════════ */
-      tl.to('.env-card-eyebrow', { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.1');
-      tl.to('.env-card-names',   { opacity: 1, y: 0, duration: 1.05, ease: 'power2.out' }, '-=0.45');
-      tl.to('.env-card-rule',    { opacity: 1, scaleX: 1, duration: 0.90, ease: 'power2.out', transformOrigin: 'center' }, '-=0.5');
-      tl.to('.env-card-date',    { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.5');
-      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.95, ease: 'power2.out' }, '-=0.5');
-      tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.90, ease: 'power2.out' }, '-=0.45');
+      /* Photo s'efface pendant la sortie de la carte */
+      tl.to(photo, {
+        opacity:  0,
+        y:        30,
+        duration: 1.6,
+        ease:     'power2.inOut'
+      }, 'cardExit+=0.4');
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 7 — Carte s'élargit majestueusement (~90% écran)
-      ══════════════════════════════════════════════════════════════ */
+      /* ════════════════════════════════════════════════════════════
+         TEXTE — cascade après centrage de la carte
+      ════════════════════════════════════════════════════════════ */
+      tl.to('.env-card-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+      tl.to('.env-card-names',   { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' });
+      tl.to('.env-card-rule',    { opacity: 1, scaleX: 1, transformOrigin: 'center', duration: 0.7, ease: 'power2.out' });
+      tl.to('.env-card-date',    { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+      tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
+
+      /* ════════════════════════════════════════════════════════════
+         ÉTAT 7 — AGRANDISSEMENT  (1.5s)
+         La carte devient la page principale.
+      ════════════════════════════════════════════════════════════ */
       tl.to(card, {
-        width:  () => Math.round(window.innerWidth  * 0.90),
-        height: () => Math.round(window.innerHeight * 0.90),
-        duration: 1.2,
-        ease: 'power2.inOut',
+        width:    () => Math.round(window.innerWidth  * 0.90),
+        height:   () => Math.round(window.innerHeight * 0.90),
+        duration: 1.5,
+        ease:     'power2.inOut',
         onComplete: () => { card.style.overflowY = 'auto'; }
-      }, '+=0.55');
+      }, '+=0.3');
 
-      tl.to(photo, { opacity: 0, duration: 1.0 }, '<');
-
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 8 — Bouton "Découvrir le site" + CTA actif
-      ══════════════════════════════════════════════════════════════ */
+      /* ════════════════════════════════════════════════════════════
+         FIN — Bouton "Découvrir le site" + CTA actif
+      ════════════════════════════════════════════════════════════ */
       tl.add(() => {
         /* Enable pointer events on the card so buttons are clickable */
         card.style.pointerEvents = 'auto';
