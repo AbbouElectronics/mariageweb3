@@ -1650,23 +1650,24 @@ ul { list-style: none; }
 }
 
 /* Sceau : crop circulaire de la photo positionné exactement sur le sceau baked-in.
-   background-size et background-position sont définis par JS (calcul object-fit:cover).
-   À l'état initial, invisible par construction (même image, même rendu que la photo).
-   Lors de l'animation, il se "décolle" et révèle la photo dessous — 1 seul sceau visible. */
+   background-size/position définis par JS (calcul object-fit:cover).
+   Pas de transform CSS — GSAP prend en charge tout via xPercent/yPercent.
+   box-shadow donne la sensation physique d'un cachet en relief sur le papier. */
 .env-seal {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: clamp(220px, 24vw, 320px);
   height: clamp(220px, 24vw, 320px);
   border-radius: 50%;
   background-image: url('../images/image_envloppe.png');
-  /* background-size et background-position fixés par JS */
   overflow: hidden;
   cursor: pointer;
   z-index: 20;
   pointer-events: all;
+  box-shadow:
+    0 3px 14px rgba(55, 12, 4, 0.30),
+    0 1px 5px  rgba(30,  8, 2, 0.18);
 }
 
 /* Pulsing ring just outside the seal element */
