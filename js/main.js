@@ -125,13 +125,14 @@
     const intro   = document.getElementById('envelopeIntro');
     if (!intro) return;
 
-    const skipBtn  = document.getElementById('envSkip');
-    const hint     = document.getElementById('envHint');
-    const seal     = document.getElementById('envSeal');
-    const flapClip = document.getElementById('envFlapClip');
-    const flap     = document.getElementById('envFlap');
-    const photo    = document.getElementById('envPhoto');
-    const card     = document.getElementById('envCard');
+    const skipBtn   = document.getElementById('envSkip');
+    const hint      = document.getElementById('envHint');
+    const seal      = document.getElementById('envSeal');
+    const sealCover = document.getElementById('envSealCover');
+    const flapClip  = document.getElementById('envFlapClip');
+    const flap      = document.getElementById('envFlap');
+    const photo     = document.getElementById('envPhoto');
+    const card      = document.getElementById('envCard');
 
     let opened = false;
     document.body.style.overflow = 'hidden';
@@ -173,31 +174,45 @@
         return;
       }
 
-      const tl = gsap.timeline();
+      const tl   = gsap.timeline();
       const ring = document.getElementById('envSealRing');
 
+      /* Stopper l'animation CSS de l'anneau immédiatement */
+      if (ring) ring.style.animation = 'none';
+
       /* ════════════════════════════════════════════════════════════
-         ÉTAT 2 — RETRAIT DU SCEAU  (~1.2s)
-         Photo vibre + éclair lumineux = simulation de cire qui craque.
-         Anneau explose = signal visuel de rupture.
-         AUCUN chevauchement avec l'état suivant.
+         ÉTAT 2 — DÉTACHEMENT DU SCEAU  (1.2s)
+         Le sceau HTML (seul sceau visible) se détache et disparaît.
+         Aucun chevauchement avec l'état suivant.
       ════════════════════════════════════════════════════════════ */
       tl.addLabel('sealCrack');
 
-      /* Vibration : photo entière (6 micro-secousses irrégulières) */
-      tl.to(photo, { scale: 1.03, duration: 0.14, ease: 'power2.out' }, 'sealCrack');
-      tl.to(photo, { filter: 'brightness(1.55) contrast(1.1)', duration: 0.09 }, 'sealCrack');
-      tl.to(photo, { x: -8, duration: 0.055 });
-      tl.to(photo, { x:  9, duration: 0.060 });
-      tl.to(photo, { x: -5, duration: 0.050 });
-      tl.to(photo, { x:  6, duration: 0.050 });
-      tl.to(photo, { x: -3, duration: 0.040 });
-      tl.to(photo, { x:  3, duration: 0.040 });
-      tl.to(photo, { x:  0, scale: 1, filter: 'brightness(1.0)', duration: 0.22, ease: 'power2.out' });
+      /* Vibration subtile du fond (sensation physique du craquement) */
+      tl.to(photo, { scale: 1.02, duration: 0.10, ease: 'power2.out' }, 'sealCrack');
+      tl.to(photo, { x: -6, duration: 0.050 });
+      tl.to(photo, { x:  7, duration: 0.055 });
+      tl.to(photo, { x: -4, duration: 0.045 });
+      tl.to(photo, { x:  4, duration: 0.045 });
+      tl.to(photo, { x:  0, scale: 1, duration: 0.18, ease: 'power2.out' });
 
-      /* Anneau explose APRÈS la vibration */
+      /* Le sceau HTML se détache : rotation + descente + fondu */
+      tl.to(seal, {
+        rotation: 14,
+        y:        120,
+        scale:    0.82,
+        opacity:  0,
+        duration: 1.0,
+        ease:     'power3.in',
+        onComplete: function () {
+          seal.style.display = 'none';
+          /* Cacher aussi le couvercle maintenant que le sceau est parti */
+          if (sealCover) sealCover.style.display = 'none';
+        }
+      }, 'sealCrack+=0.20');
+
+      /* Anneau explose en même temps que le sceau se détache */
       if (ring) {
-        tl.to(ring, { scale: 3.5, opacity: 0, duration: 0.52, ease: 'power3.out' });
+        tl.to(ring, { scale: 3.0, opacity: 0, duration: 0.70, ease: 'power3.out' }, 'sealCrack+=0.20');
       }
 
       /* ════════════════════════════════════════════════════════════
