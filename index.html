@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=27" />
+  <link rel="stylesheet" href="css/style.css?v=28" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -17,10 +17,6 @@
 
     <!-- Photo plein écran — fond photoréaliste de l'enveloppe -->
     <img class="env-photo" id="envPhoto" src="images/image_envloppe.png" alt="" aria-hidden="true" draggable="false">
-
-    <!-- Couvercle du sceau : cache le sceau baked-in de la photo (z:5).
-         Permet au sceau HTML (z:100) d'être le SEUL sceau visible. -->
-    <div class="env-seal-cover" id="envSealCover" aria-hidden="true"></div>
 
     <!-- Clip wrapper : non-rotatif, porte le clip-path triangle -->
     <div class="env-flap-clip" id="envFlapClip" aria-hidden="true">
@@ -119,151 +115,14 @@
       </div><!-- /.env-flap -->
     </div><!-- /.env-flap-clip -->
 
-    <!-- Anneau pulsant autour du sceau HTML -->
+    <!-- Anneau pulsant autour du sceau -->
     <div class="env-seal-ring" id="envSealRing" aria-hidden="true"></div>
 
-    <!-- Sceau HTML — THE seul sceau visible (z:100, par-dessus le couvercle z:5) -->
-    <svg class="env-seal" id="envSeal"
-             viewBox="0 0 400 400"
-             xmlns="http://www.w3.org/2000/svg"
-             role="button" tabindex="0"
-             aria-label="Cliquez pour ouvrir l'invitation">
-          <defs>
-
-            <!-- Bords organiques : déformation turbulente forte pour effet cire fondue -->
-            <filter id="fsOrg" x="-28%" y="-28%" width="156%" height="156%" color-interpolation-filters="sRGB">
-              <feTurbulence type="fractalNoise" baseFrequency="0.036 0.028" numOctaves="8" seed="23" result="noise"/>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-
-            <!-- Texture matte de surface (fractalNoise en mode multiply) -->
-            <filter id="fsMatte" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-              <feTurbulence type="fractalNoise" baseFrequency="0.058 0.050" numOctaves="6" seed="41" result="tex"/>
-              <feColorMatrix in="tex" type="saturate" values="0" result="gray"/>
-              <feBlend in="SourceGraphic" in2="gray" mode="multiply" result="textured"/>
-              <feComposite in="textured" in2="SourceGraphic" operator="in"/>
-            </filter>
-
-            <!-- Embossage doux : lumière directionnelle, bas specular pour aspect matte -->
-            <filter id="fsEmboss" x="-28%" y="-28%" width="156%" height="156%" color-interpolation-filters="sRGB">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="13" result="blur"/>
-              <feSpecularLighting in="blur" surfaceScale="28" specularConstant="0.38" specularExponent="11"
-                  lighting-color="#CC6840" result="spec">
-                <fePointLight x="105" y="72" z="370"/>
-              </feSpecularLighting>
-              <feComposite in="spec" in2="SourceAlpha" operator="in" result="specM"/>
-              <feBlend in="SourceGraphic" in2="specM" mode="screen" result="lit"/>
-              <feComposite in="lit" in2="SourceGraphic" operator="in"/>
-            </filter>
-
-            <!-- Monogramme gravé : ombre portée sous les lettres + reflet au-dessus -->
-            <filter id="fsGrave" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="2.8" result="blur"/>
-              <feOffset dx="2.0" dy="3.2" in="blur" result="shadowOff"/>
-              <feFlood flood-color="rgba(2,0,0,0.92)" result="blk"/>
-              <feComposite in="blk" in2="shadowOff" operator="in" result="shadow"/>
-              <feOffset dx="-1.0" dy="-1.8" in="SourceAlpha" result="hlOff"/>
-              <feFlood flood-color="rgba(195,120,70,0.20)" result="hlC"/>
-              <feComposite in="hlC" in2="hlOff" operator="in" result="hl"/>
-              <feMerge>
-                <feMergeNode in="shadow"/>
-                <feMergeNode in="SourceGraphic"/>
-                <feMergeNode in="hl"/>
-              </feMerge>
-            </filter>
-
-            <!-- Bordeaux vibrant chaud — correspond au sceau de la photo -->
-            <radialGradient id="gsBdx" cx="34%" cy="24%" r="80%" fx="34%" fy="24%">
-              <stop offset="0%"   stop-color="#C83028"/>
-              <stop offset="12%"  stop-color="#A82420"/>
-              <stop offset="36%"  stop-color="#861C1A"/>
-              <stop offset="62%"  stop-color="#641414"/>
-              <stop offset="84%"  stop-color="#480E0E"/>
-              <stop offset="100%" stop-color="#300808"/>
-            </radialGradient>
-
-            <!-- Reflet chaud en haut-gauche -->
-            <radialGradient id="gsSheen" cx="26%" cy="19%" r="36%">
-              <stop offset="0%"   stop-color="rgba(200,100,70,0.22)"/>
-              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-            </radialGradient>
-
-            <!-- Vignette interne -->
-            <radialGradient id="gsVig" cx="50%" cy="50%" r="50%">
-              <stop offset="65%" stop-color="rgba(0,0,0,0)"/>
-              <stop offset="100%" stop-color="rgba(0,0,0,0.38)"/>
-            </radialGradient>
-
-          </defs>
-
-          <!-- Ombre douce sur le papier de l'enveloppe -->
-          <ellipse cx="202" cy="394" rx="180" ry="16"
-            fill="rgba(8,0,0,0.52)" filter="url(#fsOrg)"/>
-
-          <!-- Couche 1 : Corps principal — bords organiques -->
-          <circle cx="200" cy="200" r="178" fill="url(#gsBdx)"
-            filter="url(#fsOrg)"/>
-
-          <!-- Couche 2 : Texture matte de surface -->
-          <circle cx="200" cy="200" r="178" fill="url(#gsBdx)"
-            filter="url(#fsMatte)" opacity="0.58"/>
-
-          <!-- Couche 3 : Embossage doux (relief matte, pas brillant) -->
-          <circle cx="200" cy="200" r="178" fill="url(#gsBdx)"
-            filter="url(#fsEmboss)" opacity="0.70"/>
-
-          <!-- Couche 4 : Reflet chaud haut-gauche -->
-          <circle cx="200" cy="200" r="178" fill="url(#gsSheen)"
-            filter="url(#fsOrg)"/>
-
-          <!-- Couche 5 : Vignette bord pour profondeur -->
-          <circle cx="200" cy="200" r="178" fill="url(#gsVig)"
-            filter="url(#fsOrg)"/>
-
-          <!-- Anneau embossé extérieur (pressé dans la cire) -->
-          <circle cx="200" cy="200" r="162" fill="none"
-            stroke="rgba(0,0,0,0.32)" stroke-width="5"
-            filter="url(#fsOrg)"/>
-          <circle cx="200" cy="200" r="158" fill="none"
-            stroke="rgba(165,88,48,0.13)" stroke-width="2.5"
-            filter="url(#fsOrg)"/>
-
-          <!-- Anneau embossé intérieur -->
-          <circle cx="200" cy="200" r="142" fill="none"
-            stroke="rgba(0,0,0,0.24)" stroke-width="4"
-            filter="url(#fsOrg)"/>
-          <circle cx="200" cy="200" r="138" fill="none"
-            stroke="rgba(158,82,44,0.11)" stroke-width="2"
-            filter="url(#fsOrg)"/>
-
-          <!-- Monogramme A&Z — gravé dans la cire -->
-          <text x="200" y="232"
-            text-anchor="middle"
-            font-family="'Great Vibes', cursive"
-            font-size="110" font-weight="400"
-            fill="rgba(148,58,32,0.60)"
-            filter="url(#fsGrave)"
-            letter-spacing="2">A&amp;Z</text>
-
-          <!-- Coulures de cire organiques (imperfections réalistes) -->
-          <ellipse cx="136" cy="358" rx="16" ry="10"
-            fill="url(#gsBdx)" filter="url(#fsOrg)" opacity="0.80"
-            transform="rotate(-30,136,358)"/>
-          <ellipse cx="272" cy="360" rx="12" ry="7"
-            fill="url(#gsBdx)" filter="url(#fsOrg)" opacity="0.75"
-            transform="rotate(22,272,360)"/>
-          <ellipse cx="58" cy="248" rx="9" ry="6"
-            fill="url(#gsBdx)" filter="url(#fsOrg)" opacity="0.62"
-            transform="rotate(-50,58,248)"/>
-          <ellipse cx="344" cy="190" rx="8" ry="5"
-            fill="url(#gsBdx)" filter="url(#fsOrg)" opacity="0.55"
-            transform="rotate(35,344,190)"/>
-
-          <!-- Anneau extérieur pulsant (aura douce) -->
-          <circle cx="200" cy="200" r="186" fill="none"
-            stroke="rgba(90,14,7,0.28)" stroke-width="2.5"
-            class="env-seal-pulse"/>
-        </svg>
+    <!-- Sceau : crop circulaire de la photo — même image, même rendu = 1 seul sceau.
+         background-size/position calculés par JS pour correspondre exactement à la photo. -->
+    <div class="env-seal" id="envSeal"
+         role="button" tabindex="0"
+         aria-label="Cliquez pour ouvrir l'invitation"></div>
 
     <!-- Carte d'invitation (sort de l'enveloppe) -->
     <div class="env-card" id="envCard">
@@ -864,6 +723,6 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=27"></script>
+  <script src="js/main.js?v=28"></script>
 </body>
 </html>

@@ -125,14 +125,36 @@
     const intro   = document.getElementById('envelopeIntro');
     if (!intro) return;
 
-    const skipBtn   = document.getElementById('envSkip');
-    const hint      = document.getElementById('envHint');
-    const seal      = document.getElementById('envSeal');
-    const sealCover = document.getElementById('envSealCover');
-    const flapClip  = document.getElementById('envFlapClip');
-    const flap      = document.getElementById('envFlap');
-    const photo     = document.getElementById('envPhoto');
-    const card      = document.getElementById('envCard');
+    const skipBtn  = document.getElementById('envSkip');
+    const hint     = document.getElementById('envHint');
+    const seal     = document.getElementById('envSeal');
+    const flapClip = document.getElementById('envFlapClip');
+    const flap     = document.getElementById('envFlap');
+    const photo    = document.getElementById('envPhoto');
+    const card     = document.getElementById('envCard');
+
+    /* Set seal div background to show exactly the photo's seal region.
+       Matches object-fit:cover scaling so it's pixel-perfect with the photo. */
+    function matchSealBackground() {
+      if (!seal || !photo) return;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const iw = photo.naturalWidth;
+      const ih = photo.naturalHeight;
+      if (!iw || !ih) return;
+      const scale = Math.max(vw / iw, vh / ih);
+      const effW  = Math.round(iw * scale);
+      const effH  = Math.round(ih * scale);
+      seal.style.backgroundSize     = effW + 'px ' + effH + 'px';
+      seal.style.backgroundPosition = 'center';
+    }
+
+    if (photo.complete && photo.naturalWidth) {
+      matchSealBackground();
+    } else {
+      photo.addEventListener('load', matchSealBackground, { once: true });
+    }
+    window.addEventListener('resize', matchSealBackground, { passive: true });
 
     let opened = false;
     document.body.style.overflow = 'hidden';
@@ -195,19 +217,15 @@
       tl.to(photo, { x:  4, duration: 0.045 });
       tl.to(photo, { x:  0, scale: 1, duration: 0.18, ease: 'power2.out' });
 
-      /* Le sceau HTML se détache : rotation + descente + fondu */
+      /* Le sceau se détache : grossit, pivote, descend, disparaît */
       tl.to(seal, {
         rotation: 14,
-        y:        120,
-        scale:    0.82,
+        y:        110,
+        scale:    0.88,
         opacity:  0,
         duration: 1.0,
         ease:     'power3.in',
-        onComplete: function () {
-          seal.style.display = 'none';
-          /* Cacher aussi le couvercle maintenant que le sceau est parti */
-          if (sealCover) sealCover.style.display = 'none';
-        }
+        onComplete: function () { seal.style.display = 'none'; }
       }, 'sealCrack+=0.20');
 
       /* Anneau explose en même temps que le sceau se détache */

@@ -1649,49 +1649,38 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Couvercle circulaire z:5 — cache le sceau baked-in de la photo.
-   Légèrement plus grand que le sceau HTML pour une couverture totale. */
-.env-seal-cover {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(290px, 28vw, 390px);
-  height: clamp(290px, 28vw, 390px);
-  border-radius: 50%;
-  background: radial-gradient(circle, #F2E8D4 25%, #EDE0C4 55%, #E6D4B0 75%, transparent 92%);
-  z-index: 5;
-  pointer-events: none;
-}
-
-/* Sceau HTML — LE SEUL sceau visible. opacity:1, couvre le baked-in seal.
-   z-index:100 = au-dessus de tout (rabat z:10, anneau z:19, couvercle z:5). */
+/* Sceau : crop circulaire de la photo positionné exactement sur le sceau baked-in.
+   background-size et background-position sont définis par JS (calcul object-fit:cover).
+   À l'état initial, invisible par construction (même image, même rendu que la photo).
+   Lors de l'animation, il se "décolle" et révèle la photo dessous — 1 seul sceau visible. */
 .env-seal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(240px, 26vw, 340px);
-  height: clamp(240px, 26vw, 340px);
-  overflow: visible;
+  width: clamp(220px, 24vw, 320px);
+  height: clamp(220px, 24vw, 320px);
+  border-radius: 50%;
+  background-image: url('../images/image_envloppe.png');
+  /* background-size et background-position fixés par JS */
+  overflow: hidden;
   cursor: pointer;
-  z-index: 100;
-  opacity: 1;
+  z-index: 20;
   pointer-events: all;
 }
 
-/* Pulsing ring around the HTML seal */
+/* Pulsing ring just outside the seal element */
 .env-seal-ring {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(260px, 28vw, 360px);
-  height: clamp(260px, 28vw, 360px);
+  width: clamp(240px, 26vw, 342px);
+  height: clamp(240px, 26vw, 342px);
   border-radius: 50%;
   border: 2px solid rgba(180, 130, 80, 0.55);
   pointer-events: none;
-  z-index: 101;
+  z-index: 21;
   animation: sealRingPulse 2.4s ease-in-out infinite;
 }
 @keyframes sealRingPulse {
@@ -1872,20 +1861,18 @@ ul { list-style: none; }
 
 /* ─── Mobile ≤600px ─────────────────── */
 @media (max-width: 600px) {
-  .env-seal-cover { width: clamp(140px, 38vw, 200px); height: clamp(140px, 38vw, 200px); }
-  .env-seal       { width: clamp(120px, 32vw, 175px); height: clamp(120px, 32vw, 175px); }
-  .env-seal-ring  { width: clamp(130px, 35vw, 190px); height: clamp(130px, 35vw, 190px); }
-  .env-hint-text  { display: none; }
-  .env-card       { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
+  .env-seal      { width: clamp(120px, 34vw, 175px); height: clamp(120px, 34vw, 175px); }
+  .env-seal-ring { width: clamp(130px, 37vw, 190px); height: clamp(130px, 37vw, 190px); }
+  .env-hint-text { display: none; }
+  .env-card      { width: 95vw; min-height: auto; padding: 2.5rem 1.8rem; }
   .env-card-names { font-size: clamp(2.4rem, 9vw, 3rem); }
 }
 
 /* ─── Portrait mobile ───────────────── */
 @media (orientation: portrait) and (max-width: 900px) {
   /* Sur portrait le rabat de la photo converge plus bas (~52%) */
-  .env-flap-clip  { clip-path: polygon(0 0, 100% 0, 50% 52%); }
-  .env-seal-cover { top: 52%; }
-  .env-seal       { top: 52%; width: clamp(120px, 24vw, 175px) !important; height: clamp(120px, 24vw, 175px) !important; }
-  .env-seal-ring  { top: 52%; width: clamp(130px, 26vw, 185px) !important; height: clamp(130px, 26vw, 185px) !important; }
-  .env-card       { width: 98vw; max-width: 98vw; min-height: 90vh; }
+  .env-flap-clip { clip-path: polygon(0 0, 100% 0, 50% 52%); }
+  .env-seal      { top: 52%; width: clamp(120px, 26vw, 175px) !important; height: clamp(120px, 26vw, 175px) !important; }
+  .env-seal-ring { top: 52%; width: clamp(130px, 28vw, 188px) !important; height: clamp(130px, 28vw, 188px) !important; }
+  .env-card      { width: 98vw; max-width: 98vw; min-height: 90vh; }
 }
