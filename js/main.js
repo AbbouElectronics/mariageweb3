@@ -177,52 +177,44 @@
       const ring = document.getElementById('envSealRing');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 1 — Vibration du sceau (0.35s)
-         Le sceau (z:100, indépendant du rabat) tremble sur place.
+         ÉTAPE 1 — Fissure du sceau (0.65s)
+         Le sceau visible est celui de la photo (baked-in).
+         On anime la photo + l'anneau pour simuler la rupture de la cire.
+         Aucun second sceau n'est jamais affiché.
       ══════════════════════════════════════════════════════════════ */
+      /* Vibration réaliste de l'enveloppe entière */
       tl
-        .to(seal, { scale: 1.07, duration: 0.10, ease: 'power2.out' })
-        .to(seal, { x: -7, duration: 0.055, ease: 'none' })
-        .to(seal, { x:  9, duration: 0.060, ease: 'none' })
-        .to(seal, { x: -5, duration: 0.050, ease: 'none' })
-        .to(seal, { x:  6, duration: 0.050, ease: 'none' })
-        .to(seal, { x: -3, duration: 0.040, ease: 'none' })
-        .to(seal, { x:  3, duration: 0.040, ease: 'none' })
-        .to(seal, { x:  0, scale: 1.04, duration: 0.06, ease: 'power1.out' });
+        .to(photo, { scale: 1.04, duration: 0.18, ease: 'power2.out' })
+        .to(photo, { x: -7, duration: 0.055, ease: 'none' })
+        .to(photo, { x:  9, duration: 0.060, ease: 'none' })
+        .to(photo, { x: -5, duration: 0.050, ease: 'none' })
+        .to(photo, { x:  6, duration: 0.050, ease: 'none' })
+        .to(photo, { x: -3, duration: 0.040, ease: 'none' })
+        .to(photo, { x:  3, duration: 0.040, ease: 'none' })
+        .to(photo, { x:  0, duration: 0.06,  ease: 'power1.out' });
 
-      /* Reflet lumineux sur la cire */
-      tl.to(seal, { filter: 'brightness(1.6) contrast(1.1)', duration: 0.12 }, '-=0.35');
-      tl.to(seal, { filter: 'brightness(1.0)',               duration: 0.20, ease: 'power2.out' });
+      /* Éclair lumineux : reflet sur la cire au moment de la rupture */
+      tl.to(photo, { filter: 'brightness(1.5) contrast(1.08)', duration: 0.12 }, '-=0.42');
+      tl.to(photo, { filter: 'brightness(1.0)',                duration: 0.30, ease: 'power2.out' });
 
-      /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 2 — Détachement du sceau (0.85s)
-         Le sceau entier se décolle : zoom + rotation + ombre + glisse.
-         L'anneau explose simultanément.
-         Total sceau : ~1.2s
-      ══════════════════════════════════════════════════════════════ */
+      /* L'anneau explose vers l'extérieur — symbolise le sceau qui se brise */
       if (ring) {
-        tl.to(ring, { scale: 3.0, opacity: 0, duration: 0.75, ease: 'power3.out' }, '-=0.1');
+        tl.to(ring, { scale: 3.2, opacity: 0, duration: 0.70, ease: 'power3.out' }, '-=0.38');
       }
-      tl.to(seal, {
-        scale:    1.22,
-        rotation: 14,
-        y:        90,
-        opacity:  0,
-        filter:   'drop-shadow(0 16px 28px rgba(0,0,0,0.50)) brightness(1.35)',
-        duration: 0.85,
-        ease:     'power2.in'
-      }, '<');
+
+      /* Enveloppe reprend sa taille normale */
+      tl.to(photo, { scale: 1.0, duration: 0.35, ease: 'power2.inOut' }, '-=0.3');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 3 — Ouverture du rabat (2.5s) — STRICTEMENT après le sceau.
-         Architecture: flapClip (clip-path, fixe) / flap (rotateX, sans clip-path).
-         Fallback Safari: onUpdate masque le wrapper dès 90° de rotation.
+         ÉTAPE 2 — Ouverture du rabat (2.5s) — STRICTEMENT après rupture.
+         flapClip = clip-path fixe  /  flap = rotateX sans clip-path.
+         Fallback Safari : masquage manuel dès 90° (onUpdate).
       ══════════════════════════════════════════════════════════════ */
       let flapHidden = false;
       tl.to(flap, {
-        rotateX:       -180,
-        duration:      2.5,
-        ease:          'expo.out',
+        rotateX:         -180,
+        duration:        2.5,
+        ease:            'expo.out',
         transformOrigin: 'top center',
         onUpdate: function () {
           if (!flapHidden) {
@@ -236,15 +228,14 @@
         onComplete: function () {
           flapClip.style.display = 'none';
         }
-      }); /* pas de position négative — démarre strictement après le sceau */
+      });
 
-      /* Ombre dynamique : légère obscurité pendant l'ouverture */
+      /* Ombre dynamique pendant l'ouverture */
       tl.to(photo, { filter: 'brightness(0.88)', duration: 1.0, ease: 'power1.inOut' }, '<');
       tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.0, ease: 'power1.out'  }, '-=0.8');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 4 — La carte glisse lentement hors de l'enveloppe
-         Commence dès que le rabat est presque ouvert (~80%)
+         ÉTAPE 3 — La carte glisse hors de l'enveloppe
       ══════════════════════════════════════════════════════════════ */
       tl.to(card, {
         yPercent: -58,
@@ -254,7 +245,7 @@
       }, '-=0.7');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 5 — Photo s'efface, carte monte et se centre
+         ÉTAPE 4 — Photo s'efface, carte monte et se centre
       ══════════════════════════════════════════════════════════════ */
       tl.to(photo, {
         opacity:  0,
