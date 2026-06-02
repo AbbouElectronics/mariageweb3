@@ -165,10 +165,10 @@
       if (seal) gsap.set(seal, { xPercent: -50, yPercent: -50 });
       if (card) {
         gsap.set(card, { xPercent: -50, yPercent: 22, opacity: 0 });
-        /* Bordure et coins floraux — apparaissent après la carte */
+        /* Bordure et illustration botanique — apparaissent après la carte */
         gsap.set('.card-border',          { opacity: 0 });
         gsap.set('.card-monogram',        { opacity: 0 });
-        gsap.set('.floral-corner',        { opacity: 0, scale: 0.95 });
+        gsap.set('.env-card-florals',     { opacity: 0 });
         /* Cascade textuelle */
         gsap.set('.env-card-eyebrow',     { opacity: 0, y: 18 });
         gsap.set('.env-card-names',       { opacity: 0, y: 22 });
@@ -298,10 +298,10 @@
         opacity: 1, duration: 1.2, ease: 'power2.out'
       }, 'cardExit+=0.55');
 
-      /* Coins floraux : épanouissement en stagger */
-      tl.to('.floral-corner', {
-        opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', stagger: 0.10
-      }, 'cardExit+=0.85');
+      /* Illustration botanique : fondu doux après la bordure */
+      tl.to('.env-card-florals', {
+        opacity: 1, duration: 1.8, ease: 'power2.out'
+      }, 'cardExit+=0.75');
 
       /* -- Texte : cascade séquentielle */
       tl.to('.env-card-eyebrow', { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });

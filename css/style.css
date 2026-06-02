@@ -1736,6 +1736,17 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
+/* ── SVG illustration botanique — overlay absolu ── */
+.env-card-florals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
 /* ── Bordure champagne dorée (élément animé par GSAP) ── */
 .card-border {
   position: absolute;
