@@ -177,50 +177,54 @@
       const ring = document.getElementById('envSealRing');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 1 — Réaction du sceau : zoom lent + vibration réaliste
-         Durée : ~1.2s
+         ÉTAPE 1 — Vibration du sceau (0.35s)
+         Le sceau (z:100, indépendant du rabat) tremble sur place.
       ══════════════════════════════════════════════════════════════ */
       tl
-        /* Zoom doux vers le sceau */
-        .to(photo, { scale: 1.055, duration: 0.85, ease: 'power2.out' })
-        /* Légère vibration réaliste — 6 micro-mouvements irréguliers */
-        .to(photo, { x: -7,  duration: 0.07,  ease: 'none' }, '-=0.38')
-        .to(photo, { x:  9,  duration: 0.08,  ease: 'none' })
-        .to(photo, { x: -5,  duration: 0.065, ease: 'none' })
-        .to(photo, { x:  6,  duration: 0.065, ease: 'none' })
-        .to(photo, { x: -3,  duration: 0.055, ease: 'none' })
-        .to(photo, { x:  3,  duration: 0.055, ease: 'none' })
-        .to(photo, { x:  0,  duration: 0.07,  ease: 'power1.out' })
-        /* Reflet lumineux : éclair bref sur la cire */
-        .to(photo, { filter: 'brightness(1.25) contrast(1.06)', duration: 0.16 }, '-=0.5')
-        .to(photo, { filter: 'brightness(1.0)',                 duration: 0.55, ease: 'power2.out' });
+        .to(seal, { scale: 1.07, duration: 0.10, ease: 'power2.out' })
+        .to(seal, { x: -7, duration: 0.055, ease: 'none' })
+        .to(seal, { x:  9, duration: 0.060, ease: 'none' })
+        .to(seal, { x: -5, duration: 0.050, ease: 'none' })
+        .to(seal, { x:  6, duration: 0.050, ease: 'none' })
+        .to(seal, { x: -3, duration: 0.040, ease: 'none' })
+        .to(seal, { x:  3, duration: 0.040, ease: 'none' })
+        .to(seal, { x:  0, scale: 1.04, duration: 0.06, ease: 'power1.out' });
+
+      /* Reflet lumineux sur la cire */
+      tl.to(seal, { filter: 'brightness(1.6) contrast(1.1)', duration: 0.12 }, '-=0.35');
+      tl.to(seal, { filter: 'brightness(1.0)',               duration: 0.20, ease: 'power2.out' });
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 2 — Détachement du sceau : anneau explose vers l'extérieur
-         Durée : ~1.0s, chevauche avec fin étape 1
+         ÉTAPE 2 — Détachement du sceau (0.85s)
+         Le sceau entier se décolle : zoom + rotation + ombre + glisse.
+         L'anneau explose simultanément.
+         Total sceau : ~1.2s
       ══════════════════════════════════════════════════════════════ */
       if (ring) {
-        tl.to(ring, { scale: 2.4, opacity: 0, duration: 1.0, ease: 'power3.out' }, '-=0.75');
+        tl.to(ring, { scale: 3.0, opacity: 0, duration: 0.75, ease: 'power3.out' }, '-=0.1');
       }
-      /* Retour au zoom initial — l'enveloppe "respire" */
-      tl.to(photo, { scale: 1.0, duration: 0.80, ease: 'power2.inOut' }, '-=0.50');
+      tl.to(seal, {
+        scale:    1.22,
+        rotation: 14,
+        y:        90,
+        opacity:  0,
+        filter:   'drop-shadow(0 16px 28px rgba(0,0,0,0.50)) brightness(1.35)',
+        duration: 0.85,
+        ease:     'power2.in'
+      }, '<');
 
       /* ══════════════════════════════════════════════════════════════
-         ÉTAPE 3 — Ouverture du rabat en 3D très lente et fluide
-         Durée : 2.4s avec décélération naturelle expo.out.
-         Architecture : flapClip porte le clip-path (non-rotatif) ;
-         flap (enfant) porte les transforms 3D (sans clip-path).
-         → backface-visibility fonctionne correctement sur Safari.
+         ÉTAPE 3 — Ouverture du rabat (2.5s) — STRICTEMENT après le sceau.
+         Architecture: flapClip (clip-path, fixe) / flap (rotateX, sans clip-path).
+         Fallback Safari: onUpdate masque le wrapper dès 90° de rotation.
       ══════════════════════════════════════════════════════════════ */
       let flapHidden = false;
       tl.to(flap, {
-        rotateX: -180,
-        duration: 2.4,
-        ease: 'expo.out',
+        rotateX:       -180,
+        duration:      2.5,
+        ease:          'expo.out',
         transformOrigin: 'top center',
         onUpdate: function () {
-          /* Fallback Safari : dès que le rabat dépasse 90° on masque le clip wrapper.
-             backface-visibility devrait s'en charger, mais sur iOS ce n'est pas fiable. */
           if (!flapHidden) {
             const rx = Math.abs(gsap.getProperty(flap, 'rotateX'));
             if (rx > 92) {
@@ -232,38 +236,37 @@
         onComplete: function () {
           flapClip.style.display = 'none';
         }
-      }, '+=0.15');
+      }); /* pas de position négative — démarre strictement après le sceau */
 
-      /* Ombre dynamique : la lumière change lentement quand le rabat pivote */
-      tl.to(photo, { filter: 'brightness(0.88)', duration: 1.1, ease: 'power1.inOut' }, '-=2.1');
-      tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.0, ease: 'power1.out'  }, '-=0.9');
+      /* Ombre dynamique : légère obscurité pendant l'ouverture */
+      tl.to(photo, { filter: 'brightness(0.88)', duration: 1.0, ease: 'power1.inOut' }, '<');
+      tl.to(photo, { filter: 'brightness(1.0)',  duration: 1.0, ease: 'power1.out'  }, '-=0.8');
 
       /* ══════════════════════════════════════════════════════════════
          ÉTAPE 4 — La carte glisse lentement hors de l'enveloppe
-         Durée : 2.2s — comme une vraie lettre extraite à la main
+         Commence dès que le rabat est presque ouvert (~80%)
       ══════════════════════════════════════════════════════════════ */
       tl.to(card, {
         yPercent: -58,
-        opacity: 1,
-        duration: 2.2,
-        ease: 'power2.out'
-      }, '-=1.6');
+        opacity:  1,
+        duration: 2.0,
+        ease:     'power2.out'
+      }, '-=0.7');
 
       /* ══════════════════════════════════════════════════════════════
          ÉTAPE 5 — Photo s'efface, carte monte et se centre
-         Durée : ~2.2s
       ══════════════════════════════════════════════════════════════ */
       tl.to(photo, {
-        opacity: 0,
-        y: 45,
-        duration: 1.4,
-        ease: 'power2.inOut'
+        opacity:  0,
+        y:        40,
+        duration: 1.3,
+        ease:     'power2.inOut'
       }, '-=0.9');
 
       tl.to(card, {
         yPercent: -50,
-        duration: 1.3,
-        ease: 'power3.out'
+        duration: 1.2,
+        ease:     'power3.out'
       }, '-=0.8');
 
       /* ══════════════════════════════════════════════════════════════

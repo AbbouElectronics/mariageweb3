@@ -1649,18 +1649,19 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Sceau — centré à la jonction des plis de la photo */
+/* Sceau — z-index:100 = au-dessus de TOUT (body, clip wrapper, flap).
+   Le sceau ne doit jamais entrer dans le clip-path du rabat.
+   Visible : recouvre le sceau intégré à la photo. */
 .env-seal {
   position: absolute;
-  top: 50%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(150px, 16vw, 230px);
-  height: clamp(150px, 16vw, 230px);
+  width: clamp(160px, 18vw, 250px);
+  height: clamp(160px, 18vw, 250px);
   overflow: visible;
   cursor: pointer;
-  z-index: 20;
-  opacity: 0;
+  z-index: 100;
   pointer-events: all;
 }
 
