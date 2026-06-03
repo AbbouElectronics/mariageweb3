@@ -2068,3 +2068,61 @@ ul { list-style: none; }
   }
   .env-card-content { padding: 0 19%; }
 }
+
+/* ── Corrections raffinement v37 ─────────────────────── */
+
+/* 1. Voile blanc doux centré sur l'ovale bordeaux */
+.env-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 52% 62% at 50% 50%,
+    rgba(255,255,255,0.13) 0%,
+    rgba(255,255,255,0.05) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 2. Monogramme A&Z restauré — ivoire discret */
+.card-monogram { display: block !important; }
+
+/* Seuls les SVG floraux et la bordure restent cachés */
+.env-card-florals,
+.card-border { display: none !important; }
+
+/* 3. Titre réduit de 22% */
+.env-card-names {
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  margin: 0 0 0.5rem;
+}
+
+/* 4. Espacement vertical augmenté */
+.env-card-eyebrow   { margin-bottom: 2.0rem; }
+.env-card-rule      { margin: 0.8rem 0 1.4rem; }
+.env-card-date      { margin-bottom: 1.8rem; }
+.env-card-venue-label { margin-bottom: 0.5rem; }
+.env-card-venue     { margin-bottom: 2.8rem; }
+
+/* 5. Bouton bordeaux plein + texte ivoire */
+.env-card-cta {
+  background:    #5C1828 !important;
+  color:         #FAF0E6 !important;
+  border-color:  #5C1828 !important;
+  padding:       0.92rem 2.8rem;
+}
+.env-card-cta:hover {
+  background:   #7A2038 !important;
+  border-color: #7A2038 !important;
+  color:        #FAF0E6 !important;
+}
+
+/* 6. Image légèrement zoomée — fleurs rognées ~4% de chaque côté */
+.env-card { background-size: 108%; }
+
+/* 7. Mobile — largeur 90vw */
+@media (max-width: 600px) {
+  .env-card       { width: 90vw; background-size: 108%; }
+  .env-card-names { font-size: clamp(2.0rem, 8.5vw, 2.6rem); }
+}
