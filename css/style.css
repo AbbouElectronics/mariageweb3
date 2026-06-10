@@ -1051,6 +1051,99 @@ ul { list-style: none; }
   padding: 7rem 0;
   background: #F0E9DC;
 }
+.itineraire-intro {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  color: var(--text);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.itineraire-timeline {
+  max-width: 520px;
+  margin: 3.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.itin-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(178,140,58,0.22);
+  border-radius: 6px;
+  padding: 1.6rem 1.8rem;
+  box-shadow: 0 4px 16px rgba(30,10,5,0.08);
+}
+.itin-icon {
+  flex-shrink: 0;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--bordeaux);
+  display: flex; align-items: center; justify-content: center;
+  color: #FAF0E6;
+  font-size: 1.1rem;
+}
+.itin-icon.gold { background: var(--gold-dark); }
+.itin-content { flex: 1; }
+.itin-time {
+  font-family: var(--ff-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin: 0 0 0.25rem;
+}
+.itin-content h3 {
+  font-family: var(--ff-serif);
+  font-size: 1.05rem;
+  color: var(--bordeaux);
+  margin: 0 0 0.25rem;
+}
+.itin-addr {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  margin: 0 0 0.25rem;
+}
+.itin-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--gold-dark);
+  margin: 0;
+}
+.itin-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 0;
+  width: 100%;
+}
+.itin-line {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(178,140,58,0.35), rgba(178,140,58,0.15));
+}
+.itin-transport {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  border: 1px solid rgba(178,140,58,0.25);
+  border-radius: 20px;
+  padding: 0.45rem 1.1rem;
+  font-family: var(--ff-sans);
+  font-size: 0.76rem;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(30,10,5,0.06);
+}
+.itin-transport i { color: var(--bordeaux); }
+.itin-duration {
+  margin-left: 0.3rem;
+  color: var(--gold-dark);
+  font-style: italic;
+}
 
 .voyage-grid {
   display: grid;
