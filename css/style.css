@@ -1653,8 +1653,6 @@ ul { list-style: none; }
   position: absolute;
   inset: 0;
   clip-path: polygon(0 0, 100% 0, 50% 42%);
-  perspective: 1800px;
-  -webkit-perspective: 1800px;
   z-index: 10;
   pointer-events: none;
 }

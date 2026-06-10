@@ -8,116 +8,34 @@
 
 (function EnvelopeIntro() {
 
-  /* ---- Web Audio Piano Synth ---- */
-  let audioCtx = null;
-  let musicTimer = null;
-  let musicPlaying = false;
-
-  const NOTE = {
-    D3:146.83, A3:220.00, B3:246.94, Fs3:185.00, G3:196.00,
-    D4:293.66, E4:329.63, Fs4:369.99, G4:392.00, A4:440.00,
-    B4:493.88, Cs5:554.37, D5:587.33, E5:659.25, Fs5:739.99
-  };
-
-  function pianoNote(ctx, masterGain, freq, startT, dur, vel = 0.45) {
-    if (!freq) return;
-    const osc1  = ctx.createOscillator();
-    const osc2  = ctx.createOscillator();
-    const osc3  = ctx.createOscillator();
-    const gNode = ctx.createGain();
-
-    osc1.type = 'triangle'; osc1.frequency.value = freq;
-    osc2.type = 'sine';     osc2.frequency.value = freq * 2.005;
-    osc3.type = 'sine';     osc3.frequency.value = freq * 3.01;
-
-    const g2 = ctx.createGain(); g2.gain.value = 0.25;
-    const g3 = ctx.createGain(); g3.gain.value = 0.07;
-
-    osc1.connect(gNode);
-    osc2.connect(g2); g2.connect(gNode);
-    osc3.connect(g3); g3.connect(gNode);
-    gNode.connect(masterGain);
-
-    gNode.gain.setValueAtTime(0, startT);
-    gNode.gain.linearRampToValueAtTime(vel, startT + 0.015);
-    gNode.gain.setValueAtTime(vel * 0.65, startT + 0.08);
-    gNode.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
-
-    [osc1, osc2, osc3].forEach(o => { o.start(startT); o.stop(startT + dur + 0.05); });
-  }
-
-  function chord(ctx, mg, notes, t, dur, vel) {
-    notes.forEach(f => pianoNote(ctx, mg, f, t, dur, vel));
-  }
-
-  function scheduleMusic(ctx, masterGain) {
-    const bpm  = 58;
-    const beat = 60 / bpm;
-    const bar  = beat * 4;
-
-    const chords = [
-      [NOTE.D3, NOTE.Fs4, NOTE.A4],
-      [NOTE.A3, NOTE.E4,  NOTE.A4],
-      [NOTE.B3, NOTE.D4,  NOTE.Fs4],
-      [NOTE.Fs3,NOTE.Cs5, NOTE.Fs4],
-      [NOTE.G3, NOTE.D4,  NOTE.G4],
-      [NOTE.D3, NOTE.Fs4, NOTE.A4],
-      [NOTE.G3, NOTE.D4,  NOTE.B4],
-      [NOTE.A3, NOTE.E4,  NOTE.A4],
-    ];
-
-    const melody = [
-      [NOTE.Fs5, NOTE.E5],
-      [NOTE.D5,  NOTE.Cs5],
-      [NOTE.B4,  NOTE.A4],
-      [NOTE.Fs4, NOTE.Fs4],
-      [NOTE.G4,  NOTE.A4],
-      [NOTE.B4,  NOTE.A4],
-      [NOTE.G4,  NOTE.Fs4],
-      [NOTE.E4,  NOTE.D4],
-    ];
-
-    let t = ctx.currentTime + 0.1;
-
-    function scheduleBar(barIndex) {
-      if (!musicPlaying) return;
-      const ci = barIndex % chords.length;
-      const t0 = t + barIndex * bar;
-
-      chord(ctx, masterGain, chords[ci], t0, bar * 0.9, 0.28);
-
-      melody[ci].forEach((mf, mi) => {
-        pianoNote(ctx, masterGain, mf, t0 + mi * beat * 2, beat * 1.8, 0.22);
-      });
-
-      const delay = (t0 + bar - ctx.currentTime - 0.2) * 1000;
-      musicTimer = setTimeout(() => scheduleBar(barIndex + 1), Math.max(0, delay));
-    }
-
-    scheduleBar(0);
-  }
+  /* ---- Lecteur MP3 ---- */
+  let audioEl = null;
 
   function startMusic() {
-    if (musicPlaying) return;
-    musicPlaying = true;
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioEl) return;
+    audioEl = new Audio('audio/musique-mariage.mp3');
+    audioEl.loop   = true;
+    audioEl.volume = 0;
+    audioEl.play().catch(() => {});
 
-    const masterGain = audioCtx.createGain();
-    const compressor = audioCtx.createDynamicsCompressor();
-
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.55, audioCtx.currentTime + 2.5);
-
-    masterGain.connect(compressor);
-    compressor.connect(audioCtx.destination);
-
-    scheduleMusic(audioCtx, masterGain);
+    let vol = 0;
+    const ramp = setInterval(() => {
+      vol = Math.min(vol + 0.02, 0.65);
+      if (audioEl) audioEl.volume = vol;
+      if (vol >= 0.65) clearInterval(ramp);
+    }, 80);
   }
 
   function stopMusic() {
-    musicPlaying = false;
-    clearTimeout(musicTimer);
-    if (audioCtx) { audioCtx.close(); audioCtx = null; }
+    if (!audioEl) return;
+    const el = audioEl;
+    audioEl = null;
+    let vol = el.volume;
+    const fade = setInterval(() => {
+      vol = Math.max(vol - 0.04, 0);
+      el.volume = vol;
+      if (vol <= 0) { clearInterval(fade); el.pause(); }
+    }, 60);
   }
 
   /* ---- Envelope DOM ---- */
@@ -248,26 +166,15 @@
       /* -- ETAT 3 : PAUSE (300ms) */
       tl.to({}, { duration: 0.30 });
 
-      /* -- ETAT 4 : OUVERTURE DU RABAT (2500ms) */
+      /* -- ETAT 4 : OUVERTURE DU RABAT (1500ms)
+         Morphing clip-path : le triangle du rabat remonte vers le haut edge.
+         Fiable sur tous navigateurs (pas de 3D / perspective). */
       tl.addLabel('flapOpen');
 
-      /* power1.inOut : depart lent (inertie/resistance du rabat), acceleration,
-         puis ralentissement doux a la fin — sensation d'objet physique. */
-      let flapHidden = false;
-      tl.to(flap, {
-        rotateX:         -180,
-        duration:        2.5,
-        ease:            'power1.inOut',
-        transformOrigin: 'top center',
-        onUpdate: function () {
-          if (!flapHidden) {
-            const rx = Math.abs(gsap.getProperty(flap, 'rotateX'));
-            if (rx > 90) {
-              flapHidden = true;
-              flapClip.style.visibility = 'hidden';
-            }
-          }
-        },
+      tl.to(flapClip, {
+        clipPath: 'polygon(0 0, 100% 0, 50% 0%)',
+        duration: 1.5,
+        ease: 'power2.inOut',
         onComplete: function () {
           flapClip.style.display = 'none';
         }
