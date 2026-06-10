@@ -754,6 +754,21 @@ ul { list-style: none; }
   max-width: 100% !important;
   margin: 0 !important;
 }
+.dress-code-roles {
+  margin: 1.2rem auto 0;
+  max-width: 580px;
+}
+.dress-code-roles p {
+  font-size: 0.98rem !important;
+  color: var(--text) !important;
+  max-width: 100% !important;
+  margin: 0.3rem auto !important;
+}
+.dress-code-closing {
+  margin-top: 1.4rem !important;
+  font-style: italic;
+  color: var(--gold-dark) !important;
+}
 
 /* ── Cartes Google Maps ── */
 .maps-grid {
