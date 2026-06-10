@@ -2127,3 +2127,18 @@ ul { list-style: none; }
   .env-card-names { font-size: clamp(2.0rem, 8.5vw, 2.6rem); }
 }
 
+/* 8. Police Italiana sur tous les éléments de la carte */
+.env-card-eyebrow,
+.env-card-names,
+.env-card-date,
+.env-card-venue-label,
+.env-card-venue {
+  font-family: 'Italiana', serif;
+  font-style:  normal;
+}
+.env-card-eyebrow { font-size: clamp(0.78rem, 1.5vw, 0.95rem); letter-spacing: 0.06em; }
+.env-card-names   { font-size: clamp(2.5rem, 5.5vw, 4.5rem);   letter-spacing: 0.04em; }
+.env-card-date    { font-size: clamp(1.4rem, 3.0vw, 2.0rem);   letter-spacing: 0.05em; }
+.env-card-venue-label { font-size: clamp(0.52rem, 1vw, 0.60rem); letter-spacing: 0.30em; }
+.env-card-venue   { font-size: clamp(0.85rem, 1.8vw, 1.10rem); letter-spacing: 0.06em; }
+
