@@ -218,7 +218,7 @@ ul { list-style: none; }
 }
 
 .nav-logo {
-  font-family: 'Italiana', serif;
+  font-family: var(--ff-script);
   font-size: 2.2rem;
   color: var(--warm-white);
   transition: color var(--transition);
@@ -355,8 +355,9 @@ ul { list-style: none; }
 }
 
 .hero-names .ampersand {
-  color: var(--gold);
   font-family: var(--ff-script);
+  color: var(--gold);
+  font-size: 1.1em;
 }
 
 .hero-divider {
@@ -1325,7 +1326,7 @@ ul { list-style: none; }
 .footer-top { padding: 5rem 0 3rem; text-align: center; }
 
 .footer-logo {
-  font-family: 'Italiana', serif;
+  font-family: var(--ff-script);
   font-size: 4rem;
   color: var(--gold);
   margin-bottom: 1rem;
@@ -1885,8 +1886,9 @@ ul { list-style: none; }
   text-shadow: 0 1px 4px rgba(92,24,40,0.10), 0 4px 14px rgba(92,24,40,0.05);
 }
 .env-amp {
+  font-family: var(--ff-script);
   color: #B89048;
-  font-size: 0.86em;
+  font-size: 1.15em;
 }
 
 /* Séparateur ornemental losange */
@@ -2085,7 +2087,7 @@ ul { list-style: none; }
 /* Typographie bordeaux foncé sur fond ivoire clair (nouvelle carte cygnes) */
 .env-card-eyebrow  { color: rgba(92,24,40,0.68); }
 .env-card-names    { color: #5C1828; text-shadow: none; }
-.env-amp           { color: #A87830; }
+.env-amp           { font-family: var(--ff-script); color: #A87830; font-size: 1.15em; }
 .env-card-rule span { background: linear-gradient(to right, transparent, rgba(168,120,48,0.40), transparent); }
 .env-card-date     { color: #3A0A14; }
 .env-card-venue-label { color: rgba(160,120,40,0.85); }
