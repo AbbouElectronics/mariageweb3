@@ -358,7 +358,10 @@ ul { list-style: none; }
 .hero-names .ampersand {
   font-family: var(--ff-script);
   color: var(--gold);
-  font-size: 1.1em;
+  font-size: 1.2em;
+  display: block;
+  text-align: center;
+  line-height: 1.1;
 }
 
 .hero-divider {
@@ -2181,7 +2184,10 @@ ul { list-style: none; }
 .env-amp {
   font-family: var(--ff-script);
   color: #B89048;
-  font-size: 1.15em;
+  font-size: 1.3em;
+  display: block;
+  text-align: center;
+  line-height: 1.1;
 }
 
 /* Séparateur ornemental losange */
