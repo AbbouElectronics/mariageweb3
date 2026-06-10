@@ -225,6 +225,7 @@ ul { list-style: none; }
 }
 
 #navbar.scrolled .nav-logo { color: var(--gold-dark); }
+.logo-initial { font-size: 1.25em; line-height: 1; }
 
 .nav-links {
   display: flex;
@@ -1188,6 +1189,129 @@ ul { list-style: none; }
    RSVP
    ============================================= */
 
+/* ── Section Cadeaux ── */
+.cadeaux-section {
+  padding: 7rem 0;
+  background: var(--cream);
+}
+.cadeaux-intro {
+  max-width: 580px;
+  margin: 0 auto 3.5rem;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.75;
+}
+.cadeaux-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .cadeaux-grid { grid-template-columns: 1fr; }
+}
+.cadeau-card {
+  background: #fff;
+  border: 1px solid rgba(178,140,58,0.20);
+  border-radius: 6px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(30,10,5,0.07);
+}
+.cadeau-icon {
+  font-size: 2rem;
+  color: var(--gold-dark);
+  margin-bottom: 1.2rem;
+}
+.cadeau-card h3 {
+  font-family: var(--ff-serif);
+  font-size: 1.15rem;
+  color: var(--bordeaux);
+  margin-bottom: 0.8rem;
+}
+.cadeau-desc {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 1.8rem;
+}
+.rib-block {
+  background: #FAF7F2;
+  border: 1px solid rgba(178,140,58,0.18);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.4rem;
+  text-align: left;
+}
+.rib-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.38rem 0;
+  border-bottom: 1px solid rgba(178,140,58,0.10);
+}
+.rib-row:last-child { border-bottom: none; }
+.rib-label {
+  font-family: var(--ff-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  white-space: nowrap;
+}
+.rib-value {
+  font-family: var(--ff-serif);
+  font-size: 0.88rem;
+  color: var(--text);
+  text-align: right;
+  word-break: break-all;
+}
+.rib-iban {
+  font-family: 'Courier New', monospace;
+  font-size: 0.80rem;
+  letter-spacing: 0.06em;
+}
+.btn-copy-iban {
+  background: transparent;
+  border: 1.5px solid rgba(92,24,40,0.45);
+  border-radius: 2px;
+  font-family: 'Italiana', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  color: #5C1828;
+  padding: 0.6rem 1.6rem;
+  cursor: pointer;
+  transition: background 0.22s, color 0.22s;
+}
+.btn-copy-iban:hover { background: #5C1828; color: #FAF0E6; }
+.copy-confirm {
+  font-size: 0.78rem;
+  color: #4A7852;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.copy-confirm.show { opacity: 1; }
+.cadeau-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+.cadeau-list li {
+  font-size: 0.88rem;
+  color: var(--text);
+  padding: 0.4rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.cadeau-list li i { color: var(--gold-dark); font-size: 0.75rem; }
+
+/* ── Section RSVP ── */
 .rsvp-section {
   position: relative;
   padding: 7rem 0;

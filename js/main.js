@@ -447,6 +447,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
   });
 
+  /* ---------- COPIE IBAN ---------- */
+  window.copyIban = function() {
+    const iban = document.getElementById('ribIban')?.textContent?.trim();
+    if (!iban || iban.includes('compléter')) return;
+    navigator.clipboard?.writeText(iban.replace(/\s/g, '')).then(() => {
+      const c = document.getElementById('copyConfirm');
+      if (c) { c.classList.add('show'); setTimeout(() => c.classList.remove('show'), 2500); }
+    });
+  };
+
   /* ---------- RSVP FORM ---------- */
   const rsvpForm    = document.getElementById('rsvpForm');
   const formSuccess = document.getElementById('formSuccess');

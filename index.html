@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdelali & Zahia — Notre Mariage</title>
-  <link rel="stylesheet" href="css/style.css?v=51" />
+  <link rel="stylesheet" href="css/style.css?v=52" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Italiana&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -441,13 +441,14 @@
   <!-- ===== NAVIGATION ===== -->
   <nav id="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">A & Z</a>
+      <a href="index.html" class="nav-logo"><span class="logo-initial">A</span> & <span class="logo-initial">Z</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#histoire">Notre Histoire</a></li>
         <li><a href="#details">La Cérémonie</a></li>
+        <li><a href="#cadeaux">Cadeaux</a></li>
         <li><a href="#rsvp" class="nav-btn">RSVP</a></li>
       </ul>
     </div>
@@ -830,6 +831,66 @@ Une journée remplie d'amour, de joie et de souvenirs précieux, marquant le vé
     </div>
   </section>
 
+  <!-- ===== CADEAUX ===== -->
+  <section id="cadeaux" class="cadeaux-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Votre présence est notre plus beau cadeau</p>
+        <h2 class="section-title">Liste de Cadeaux</h2>
+        <div class="section-ornament"><span></span><i class="fa-solid fa-gift"></i><span></span></div>
+        <p class="cadeaux-intro">Si vous souhaitez nous offrir un cadeau, nous avons choisi de privilégier une contribution à notre voyage de noces et à notre nouveau foyer.</p>
+      </div>
+
+      <div class="cadeaux-grid">
+
+        <!-- Carte RIB / Virement -->
+        <div class="cadeau-card rib-card" data-aos>
+          <div class="cadeau-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <h3>Participation au voyage de noces</h3>
+          <p class="cadeau-desc">Contribuez à notre lune de miel en effectuant un virement bancaire.</p>
+
+          <div class="rib-block">
+            <div class="rib-row">
+              <span class="rib-label">Titulaire</span>
+              <span class="rib-value" id="ribTitulaire">— à compléter —</span>
+            </div>
+            <div class="rib-row">
+              <span class="rib-label">IBAN</span>
+              <span class="rib-value rib-iban" id="ribIban">— à compléter —</span>
+            </div>
+            <div class="rib-row">
+              <span class="rib-label">BIC</span>
+              <span class="rib-value" id="ribBic">— à compléter —</span>
+            </div>
+            <div class="rib-row">
+              <span class="rib-label">Banque</span>
+              <span class="rib-value" id="ribBanque">— à compléter —</span>
+            </div>
+          </div>
+
+          <button class="btn btn-copy-iban" onclick="copyIban()">
+            <i class="fa-regular fa-copy"></i> Copier l'IBAN
+          </button>
+          <p class="copy-confirm" id="copyConfirm">IBAN copié !</p>
+        </div>
+
+        <!-- Message cadeaux matériels -->
+        <div class="cadeau-card" data-aos>
+          <div class="cadeau-icon"><i class="fa-solid fa-heart"></i></div>
+          <h3>Idées cadeaux</h3>
+          <p class="cadeau-desc">Pour ceux qui préfèrent offrir un cadeau, voici quelques idées qui nous feraient plaisir.</p>
+          <ul class="cadeau-list">
+            <li><i class="fa-solid fa-check"></i> Expériences gastronomiques</li>
+            <li><i class="fa-solid fa-check"></i> Décoration intérieure</li>
+            <li><i class="fa-solid fa-check"></i> Équipement de cuisine</li>
+            <li><i class="fa-solid fa-check"></i> Art & objets décoratifs</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===== RSVP ===== -->
   <section id="rsvp" class="rsvp-section">
     <div class="rsvp-overlay"></div>
@@ -918,7 +979,7 @@ Une journée remplie d'amour, de joie et de souvenirs précieux, marquant le vé
   <footer class="footer">
     <div class="footer-top">
       <div class="container">
-        <div class="footer-logo">A & Z</div>
+        <div class="footer-logo"><span class="logo-initial">A</span> & <span class="logo-initial">Z</span></div>
         <p class="footer-tagline">Abdelali & Zahia — 22 Juin 2026 — ŌRA Le Domaine</p>
         <div class="footer-divider">
           <span></span><i class="fa-solid fa-heart"></i><span></span>
@@ -948,6 +1009,6 @@ Une journée remplie d'amour, de joie et de souvenirs précieux, marquant le vé
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="js/main.js?v=49"></script>
+  <script src="js/main.js?v=52"></script>
 </body>
 </html>
