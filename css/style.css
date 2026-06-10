@@ -1662,25 +1662,34 @@ ul { list-style: none; }
 
 .footer-links a:hover { color: var(--gold); }
 
-.footer-social {
+.footer-contacts {
   display: flex;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 2.5rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
-
-.footer-social a {
-  width: 42px; height: 42px;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
+.footer-tel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.55);
-  font-size: 0.95rem;
-  transition: all var(--transition);
+  gap: 0.6rem;
+  color: rgba(255,255,255,0.72);
+  text-decoration: none;
+  font-family: var(--ff-sans);
+  font-size: 0.88rem;
+  transition: color 0.25s;
 }
+.footer-tel:hover { color: var(--gold); }
+.footer-tel i { color: var(--gold); font-size: 0.8rem; }
+.footer-tel-name {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.92rem;
+}
+.footer-tel-num { letter-spacing: 0.08em; }
 
+/* ancien hover social (conservé pour compat) */
 .footer-social a:hover {
   background: var(--gold-dark);
   border-color: var(--gold-dark);
