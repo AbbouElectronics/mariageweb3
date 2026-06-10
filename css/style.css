@@ -1933,11 +1933,15 @@ ul { list-style: none; }
 /* Nom du domaine */
 .env-card-venue {
   font-family: var(--ff-serif);
-  font-size: clamp(0.82rem, 1.7vw, 1.06rem);
-  letter-spacing: 0.09em;
+  font-size: clamp(0.92rem, 1.9vw, 1.15rem);
+  letter-spacing: 0.07em;
   color: rgba(46,26,8,0.70);
   margin-bottom: 2.4rem;
   opacity: 0;
+}
+.env-card-venue strong {
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 /* CTA — bordeaux raffiné */
@@ -2083,6 +2087,7 @@ ul { list-style: none; }
 .env-card-date     { color: #3A0A14; }
 .env-card-venue-label { color: rgba(160,120,40,0.85); }
 .env-card-venue    { color: rgba(58,10,20,0.75); }
+.env-card-venue strong { color: #5C1828; }
 .env-card-cta      { border-color: rgba(92,24,40,0.55); color: rgba(92,24,40,0.88); }
 .env-card-cta:hover { background: rgba(92,24,40,0.08); color: #5C1828; border-color: rgba(92,24,40,0.75); }
 .env-discover-btn  { color: rgba(92,24,40,0.45); }

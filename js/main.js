@@ -311,8 +311,8 @@
       tl.to('.env-card-rule',    { opacity: 1, scaleX: 1, transformOrigin: 'center', duration: 0.60, ease: 'power2.out' });
       tl.to('.env-card-date',    { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });
       tl.to('.env-card-venue-label', { opacity: 1, y: 0, duration: 0.50, ease: 'power2.out' });
-      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.60, ease: 'power2.out' });
-      tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.60, ease: 'power2.out' });
+      tl.to('.env-card-venue',   { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' });
+      tl.to('.env-card-cta',     { opacity: 1, y: 0, duration: 0.70, ease: 'power2.out' }, '<');
 
       /* -- ETAT 7 : AGRANDISSEMENT (1500ms) */
       tl.to(card, {
