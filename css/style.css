@@ -362,7 +362,7 @@ ul { list-style: none; }
   display: block;
   text-align: center;
   line-height: 1.1;
-  margin-bottom: -0.65em;
+  margin-bottom: -1em;
 }
 
 .hero-divider {
@@ -2189,7 +2189,7 @@ ul { list-style: none; }
   display: block;
   text-align: center;
   line-height: 1.1;
-  margin-bottom: -0.65em;
+  margin-bottom: -1em;
 }
 
 /* Séparateur ornemental losange */
