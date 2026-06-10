@@ -580,8 +580,8 @@ ul { list-style: none; }
 
 .details-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.8rem;
   margin-bottom: 3rem;
 }
 
@@ -1550,6 +1550,7 @@ ul { list-style: none; }
   .details-grid { grid-template-columns: 1fr 1fr; }
   .detail-card.featured { transform: none; }
   .detail-card.featured.visible { transform: none; }
+
   .voyage-grid { grid-template-columns: 1fr 1fr; }
   .cortege-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-masonry { grid-template-columns: 1fr 1fr; }
