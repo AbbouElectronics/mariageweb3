@@ -362,6 +362,7 @@ ul { list-style: none; }
   display: block;
   text-align: center;
   line-height: 1.1;
+  margin-bottom: -0.35em;
 }
 
 .hero-divider {
@@ -2188,6 +2189,7 @@ ul { list-style: none; }
   display: block;
   text-align: center;
   line-height: 1.1;
+  margin-bottom: -0.35em;
 }
 
 /* Séparateur ornemental losange */
@@ -2386,7 +2388,7 @@ ul { list-style: none; }
 /* Typographie bordeaux foncé sur fond ivoire clair (nouvelle carte cygnes) */
 .env-card-eyebrow  { color: rgba(92,24,40,0.68); }
 .env-card-names    { color: #5C1828; text-shadow: none; }
-.env-amp           { font-family: var(--ff-script); color: #A87830; font-size: 1.15em; }
+.env-amp           { font-family: var(--ff-script); color: #A87830; font-size: 1.15em; margin-bottom: -0.35em; }
 .env-card-rule span { background: linear-gradient(to right, transparent, rgba(168,120,48,0.40), transparent); }
 .env-card-date     { color: #3A0A14; }
 .env-card-venue-label { color: rgba(160,120,40,0.85); }
