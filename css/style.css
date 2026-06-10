@@ -1962,20 +1962,25 @@ ul { list-style: none; }
 
 .env-discover-btn {
   display: block;
-  margin: 1.1rem auto 0;
-  background: none;
-  border: none;
-  font-family: var(--ff-sans);
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
+  margin: 1.2rem auto 0;
+  background: transparent;
+  border: 1.5px solid rgba(92,24,40,0.55);
+  border-radius: 2px;
+  font-family: 'Italiana', serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(110,82,38,0.52);
+  color: rgba(92,24,40,0.82);
   cursor: pointer;
-  padding: 0.4rem;
-  transition: color 0.3s;
+  padding: 0.75rem 2.2rem;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
   pointer-events: auto;
 }
-.env-discover-btn:hover { color: rgba(110,82,38,0.88); }
+.env-discover-btn:hover {
+  background: #5C1828;
+  color: #FAF0E6;
+  border-color: #5C1828;
+}
 
 /* Hint — or chaud, bas de l'écran */
 .env-hint-text {
@@ -2088,8 +2093,7 @@ ul { list-style: none; }
 .env-card-venue strong { color: #5C1828; }
 .env-card-cta      { border-color: rgba(92,24,40,0.55); color: rgba(92,24,40,0.88); }
 .env-card-cta:hover { background: rgba(92,24,40,0.08); color: #5C1828; border-color: rgba(92,24,40,0.75); }
-.env-discover-btn  { color: rgba(92,24,40,0.45); }
-.env-discover-btn:hover { color: rgba(92,24,40,0.72); }
+.env-discover-btn  { color: rgba(92,24,40,0.82); border-color: rgba(92,24,40,0.55); }
 
 /* ─── Mobile ─── */
 @media (max-width: 600px) {
