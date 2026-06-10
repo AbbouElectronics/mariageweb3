@@ -460,18 +460,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  rsvpForm?.addEventListener('submit', e => {
+  rsvpForm?.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = rsvpForm.querySelector('.btn-rsvp');
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
 
-    setTimeout(() => {
-      rsvpForm.querySelectorAll('.form-group, .form-row, .btn-rsvp').forEach(el => {
-        el.style.display = 'none';
+    try {
+      const res = await fetch('https://formspree.io/f/xgoblvog', {
+        method:  'POST',
+        body:    new FormData(rsvpForm),
+        headers: { 'Accept': 'application/json' }
       });
-      formSuccess?.classList.add('show');
-    }, 1200);
+
+      if (res.ok) {
+        rsvpForm.querySelectorAll('.form-group, .form-row, .btn-rsvp').forEach(el => {
+          el.style.display = 'none';
+        });
+        formSuccess?.classList.add('show');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        const msg  = data?.errors?.map(er => er.message).join(', ') || 'Erreur inconnue';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Envoyer ma réponse';
+        alert('Erreur lors de l\'envoi : ' + msg + '\nVeuillez réessayer.');
+      }
+    } catch {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Envoyer ma réponse';
+      alert('Erreur réseau. Vérifiez votre connexion et réessayez.');
+    }
   });
 
   /* ---------- GALLERY FILTER (gallery page) ---------- */
