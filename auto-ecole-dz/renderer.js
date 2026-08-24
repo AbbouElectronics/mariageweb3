@@ -2,8 +2,11 @@
   'use strict';
 
   const CATEGORY_LABELS = {
-    panneaux: 'إشارات المرور',
+    danger: 'إشارات الخطر',
+    interdiction: 'إشارات المنع',
+    obligation: 'إشارات الإجباري',
     priorite: 'الأولوية وقواعد المرور',
+    zones: 'تعليمات خاصة بالمناطق',
     securite: 'السياقة الآمنة',
     documents: 'الوثائق والتأمين',
     mecanique: 'الميكانيك العامة'
@@ -141,8 +144,13 @@
     el.questionCategory.textContent = CATEGORY_LABELS[q.category] || q.category;
     el.questionText.textContent = q.text;
 
-    if (q.sign && typeof SIGNS !== 'undefined' && SIGNS[q.sign]) {
-      el.questionImage.innerHTML = SIGNS[q.sign];
+    if (q.image) {
+      el.questionImage.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = q.image;
+      img.alt = '';
+      img.draggable = false;
+      el.questionImage.appendChild(img);
       el.questionImage.classList.remove('hidden');
     } else {
       el.questionImage.innerHTML = '';
