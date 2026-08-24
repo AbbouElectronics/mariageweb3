@@ -33,7 +33,7 @@ const SIGNS = {
 
   virageDangereux: `<svg viewBox="0 0 100 100"><polygon points="50,6 96,92 4,92" fill="#fff" stroke="#d21f28" stroke-width="8"/><path d="M30 76 Q30 34 70 34" fill="none" stroke="#111" stroke-width="8"/></svg>`,
 
-  chausseeGlissante: `<svg viewBox="0 0 100 100"><polygon points="50,6 96,92 4,92" fill="#fff" stroke="#d21f28" stroke-width="8"/><path d="M22 60 Q40 44 58 60 T78 58" fill="none" stroke="#111" stroke-width="6"/></svg>`,
+  chausseeGlissante: `<svg viewBox="0 0 100 100"><polygon points="50,6 96,92 4,92" fill="#fff" stroke="#d21f28" stroke-width="8"/><g transform="rotate(-14 50 48)"><rect x="38" y="26" width="24" height="15" rx="3" fill="#fff" stroke="#333" stroke-width="3"/><rect x="30" y="39" width="40" height="20" rx="7" fill="#4a4a4a"/><circle cx="38" cy="59" r="5" fill="#222"/><circle cx="62" cy="59" r="5" fill="#222"/></g><path d="M26 66 Q18 72 24 78 Q30 84 20 90" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/><path d="M56 64 Q70 68 60 76 Q50 84 76 88" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/></svg>`,
 
   ecoleProximite: `<svg viewBox="0 0 100 100"><polygon points="50,6 96,92 4,92" fill="#fff" stroke="#d21f28" stroke-width="8"/><circle cx="50" cy="48" r="9" fill="#111"/><path d="M32 78 Q50 54 68 78" fill="none" stroke="#111" stroke-width="7"/></svg>`,
 
