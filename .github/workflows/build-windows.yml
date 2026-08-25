@@ -1,0 +1,36 @@
+name: Build Windows .exe (Auto École DZ)
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'auto-ecole-dz/**'
+      - '.github/workflows/build-windows.yml'
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: auto-ecole-dz
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Windows executable
+        run: npm run dist:win
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-ecole-dz-windows
+          path: |
+            auto-ecole-dz/dist/*.exe
+          if-no-files-found: error

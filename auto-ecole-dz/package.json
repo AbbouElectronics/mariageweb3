@@ -1,0 +1,46 @@
+{
+  "name": "auto-ecole-dz",
+  "productName": "اختبار السياقة - Auto École DZ",
+  "version": "1.0.0",
+  "description": "تطبيق تدريب على امتحان رخصة السياقة في الجزائر - أسئلة اختيار من متعدد مع الصور",
+  "main": "main.js",
+  "author": "Auto École DZ",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "dz.autoecole.quiz",
+    "productName": "اختبار السياقة DZ",
+    "asar": true,
+    "publish": null,
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "style.css",
+      "renderer.js",
+      "data/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

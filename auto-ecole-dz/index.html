@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'">
+<title>اختبار السياقة - Auto École DZ</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-badge">🚦</span>
+      <div>
+        <h1>اختبار كود الطريق</h1>
+        <p>تدريب على امتحان رخصة السياقة - الجزائر</p>
+      </div>
+    </div>
+    <div id="scoreBadge" class="score-badge hidden"></div>
+  </header>
+
+  <main id="app">
+
+    <!-- شاشة البداية -->
+    <section id="screen-start" class="screen">
+      <div class="card">
+        <h2>مرحبًا بك 👋</h2>
+        <p class="muted">اختر إعدادات الاختبار ثم ابدأ التدريب. الأسئلة تشمل إشارات المرور، الأولوية، السياقة الآمنة، الوثائق، والميكانيك العامة.</p>
+
+        <div class="form-row">
+          <label for="numQuestions">عدد الأسئلة</label>
+          <select id="numQuestions">
+            <option value="10">10 أسئلة</option>
+            <option value="20" selected>20 سؤالاً</option>
+            <option value="30">30 سؤالاً</option>
+            <option value="40">40 سؤالاً</option>
+            <option value="0">كل الأسئلة</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="category">الفئة</label>
+          <select id="category">
+            <option value="all">كل الفئات</option>
+            <option value="danger">إشارات الخطر</option>
+            <option value="interdiction">إشارات المنع</option>
+            <option value="obligation">إشارات الإجباري</option>
+            <option value="priorite">الأولوية وقواعد المرور</option>
+            <option value="zones">تعليمات خاصة بالمناطق</option>
+            <option value="securite">السياقة الآمنة</option>
+            <option value="documents">الوثائق والتأمين</option>
+            <option value="mecanique">الميكانيك العامة</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="passThreshold">نسبة النجاح المطلوبة (%)</label>
+          <input type="range" id="passThreshold" min="50" max="100" step="5" value="80" />
+          <span id="passThresholdValue" class="range-value">80%</span>
+        </div>
+
+        <div class="form-row">
+          <label for="timerToggle" class="switch-label">
+            <input type="checkbox" id="timerToggle" checked />
+            <span>تفعيل المؤقت الزمني</span>
+          </label>
+        </div>
+
+        <button id="startBtn" class="btn btn-primary btn-lg">ابدأ الاختبار</button>
+      </div>
+    </section>
+
+    <!-- شاشة السؤال -->
+    <section id="screen-quiz" class="screen hidden">
+      <div class="quiz-top">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <span id="progressLabel">السؤال 1 من 20</span>
+        </div>
+        <div id="timerBox" class="timer-box">⏱ <span id="timerLabel">00:00</span></div>
+      </div>
+
+      <div class="card question-card">
+        <span id="questionCategory" class="tag"></span>
+        <h2 id="questionText">...</h2>
+        <div id="questionImage" class="question-image hidden"></div>
+
+        <div id="optionsList" class="options-list"></div>
+      </div>
+
+      <div class="quiz-nav">
+        <button id="nextBtn" class="btn btn-primary" disabled>السؤال التالي</button>
+      </div>
+    </section>
+
+    <!-- شاشة النتيجة -->
+    <section id="screen-result" class="screen hidden">
+      <div class="card result-card">
+        <div id="resultIcon" class="result-icon">🏁</div>
+        <h2 id="resultTitle">النتيجة</h2>
+        <p id="resultSub" class="muted"></p>
+
+        <div class="result-stats">
+          <div class="stat"><span id="statCorrect" class="stat-num">0</span><span class="stat-label">إجابات صحيحة</span></div>
+          <div class="stat"><span id="statWrong" class="stat-num">0</span><span class="stat-label">إجابات خاطئة</span></div>
+          <div class="stat"><span id="statPercent" class="stat-num">0%</span><span class="stat-label">النسبة المئوية</span></div>
+        </div>
+
+        <div class="result-actions">
+          <button id="reviewBtn" class="btn btn-secondary">مراجعة الإجابات</button>
+          <button id="restartBtn" class="btn btn-primary">اختبار جديد</button>
+        </div>
+      </div>
+
+      <div id="reviewList" class="review-list hidden"></div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>هذا التطبيق أداة تدريبية مساعدة لمراجعة قواعد المرور وليس بديلاً عن المصادر الرسمية لمديرية النقل.</p>
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
